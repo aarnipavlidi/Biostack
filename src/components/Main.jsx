@@ -24,7 +24,7 @@ const Main = () => {
 
   const { data, loading, error } = useQuery(CURRENT_LOGGED_USER);
 
-  if (!data) {
+  if (data !== null) {
     return (
       <View style={styles.mainContainer}>
         <Route path="/" exact>

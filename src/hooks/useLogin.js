@@ -8,39 +8,41 @@ import { USER_LOGIN } from '../graphql/mutations';
 import { useApolloClient } from '@apollo/client';
 import useAuthStorage from '../hooks/useAuthStorage';
 
-const useSignIn = () => {
+const useLogin = () => {
 
   const client = useApolloClient();
   const authStorage = useAuthStorage();
 
-  const [getUserCredentials, result] = useMutation(USER_LOGIN);
+  const [getUserCredentials, result] = useMutation(USER_LOGIN, {
+    onError: (error) => {
+      console.log(error);
+    }
+  });
 
-
-  const signIn = async ({ username, password }) => {
+  const userLogin = async ({ username, password }) => {
 
     const response = await getUserCredentials({
       variables: {
-        userLoginData: {
-          username, password
-        }
+        usernameData: username,
+        passwordData: password
       }
     });
 
     if (response.data) {
 
-      await authStorage.setAccessToken(response.data.authorize.accessToken);
+      await authStorage.setAccessToken(response.data.login.value);
 
-      client.resetStore();
+      //client.resetStore();
 
       return response;
     } else {
 
-      client.resetStore();
+      //client.resetStore();
       throw new Error('Could not find token for this current user, please try again!');
     };
   };
 
-  return [signIn, result]
+  return [userLogin, result]
 };
 
-export default useSignIn;
+export default useLogin;
