@@ -3,7 +3,9 @@
 
 import React from 'react';
 import { Platform, View, Pressable, Text, StyleSheet } from 'react-native';
+
 import { useHistory } from 'react-router-native';
+import useAuthStorage from '../hooks/useAuthStorage';
 
 import styling from '../styling';
 import FormikTextInput from './FormikTextInput';
@@ -77,10 +79,12 @@ const LoginForm = ({ onSubmit }) => {
 };
 
 
-const LoginScreen = () => {
+const LoginScreen = ({ setCurrentToken }) => {
 
   const history = useHistory();
   const [userLogin] = useLogin();
+
+  const authStorage = useAuthStorage();
 
   const onSubmit = async (values) => {
 
@@ -89,8 +93,9 @@ const LoginScreen = () => {
     try {
 
       const { data } = await userLogin({ username, password });
+      const response = await authStorage.getAccessToken();
+      setCurrentToken(response);
       //history.push('/');
-      console.log(data.login.value);
     } catch (error) {
       console.log(error);
     }
