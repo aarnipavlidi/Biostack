@@ -14,7 +14,6 @@ import { CURRENT_LOGGED_USER } from '../graphql/queries';
 
 const styles = StyleSheet.create({
   mainContainer: {
-    paddingTop: 50,
     backgroundColor: '#Fdfcfa',
     flexGrow: 1,
     flexShrink: 1,

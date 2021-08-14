@@ -3,11 +3,14 @@ const styling = {
     textPrimary: '#24292e',
     textSecondary: '#586069',
     primary: '#0366d6',
+    VistaWhite: '#Fdfcfa',
+    Asphalt: '#0b0904'
   },
   fontSizes: {
     body: 14,
     subheading: 16,
-    tag: 15
+    tag: 15,
+    title: 30,
   },
   fonts: {
     default: 'System',

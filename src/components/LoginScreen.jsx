@@ -2,7 +2,7 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react';
-import { Platform, View, Pressable, Text, StyleSheet } from 'react-native';
+import { Platform, View, Pressable, Text, StyleSheet, Button } from 'react-native';
 
 import { useHistory } from 'react-router-native';
 import useAuthStorage from '../hooks/useAuthStorage';
@@ -17,44 +17,61 @@ import useLogin from '../hooks/useLogin';
 
 const container = StyleSheet.create({
   container: {
+    flexGrow: 1,
     alignItems: 'stretch',
-    backgroundColor: 'white',
-    height: '100%'
+    backgroundColor: '#Fdfcfa',
+    justifyContent: 'center',
+  },
+});
+
+const titleContainer = StyleSheet.create({
+  container: {
+    marginBottom: 15,
+    alignItems: 'center'
+  },
+  containerTitle: {
+    textAlign: 'center',
+    color: styling.colors.Asphalt,
+    fontFamily: styling.fonts.android,
+    fontWeight: styling.fontWeights.bold,
+    fontSize: styling.fontSizes.title,
+  },
+  containerText: {
+    textAlign: 'center',
+    color: styling.colors.Asphalt,
+    fontFamily: styling.fonts.android,
+    fontWeight: styling.fontWeights.normal,
+    fontSize: styling.fontSizes.subheading,
   }
 });
 
-const inputContainer = StyleSheet.create({
+const buttonContainer = StyleSheet.create({
   container: {
-    marginTop: 5,
-    alignItems: 'center',
-  },
-  buttonContent: {
+    flexGrow: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    width: '81%',
+  },
+  buttonContent: {
+    flexGrow: 1,
     marginTop: 15,
+    marginLeft: 15,
+    marginRight: 15,
     height: 40,
-    backgroundColor: '#808080',
+    backgroundColor: styling.colors.Asphalt,
     borderWidth: 3,
-    borderColor: '#989898'
+    borderColor: styling.colors.Asphalt,
   },
   buttonContentText: {
     marginTop: 5,
-    color: 'white',
-    fontFamily: Platform.select({
-      android: styling.fonts.android,
-      ios: styling.fonts.ios,
-      default: styling.fonts.default
-    }),
-  }
+    textAlign: 'center',
+    color: styling.colors.VistaWhite
+  },
 });
-
 
 const initialValues = {
   username: '',
   password: ''
 };
-
 
 const loginFormValidationSchema = yup.object().shape({
   username: yup
@@ -68,12 +85,22 @@ const loginFormValidationSchema = yup.object().shape({
 const LoginForm = ({ onSubmit }) => {
 
   return (
-    <View style={inputContainer.container}>
+    <View>
       <FormikTextInput name="username" placeholder="Enter your username..." />
       <FormikTextInput name="password" placeholder="Enter your password..." secureTextEntry={true} />
-      <Pressable style={inputContainer.buttonContent} onPress={onSubmit}>
-        <Text style={inputContainer.buttonContentText}>LOG IN</Text>
-      </Pressable>
+
+      <View style={buttonContainer.container}>
+
+        <Pressable style={buttonContainer.buttonContent} onPress={onSubmit}>
+          <Text style={buttonContainer.buttonContentText}>Sign In</Text>
+        </Pressable>
+
+        <Pressable style={buttonContainer.buttonContent} onPress={onSubmit}>
+          <Text style={buttonContainer.buttonContentText}>Sign Up</Text>
+        </Pressable>
+
+      </View>
+
     </View>
   );
 };
@@ -103,6 +130,10 @@ const LoginScreen = ({ setCurrentToken }) => {
 
   return (
     <View style={container.container}>
+      <View style={titleContainer.container}>
+        <Text style={titleContainer.containerTitle}>Biostack</Text>
+        <Text style={titleContainer.containerText}>Place where you can sell or buy second hand clothes with other people.</Text>
+      </View>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={loginFormValidationSchema}>
         {({ handleSubmit }) => <LoginForm onSubmit={handleSubmit} />}
       </Formik>
