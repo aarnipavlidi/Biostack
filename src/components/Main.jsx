@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
   }
 });
 
-
 const Main = () => {
 
   const [currentToken, setCurrentToken] = useState(null);
@@ -28,27 +27,24 @@ const Main = () => {
 
   const authStorage = useAuthStorage();
 
-  //const testi = authStorage.getAccessToken();
-
   const aarni = async () => {
     const testi = await authStorage.removeAccessToken();
     setCurrentToken(null);
   };
 
-  if (currentToken === null) {
-    return (
-      <View style={styles.mainContainer}>
-        <LoginScreen setCurrentToken={setCurrentToken} />
-      </View>
-    );
-  };
-
   return (
-    <View style={styles.mainContainer}>
-      <Pressable onPress={() => aarni()}>
-        <Text>testi et poistuuko token</Text>
-      </Pressable>
-    </View>
+    <Switch>
+      <Route exact path="/">
+        <LoginScreen setCurrentToken={setCurrentToken} />
+      </Route>
+      <Route exact path="/dashboard">
+        <View style={styles.mainContainer}>
+          <Pressable onPress={() => aarni()}>
+            <Text style={{ paddingTop: 30 }}>testi et poistuuko token</Text>
+          </Pressable>
+        </View>
+      </Route>
+    </Switch>
   );
 
 };

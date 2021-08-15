@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { Alert, View, Pressable, Text, StyleSheet } from 'react-native';
+import { useHistory } from 'react-router-native';
 
 import useAuthStorage from '../hooks/useAuthStorage';
 
@@ -118,7 +119,7 @@ const LoginScreen = ({ setCurrentToken }) => {
     try {
       const { data } = await userLogin({ username, password });
       const response = await authStorage.getAccessToken();
-      setCurrentToken(response);
+      await setCurrentToken(response);
       resetForm();
     } catch (error) {
       resetForm();
@@ -138,7 +139,7 @@ const LoginScreen = ({ setCurrentToken }) => {
   return (
     <View style={container.container}>
       <View style={titleContainer.container}>
-        <Text style={titleContainer.containerTitle}>BIOSTACK</Text>
+        <Text style={titleContainer.containerTitle}>Biostack</Text>
         <Text style={titleContainer.containerText}>Place where you can sell or buy second hand clothes with other people.</Text>
       </View>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={loginFormValidationSchema}>
