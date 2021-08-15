@@ -2,9 +2,8 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react';
-import { Platform, View, Pressable, Text, StyleSheet, Button } from 'react-native';
+import { Alert, View, Pressable, Text, StyleSheet } from 'react-native';
 
-import { useHistory } from 'react-router-native';
 import useAuthStorage from '../hooks/useAuthStorage';
 
 import styling from '../styling';
@@ -108,30 +107,38 @@ const LoginForm = ({ onSubmit }) => {
 
 const LoginScreen = ({ setCurrentToken }) => {
 
-  const history = useHistory();
   const [userLogin] = useLogin();
 
   const authStorage = useAuthStorage();
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values, { resetForm }) => {
 
     const { username, password } = values;
 
     try {
-
       const { data } = await userLogin({ username, password });
       const response = await authStorage.getAccessToken();
       setCurrentToken(response);
-      //history.push('/');
+      resetForm();
     } catch (error) {
-      console.log(error);
-    }
+      resetForm();
+      Alert.alert(
+        "Biostack",
+        `${error.message}`,
+        [
+          {
+            text: "BACK",
+            style: "cancel"
+          },
+        ]
+      );
+    };
   };
 
   return (
     <View style={container.container}>
       <View style={titleContainer.container}>
-        <Text style={titleContainer.containerTitle}>Biostack</Text>
+        <Text style={titleContainer.containerTitle}>BIOSTACK</Text>
         <Text style={titleContainer.containerText}>Place where you can sell or buy second hand clothes with other people.</Text>
       </View>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={loginFormValidationSchema}>

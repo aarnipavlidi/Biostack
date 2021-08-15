@@ -13,11 +13,7 @@ const useLogin = () => {
   const client = useApolloClient();
   const authStorage = useAuthStorage();
 
-  const [getUserCredentials, result] = useMutation(USER_LOGIN, {
-    onError: (error) => {
-      console.log(error);
-    }
-  });
+  const [getUserCredentials, result] = useMutation(USER_LOGIN);
 
   const userLogin = async ({ username, password }) => {
 
@@ -29,16 +25,10 @@ const useLogin = () => {
     });
 
     if (response.data) {
-
       await authStorage.setAccessToken(response.data.login.value);
-
-      //client.resetStore();
-
-      return response;
+      return response.data;
     } else {
-
-      //client.resetStore();
-      throw new Error('Could not find token for this current user, please try again!');
+      return null;
     };
   };
 
