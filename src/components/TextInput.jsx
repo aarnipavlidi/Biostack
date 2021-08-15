@@ -18,35 +18,24 @@ const loginValidationStyling = StyleSheet.create({
     width: '91%',
     marginTop: 15,
     height: 40,
-    borderWidth: 2,
-    borderColor: 'grey',
-    fontFamily: Platform.select({
-      android: styling.fonts.android,
-      ios: styling.fonts.ios,
-      default: styling.fonts.default
-    }),
+    borderBottomColor: styling.colors.Asphalt,
+    borderBottomWidth: 2,
   },
   contentError: {
     width: '91%',
     marginTop: 15,
     height: 40,
-    borderWidth: 2,
-    borderColor: '#d73a4a',
-    fontFamily: Platform.select({
-      android: styling.fonts.android,
-      ios: styling.fonts.ios,
-      default: styling.fonts.default
-    }),
+    borderBottomColor: styling.colors.Asphalt,
+    borderBottomWidth: 2,
   },
   contentErrorMessage: {
     width: '91%',
     marginTop: 5,
-    fontFamily: Platform.select({
-      android: styling.fonts.android,
-      ios: styling.fonts.ios,
-      default: styling.fonts.default
-    }),
-    color: '#d73a4a'
+    fontFamily: styling.fonts.android,
+    fontStyle: styling.fontStyles.italic,
+    fontWeight: styling.fontWeights.bold,
+    fontSize: styling.fontSizes.inputErrorText,
+    color: styling.colors.ShimmeringBlush
   },
 });
 

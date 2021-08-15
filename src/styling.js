@@ -1,15 +1,13 @@
 const styling = {
   colors: {
-    textPrimary: '#24292e',
-    textSecondary: '#586069',
-    primary: '#0366d6',
-    VistaWhite: '#Fdfcfa',
-    Asphalt: '#0b0904'
+    VistaWhite: '#Fdfcfa', // First "primary" color for whole app.
+    Asphalt: '#0b0904', // Second "primary" color for whole app.
+    ShimmeringBlush: '#db8b93' // Color for input validation messages for example.
   },
   fontSizes: {
     body: 14,
     subheading: 16,
-    tag: 15,
+    inputErrorText: 15,
     title: 30,
   },
   fonts: {
@@ -20,6 +18,9 @@ const styling = {
   fontWeights: {
     normal: '400',
     bold: '700',
+  },
+  fontStyles: {
+    italic: 'italic'
   },
   appBarContainer: {
     backgroundColor: '#24292e',
