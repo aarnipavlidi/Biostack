@@ -3,9 +3,8 @@
 
 import React from 'react';
 import { Alert, View, Pressable, Text, StyleSheet } from 'react-native';
-import { useHistory } from 'react-router-native';
 
-import useAuthStorage from '../hooks/useAuthStorage';
+import { useHistory } from 'react-router-native';
 
 import styling from '../styling';
 import FormikTextInput from './FormikTextInput';
@@ -13,7 +12,7 @@ import FormikTextInput from './FormikTextInput';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
-import useLogin from '../hooks/useLogin';
+import useCreateNewUser from '../hooks/useCreateNewUser';
 
 const container = StyleSheet.create({
   container: {
@@ -69,66 +68,72 @@ const buttonContainer = StyleSheet.create({
 });
 
 const initialValues = {
+  name: '',
   username: '',
-  password: ''
+  password: '',
+  passwordConfirm: '',
+  email: ''
 };
 
-const loginFormValidationSchema = yup.object().shape({
+const registrationFormValidationSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required('Name is required.'),
   username: yup
     .string()
+    .min(5, 'Username has to be minimum of 5 characters.')
     .required('Username is required.'),
   password: yup
     .string()
-    .required('Password is required.')
+    .required('Password is required.'),
+  passwordConfirm: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords do not match.')
+    .required('Confirmation for password is required.'),
+  email: yup
+    .string()
+    .email('Invalid email format.')
+    .required('Email is required.')
 });
 
-const LoginForm = ({ history, onSubmit }) => {
+const RegistrationForm = ({ history, onSubmit }) => {
 
-  const goRegistration = () => {
-    history.push("/register")
+  const cancelRegistration = () => {
+    history.push("/")
   };
 
   return (
     <View>
-      <FormikTextInput name="username" placeholder="Enter your username..." />
-      <FormikTextInput name="password" placeholder="Enter your password..." secureTextEntry={true} />
-
+      <FormikTextInput name="name" placeholder="Please enter your name." />
+      <FormikTextInput name="username" placeholder="Please enter your username." />
+      <FormikTextInput name="password" placeholder="Please enter your password." />
+      <FormikTextInput name="passwordConfirm" placeholder="Please confirm your password." />
+      <FormikTextInput name="email" placeholder="Please enter your email." />
       <View style={buttonContainer.container}>
-
+        <Pressable style={buttonContainer.buttonContent} onPress={cancelRegistration}>
+          <Text style={buttonContainer.buttonContentText}>Cancel</Text>
+        </Pressable>
         <Pressable style={buttonContainer.buttonContent} onPress={onSubmit}>
-          <Text style={buttonContainer.buttonContentText}>Sign In</Text>
+          <Text style={buttonContainer.buttonContentText}>Register</Text>
         </Pressable>
-
-        <Pressable style={buttonContainer.buttonContent} onPress={goRegistration}>
-          <Text style={buttonContainer.buttonContentText}>Sign Up</Text>
-        </Pressable>
-
       </View>
-
     </View>
   );
 };
 
+const RegistrationScreen = () => {
 
-const LoginScreen = ({ setCurrentToken }) => {
-
-  const [userLogin] = useLogin();
+  const [userRegistration] = useCreateNewUser();
   const history = useHistory();
 
-  const authStorage = useAuthStorage();
+  const onSubmit = async (values) => {
 
-  const onSubmit = async (values, { resetForm }) => {
-
-    const { username, password } = values;
+    const { name, username, password, email } = values;
 
     try {
-      const { data } = await userLogin({ username, password });
-      const response = await authStorage.getAccessToken();
-      setCurrentToken(response);
-      resetForm();
-      history.push("/dashboard");
+      const { data } = await userRegistration({ name, username, password, email });
+      history.push("/");
     } catch (error) {
-      resetForm();
       Alert.alert(
         "Biostack",
         `${error.message}`,
@@ -146,13 +151,13 @@ const LoginScreen = ({ setCurrentToken }) => {
     <View style={container.container}>
       <View style={titleContainer.container}>
         <Text style={titleContainer.containerTitle}>Biostack</Text>
-        <Text style={titleContainer.containerText}>Place where you can sell or buy second hand clothes with other people.</Text>
+        <Text style={titleContainer.containerText}>Register an account for app.</Text>
       </View>
-      <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={loginFormValidationSchema}>
-        {({ handleSubmit }) => <LoginForm history={history} onSubmit={handleSubmit} />}
+      <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={registrationFormValidationSchema}>
+        {({ handleSubmit }) => <RegistrationForm history={history} onSubmit={handleSubmit} />}
       </Formik>
     </View>
   );
 };
 
-export default LoginScreen;
+export default RegistrationScreen;

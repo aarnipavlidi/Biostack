@@ -7,6 +7,7 @@ import Constants from 'expo-constants';
 import { Pressable, Text, StyleSheet, View } from 'react-native';
 
 import LoginScreen from './LoginScreen';
+import RegistrationScreen from './RegistrationScreen';
 import useAuthStorage from '../hooks/useAuthStorage';
 
 import { useQuery } from '@apollo/client'
@@ -19,6 +20,17 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   }
 });
+
+const Testi = ({ aarni }) => {
+
+  return (
+    <View style={styles.mainContainer}>
+      <Pressable onPress={() => aarni()}>
+        <Text style={{ paddingTop: 30 }}>testi et poistuuko token</Text>
+      </Pressable>
+    </View>
+  );
+};
 
 const Main = () => {
 
@@ -34,19 +46,17 @@ const Main = () => {
 
   return (
     <Switch>
+      <Route exact path="/dashboard">
+        {currentToken ? <Testi aarni={aarni} /> : <Redirect to="/" />}
+      </Route>
+      <Route exact path='/register'>
+        <RegistrationScreen />
+      </Route>
       <Route exact path="/">
         <LoginScreen setCurrentToken={setCurrentToken} />
       </Route>
-      <Route exact path="/dashboard">
-        <View style={styles.mainContainer}>
-          <Pressable onPress={() => aarni()}>
-            <Text style={{ paddingTop: 30 }}>testi et poistuuko token</Text>
-          </Pressable>
-        </View>
-      </Route>
     </Switch>
   );
-
 };
 
 export default Main;
