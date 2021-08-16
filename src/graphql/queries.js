@@ -4,10 +4,12 @@
 import { gql } from '@apollo/client'
 
 export const CURRENT_LOGGED_USER = gql`
-  query me {
-    id
-    name
-    username
-    email
+  query {
+    me {
+      id
+      name
+      username
+      email
+    }
   }
 `

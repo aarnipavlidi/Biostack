@@ -5,12 +5,16 @@ import React, { useState, useEffect } from 'react';
 import { Alert, Pressable, Text, StyleSheet, View } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 
-import styling from '../styling';
+import useCurrentUser from '../hooks/useCurrentUser';
 
 import Home from './Home';
 import UserSettings from './UserSettings';
 
+import styling from '../styling';
+
 const Dashboard = () => {
+
+  const { currentUserData, loading } = useCurrentUser();
 
   const [index, setIndex] = useState(0);
   const [routes] = React.useState([
@@ -23,7 +27,7 @@ const Dashboard = () => {
     case 'home':
       return <Home />;
     case 'settings':
-      return <UserSettings />;
+      return <UserSettings currentUserData={currentUserData} loading={loading} />;
     };
   };
 
