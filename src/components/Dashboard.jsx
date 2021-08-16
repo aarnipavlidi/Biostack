@@ -1,8 +1,8 @@
 // This exercise has been commented by Aarni Pavlidi, if you have any questions or suggestions with the code,
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
-import React, { useState, useEffect } from 'react';
-import { Alert, Pressable, Text, StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Text, StyleSheet, View } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 
 import useCurrentUser from '../hooks/useCurrentUser';
