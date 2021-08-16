@@ -1,12 +1,12 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react';
-import { ActivityIndicator, Text, StyleSheet, View, SafeAreaView, StatusBar, Platform  } from 'react-native';
+import { Alert, Pressable, ActivityIndicator, Text, StyleSheet, View, SafeAreaView, StatusBar, Platform  } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 
 import styling from '../styling';
 
-const styles = StyleSheet.create({
+const loadingContainer = StyleSheet.create({
   container: {
     backgroundColor: styling.colors.VistaWhite,
     flexGrow: 1,
@@ -22,11 +22,31 @@ const userSettingsContainer = StyleSheet.create({
   }
 });
 
+const buttonContainer = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonContent: {
+    marginTop: 15,
+    width: '75%',
+    height: 40,
+    backgroundColor: styling.colors.Asphalt,
+    borderWidth: 3,
+    borderColor: styling.colors.Asphalt,
+  },
+  buttonContentText: {
+    marginTop: 5,
+    textAlign: 'center',
+    color: styling.colors.VistaWhite
+  },
+});
+
 const UserSettings = ({ currentUserData, loading }) => {
 
   if (loading) {
     return (
-      <View style={styles.container}>
+      <View style={loadingContainer.container}>
         <ActivityIndicator size="large" color={styling.colors.Asphalt} />
       </View>
     );
@@ -43,6 +63,11 @@ const UserSettings = ({ currentUserData, loading }) => {
               <Paragraph>Email: {currentUserData.email}</Paragraph>
             </Card.Content>
           </Card>
+        </View>
+        <View style={buttonContainer.container}>
+          <Pressable style={buttonContainer.buttonContent}>
+            <Text style={buttonContainer.buttonContentText}>Delete your account.</Text>
+          </Pressable>
         </View>
       </SafeAreaView>
     );

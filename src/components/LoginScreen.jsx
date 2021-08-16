@@ -93,23 +93,17 @@ const LoginForm = ({ history, onSubmit }) => {
     <View>
       <FormikTextInput name="username" placeholder="Enter your username..." />
       <FormikTextInput name="password" placeholder="Enter your password..." secureTextEntry={true} />
-
       <View style={buttonContainer.container}>
-
         <Pressable style={buttonContainer.buttonContent} onPress={onSubmit}>
           <Text style={buttonContainer.buttonContentText}>Sign In</Text>
         </Pressable>
-
         <Pressable style={buttonContainer.buttonContent} onPress={goRegistration}>
           <Text style={buttonContainer.buttonContentText}>Sign Up</Text>
         </Pressable>
-
       </View>
-
     </View>
   );
 };
-
 
 const LoginScreen = ({ setCurrentToken }) => {
 
