@@ -8,29 +8,13 @@ import { Pressable, Text, StyleSheet, View } from 'react-native';
 
 import LoginScreen from './LoginScreen';
 import RegistrationScreen from './RegistrationScreen';
+import Dashboard from './Dashboard';
+
 import useAuthStorage from '../hooks/useAuthStorage';
 
 import { useQuery } from '@apollo/client'
 import { CURRENT_LOGGED_USER } from '../graphql/queries';
 
-const styles = StyleSheet.create({
-  mainContainer: {
-    backgroundColor: '#Fdfcfa',
-    flexGrow: 1,
-    flexShrink: 1,
-  }
-});
-
-const Testi = ({ aarni }) => {
-
-  return (
-    <View style={styles.mainContainer}>
-      <Pressable onPress={() => aarni()}>
-        <Text style={{ paddingTop: 30 }}>testi et poistuuko token</Text>
-      </Pressable>
-    </View>
-  );
-};
 
 const Main = () => {
 
@@ -47,7 +31,7 @@ const Main = () => {
   return (
     <Switch>
       <Route exact path="/dashboard">
-        {currentToken ? <Testi aarni={aarni} /> : <Redirect to="/" />}
+        {currentToken ? <Dashboard aarni={aarni} /> : <Redirect to="/" />}
       </Route>
       <Route exact path='/register'>
         <RegistrationScreen />

@@ -38,6 +38,7 @@ const titleContainer = StyleSheet.create({
   },
   containerText: {
     textAlign: 'center',
+    width: '90%',
     color: styling.colors.Asphalt,
     fontFamily: styling.fonts.android,
     fontWeight: styling.fontWeights.normal,
