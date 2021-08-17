@@ -4,7 +4,10 @@ import React from 'react';
 import { Alert, Pressable, ActivityIndicator, Text, StyleSheet, View, SafeAreaView, StatusBar, Platform  } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 
+import { useApolloClient } from '@apollo/client';
+
 import useDeleteUser from '../hooks/useDeleteUser';
+import useAuthStorage from '../hooks/useAuthStorage';
 
 import styling from '../styling';
 
@@ -44,9 +47,23 @@ const buttonContainer = StyleSheet.create({
   },
 });
 
-const UserSettings = ({ currentUserData, loading }) => {
+const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
 
   const [deleteUserFromDatabase] = useDeleteUser();
+
+  const authStorage = useAuthStorage();
+  const client = useApolloClient();
+
+  const removeUserToken = async () => {
+    try {
+      await deleteUserFromDatabase(currentUserData.id);
+      await authStorage.removeAccessToken();
+      client.resetStore();
+      setCurrentToken(null);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const confirmUserDelete = () => {
     Alert.alert(
@@ -60,7 +77,7 @@ const UserSettings = ({ currentUserData, loading }) => {
         },
         {
           text: "OK",
-          onPress: () => deleteUserFromDatabase(currentUserData.id),
+          onPress: () => removeUserToken(),
         }
       ]
     )

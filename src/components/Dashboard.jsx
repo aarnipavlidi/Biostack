@@ -12,7 +12,7 @@ import UserSettings from './UserSettings';
 
 import styling from '../styling';
 
-const Dashboard = () => {
+const Dashboard = ({ setCurrentToken }) => {
 
   const { currentUserData, loading } = useCurrentUser();
 
@@ -27,7 +27,7 @@ const Dashboard = () => {
     case 'home':
       return <Home />;
     case 'settings':
-      return <UserSettings currentUserData={currentUserData} loading={loading} />;
+      return <UserSettings setCurrentToken={setCurrentToken} currentUserData={currentUserData} loading={loading} />;
     };
   };
 
