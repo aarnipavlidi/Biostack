@@ -1,44 +1,28 @@
 // This exercise has been commented by Aarni Pavlidi, if you have any questions or suggestions with the code,
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
-import React, { useState } from 'react';
-import { Alert, Text, StyleSheet, View } from 'react-native';
-import { BottomNavigation } from 'react-native-paper';
-
-import useCurrentUser from '../hooks/useCurrentUser';
-
-import Home from './Home';
-import UserSettings from './UserSettings';
+import React from 'react';
+import { Text, StyleSheet, View } from 'react-native';
 
 import styling from '../styling';
 
-const Dashboard = ({ setCurrentToken }) => {
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: styling.colors.VistaWhite,
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+});
 
-  const { currentUserData, loading } = useCurrentUser();
-
-  const [index, setIndex] = useState(0);
-  const [routes] = React.useState([
-    { key: 'home', title: 'Home', icon: 'home' },
-    { key: 'settings', title: 'Settings', icon: 'cog' },
-  ]);
-
-  const renderScene = ({ route }) => {
-  switch (route.key) {
-    case 'home':
-      return <Home />;
-    case 'settings':
-      return <UserSettings setCurrentToken={setCurrentToken} currentUserData={currentUserData} loading={loading} />;
-    };
-  };
+const Dashboard = () => {
 
   return (
-    <BottomNavigation
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
-      barStyle={{ backgroundColor: styling.colors.VistaWhite }}
-    />
+    <View style={styles.container}>
+      <Text>This is Dashboard component.</Text>
+    </View>
   );
+
 };
 
 export default Dashboard;

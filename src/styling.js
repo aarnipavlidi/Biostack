@@ -5,9 +5,9 @@ const styling = {
     ShimmeringBlush: '#db8b93' // Color for input validation messages for example.
   },
   fontSizes: {
-    body: 14,
-    subheading: 16,
+    default: 14,
     inputErrorText: 15,
+    subheading: 16,
     title: 30,
   },
   fonts: {
