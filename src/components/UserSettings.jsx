@@ -4,6 +4,8 @@ import React from 'react';
 import { Alert, Pressable, ActivityIndicator, Text, StyleSheet, View, SafeAreaView, StatusBar, Platform  } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 
+import useDeleteUser from '../hooks/useDeleteUser';
+
 import styling from '../styling';
 
 const loadingContainer = StyleSheet.create({
@@ -44,6 +46,26 @@ const buttonContainer = StyleSheet.create({
 
 const UserSettings = ({ currentUserData, loading }) => {
 
+  const [deleteUserFromDatabase] = useDeleteUser();
+
+  const confirmUserDelete = () => {
+    Alert.alert(
+      "Biostack",
+      "Are you sure you want to delete your account from the app?",
+      [
+        {
+          text: "CANCEL",
+          onPress: () => console.log('User has cancelled account deletion process!'),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => deleteUserFromDatabase(currentUserData.id),
+        }
+      ]
+    )
+  };
+
   if (loading) {
     return (
       <View style={loadingContainer.container}>
@@ -65,7 +87,7 @@ const UserSettings = ({ currentUserData, loading }) => {
           </Card>
         </View>
         <View style={buttonContainer.container}>
-          <Pressable style={buttonContainer.buttonContent}>
+          <Pressable style={buttonContainer.buttonContent} onPress={confirmUserDelete}>
             <Text style={buttonContainer.buttonContentText}>Delete your account.</Text>
           </Pressable>
         </View>
