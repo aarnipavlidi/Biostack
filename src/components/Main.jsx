@@ -5,11 +5,12 @@ import React, { useState } from 'react'; // Import "react" library's content for
 import { Switch, Route, Redirect } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
 import { SafeAreaView, StatusBar, Platform, StyleSheet, View } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
-import LoginScreen from './LoginScreen'; // Import "LoginScreen" component from "LoginScreen.js" file for this component usage.
-import RegistrationScreen from './RegistrationScreen'; // Import "RegistrationScreen" component from "RegistrationScreen.js" file for this component usage.
-import Dashboard from './Dashboard'; // Import "Dashboard" component from "Dashboard.js" file for this component usage.
-import UserSettings from './UserSettings'; // Import "UserSettings" component from "UserSettings.js" file for this component usage.
-import NavigationBottom from './NavigationBottom'; // Import "NavigationBottom" component from "NavigationBottom.js" file for this component usage.
+import LoginScreen from './LoginScreen'; // Import "LoginScreen" component from "LoginScreen.jsx" file for this component usage.
+import RegistrationScreen from './RegistrationScreen'; // Import "RegistrationScreen" component from "RegistrationScreen.jsx" file for this component usage.
+import Dashboard from './Dashboard'; // Import "Dashboard" component from "Dashboard.jsx" file for this component usage.
+import NewItem from './NewItem'; // Import "NewItem" component from "NewItem.jsx" file for this component usage.
+import UserSettings from './UserSettings'; // Import "UserSettings" component from "UserSettings.jsx" file for this component usage.
+import NavigationBottom from './NavigationBottom'; // Import "NavigationBottom" component from "NavigationBottom.jsx" file for this component usage.
 
 import useCurrentUser from '../hooks/useCurrentUser'; // Import "useCurrentUser" hook from "useCurrentUser.js" file for this component usage.
 
@@ -43,6 +44,9 @@ const Main = () => {
         <Switch>
           <Route exact path="/dashboard">
             {currentToken ? <Dashboard /> : <Redirect to="/" />}
+          </Route>
+          <Route exact path="/dashboard/new-item">
+            {currentToken ? <NewItem /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/profile">
             {currentToken ? <UserSettings setCurrentToken={setCurrentToken} currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}

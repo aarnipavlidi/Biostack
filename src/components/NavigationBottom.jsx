@@ -5,7 +5,7 @@ import React, { useState } from 'react'; // Import "react" library's content for
 import { Link } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
 import { Text, StyleSheet, View, Pressable } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
-import { Ionicons, AntDesign } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
+import { Feather, Ionicons, AntDesign } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 // Define "navigationContainer" variable, which will be used for styling
@@ -47,8 +47,16 @@ const NavigationBottom = () => {
       <Pressable style={navigationContainer.pressableContainer}>
         <Link to="/dashboard">
           <View>
-            <Ionicons style={navigationContainer.iconContainer} name="home" size={20} color={styling.colors.Asphalt} />
+            <Feather style={navigationContainer.iconContainer} name="home" size={20} color={styling.colors.Asphalt} />
             <Text style={navigationContainer.textContainer}>Home</Text>
+          </View>
+        </Link>
+      </Pressable>
+      <Pressable style={navigationContainer.pressableContainer}>
+        <Link to="/dashboard/new-item">
+          <View>
+            <AntDesign style={navigationContainer.iconContainer} name="pluscircleo" size={20} color={styling.colors.Asphalt} />
+            <Text style={navigationContainer.textContainer}>New item</Text>
           </View>
         </Link>
       </Pressable>
