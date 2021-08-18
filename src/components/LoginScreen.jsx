@@ -1,17 +1,17 @@
-// This exercise has been commented by Aarni Pavlidi, if you have any questions or suggestions with the code,
+// This project has been commented by Aarni Pavlidi, if you have any questions or suggestions with the code,
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
-import React from 'react';
-import { Alert, View, Pressable, Text, StyleSheet } from 'react-native';
-import { useHistory } from 'react-router-native';
+import React from 'react'; // Import "react" library's content for this component usage.
+import { Alert, View, Pressable, Text, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
 
-import useAuthStorage from '../hooks/useAuthStorage';
+import useAuthStorage from '../hooks/useAuthStorage'; // Import "useAuthStorage" hook from "useAuthStorage.js" file for this component usage.
 
-import styling from '../styling';
-import FormikTextInput from './FormikTextInput';
+import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
+import FormikTextInput from './FormikTextInput'; // Import "FormikTextInput" component from "FormikTextInput.jsx" for this component usage.
 
-import { Formik } from 'formik';
-import * as yup from 'yup';
+import { Formik } from 'formik'; // Import "Formik" component from "formik" libary's content for this component usage.
+import * as yup from 'yup'; // Import everything as "yup" from "yup" libary's content for this component usage.
 
 import useLogin from '../hooks/useLogin';
 
@@ -69,11 +69,20 @@ const buttonContainer = StyleSheet.create({
   },
 });
 
+// Define "initialValues" variable, which will get inside of {...}
+// objects values as default (''). Which means, if user wants to
+// submit form without changing any input fields, these objects
+// will get those default values and passed to database. But
+// because we have validation setupped, that won't be possible! :)
 const initialValues = {
   username: '',
   password: ''
 };
 
+// Define "loginFormValidationSchema" variable, which will execute
+// validation via "yup" variable, when user wants to create new user to
+// the app. If some of the input fields don't match with required condition,
+// then function will return "error message" under of that current input field.
 const loginFormValidationSchema = yup.object().shape({
   username: yup
     .string()
@@ -107,8 +116,8 @@ const LoginForm = ({ history, onSubmit }) => {
 
 const LoginScreen = ({ setCurrentToken }) => {
 
-  const [userLogin] = useLogin();
-  const history = useHistory();
+  const [userLogin] = useLogin(); // Define "userLogin" variable from => "useLogin(...)" hook.
+  const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
   const authStorage = useAuthStorage();
 

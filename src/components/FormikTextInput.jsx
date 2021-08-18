@@ -1,5 +1,8 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+// This project has been commented by Aarni Pavlidi, if you have any questions or suggestions with the code,
+// then please contact me by sending email at me@aarnipavlidi.fi <3
+
+import React from 'react'; // Import "react" library's content for this component usage.
+import { StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { useField } from 'formik';
 
 import TextInput from './TextInput';

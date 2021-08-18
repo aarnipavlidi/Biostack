@@ -1,13 +1,11 @@
-// This exercise has been commented by Aarni Pavlidi, if you have any questions or suggestions with the code,
+// This project has been commented by Aarni Pavlidi, if you have any questions or suggestions with the code,
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
-import React from 'react'; // Otetaan käyttöön "react" niminen kirjasto sovelluksen käytettäväksi.
-import { TextInput as NativeTextInput, View, Text, StyleSheet, Platform } from 'react-native'; // Otetaan käyttöön kyseiset komponentit "react-native" kirjaston kautta sovelluksen käytettäväksi.
+import React from 'react'; // Import "react" library's content for this component usage.
+import { TextInput as NativeTextInput, View, Text, StyleSheet, Platform } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
-import styling from '../styling'; // Alustetaan "styling" niminen muuttuja, jonka avulla sovellus ottaa erillisen tyylitiedoston (styling.js) käyttöönsä.
+import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
-// Alustetaan "loginValidationStyling" niminen muuttuja, joka suorittaa kyseisen funktion,
-// jonka kautta se saa käyttöönsä {...} sisällä olevat tyylien arvot.
 const loginValidationStyling = StyleSheet.create({
   container: {
     flexDirection: 'column',
@@ -39,15 +37,9 @@ const loginValidationStyling = StyleSheet.create({
   },
 });
 
-// Alustetaan "TextInput" niminen komponentti, joka suorittaa {...} sisällä olevat
-// asiat aina, kun kyseiseen komponenttiin tehdään viittaus.
 const TextInput = ({ style, error, ...props }) => {
   const textInputStyle = [style];
 
-  // Kun käyttäjä yrittää kirjautua sisään sovellukseen ja sen aikana
-  // tietty kenttä ei toteuta sille annettuja ehtoja, niin komponentti
-  // renderöi alla olevan if-ehdon takaisin käyttäjälle näkyviin.
-  // Muussa tapauksessa renderöidään "normaali" kenttä takaisin käyttäjälle.
   if (error) {
     return (
       <View style={loginValidationStyling.container}>
@@ -57,7 +49,6 @@ const TextInput = ({ style, error, ...props }) => {
     );
   };
 
-  // Jos yllä oleva ehto ei toteudu, niin renderöidään (...) sisällä olevat asiat takaisin käyttäjälle.
   return (
     <View style={loginValidationStyling.container}>
       <NativeTextInput style={loginValidationStyling.contentNormal} {...props} />
@@ -65,5 +56,5 @@ const TextInput = ({ style, error, ...props }) => {
   );
 };
 
-// Viedään (export) alla oleva komponentti (TextInput) sovelluksen käytettäväksi, jotta esim. "App.js" tiedosto pystyy suorittamaan kyseiset funktiot.
+// Export "TextInput" component, so other components like "App.js" are able to use this hooks's content.
 export default TextInput;

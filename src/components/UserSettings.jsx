@@ -1,16 +1,19 @@
+// This project has been commented by Aarni Pavlidi, if you have any questions or suggestions with the code,
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
-import React from 'react';
-import { Alert, Pressable, ActivityIndicator, Text, StyleSheet, View } from 'react-native';
-import { Card, Title, Paragraph } from 'react-native-paper';
+import React from 'react'; // Import "react" library's content for this component usage.
+import { Alert, Pressable, ActivityIndicator, Text, StyleSheet, View } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Card, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
-import { useApolloClient } from '@apollo/client';
+import { useApolloClient } from '@apollo/client'; // Import following functions from "@apollo/client" libary for this component usage.
 
-import useDeleteUser from '../hooks/useDeleteUser';
-import useAuthStorage from '../hooks/useAuthStorage';
+import useDeleteUser from '../hooks/useDeleteUser'; // Import "useDeleteUser" hook from "useDeleteUser.js" file for this component usage.
+import useAuthStorage from '../hooks/useAuthStorage'; // Import "useAuthStorage" hook from "useAuthStorage.js" file for this component usage.
 
-import styling from '../styling';
+import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
+// Define "loadingContainer" variable, which will be used to create style
+// if data is "loading" we will return => "loading spinner".
 const loadingContainer = StyleSheet.create({
   container: {
     backgroundColor: styling.colors.VistaWhite,
@@ -20,6 +23,8 @@ const loadingContainer = StyleSheet.create({
   }
 });
 
+// Define "buttonContainer" variable, which will be used to create style
+// for buttons, if for example user wants to delete his account from db.
 const buttonContainer = StyleSheet.create({
   container: {
     justifyContent: 'center',
@@ -40,24 +45,36 @@ const buttonContainer = StyleSheet.create({
   },
 });
 
+// Define "UserSettings" component, which will execute everything inside of {...}
+// and render back either "loading spinner" or current logged user data.
 const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
 
-  const [deleteUserFromDatabase] = useDeleteUser();
+  const [deleteUserFromDatabase] = useDeleteUser(); // Define "deleteUserFromDatabase" variable from => "useDeleteUser(...)" hook.
 
-  const authStorage = useAuthStorage();
-  const client = useApolloClient();
+  const client = useApolloClient(); // Define "client" variable, which is equal to "useApolloClient(...)" function.
+  const authStorage = useAuthStorage(); // Define "authStorage" variable, which is equal to "useAuthStorage(...)" function.
 
+  // Define "removeUserToken" function, which will execute everything inside of {...},
+  // so if user wants to delete his account and confirms deletion via "Alert" method,
+  // then this function will be executed. If account deletion is successful, then
+  // user will be redirected back to login screen and else if there is a problem
+  // with deletion then "error.message" variable will be returned back to the user.
   const removeUserToken = async () => {
-    try {
+    try { // First we will execute "try" section, if there will be a problem => "catch" section.
       await deleteUserFromDatabase(currentUserData.id);
-      await authStorage.removeAccessToken();
-      client.resetStore();
-      setCurrentToken(null);
+      await authStorage.removeAccessToken(); // Remove token value from "authStorage" after account deletion.
+      client.resetStore(); // Clear mutation from "active" and refetch all other active queries again.
+      setCurrentToken(null); // Change "currentToken" variable state into original value => "null".
     } catch (error) {
-      console.log(error.message);
+      console.log(error.message); // Console.log "erro.message" variable data back to the user.
     }
   };
 
+  // Define "confirmUserDelete" function, which will execute everything inside of
+  // {...}, so if user presses button to delete his/her account => "Alert" component
+  // will be rendered back to the user and user has to confirm that he/she wants to
+  // delete account from database. If user chooses to confirm, then "removeUserToken()"
+  // function will be executed and app will try delete account from the database.
   const confirmUserDelete = () => {
     Alert.alert(
       "Biostack",
@@ -76,6 +93,8 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
     )
   };
 
+  // If "me" querys data => "currentUserData" is still loading from the dabase, component
+  // will render everything inside of (...) (loading spinner) untill data has loaded.
   if (loading) {
     return (
       <View style={loadingContainer.container}>
@@ -84,6 +103,7 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
     );
   };
 
+  // Otherwise component will render everything inside of (...) back to the user.
   return (
     <View>
       <Card>
@@ -103,4 +123,5 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
   );
 };
 
+// Export "UserSettings" component, so other components like "App.js" are able to use this hooks's content.
 export default UserSettings;
