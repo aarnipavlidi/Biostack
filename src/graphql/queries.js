@@ -13,6 +13,13 @@ export const CURRENT_LOGGED_USER = gql`
       username
       email
       rating
+      products {
+        _id
+        productTitle
+        productDescription
+        productPrice
+        productGroupName
+      }
     }
   }
 `

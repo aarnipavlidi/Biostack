@@ -2,8 +2,10 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
-import { Alert, Pressable, ActivityIndicator, Text, StyleSheet, View } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Alert, ActivityIndicator, FlatList, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Card, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+
+import UserListedProducts from './UserListedProducts';
 
 import { useApolloClient } from '@apollo/client'; // Import following functions from "@apollo/client" libary for this component usage.
 
@@ -93,6 +95,10 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
     )
   };
 
+  const getUserListedProducts = currentUserData
+    ? currentUserData.products.map(results => results)
+    : [];
+
   // If "me" querys data => "currentUserData" is still loading from the dabase, component
   // will render everything inside of (...) (loading spinner) untill data has loaded.
   if (loading) {
@@ -114,6 +120,13 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
           <Paragraph>Email: {currentUserData.email}</Paragraph>
         </Card.Content>
       </Card>
+
+      <FlatList
+        data={getUserListedProducts}
+        keyExtractor={(item, index) => item._id}
+        renderItem={({ item }) => <UserListedProducts item={item} />}
+      />
+
       <View style={buttonContainer.container}>
         <Pressable style={buttonContainer.buttonContent} onPress={confirmUserDelete}>
           <Text style={buttonContainer.buttonContentText}>Delete your account.</Text>
