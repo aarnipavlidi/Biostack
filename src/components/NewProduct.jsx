@@ -2,7 +2,7 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React, { useState } from 'react'; // Import "react" library's content for this component usage.
-import { Alert, Pressable, Text, StyleSheet, View } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Alert, Pressable, Text, StyleSheet, View, Image } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Appbar } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
@@ -24,6 +24,17 @@ const newItemContainer = StyleSheet.create({
   },
   appBarContent: {
     color: styling.colors.VistaWhite
+  }
+});
+
+const dropdownContainer = StyleSheet.create({
+  container: {
+    marginTop: 15,
+    marginBottom: 15,
+    alignItems: 'center',
+  },
+  options: {
+    width: '75%',
   }
 });
 
@@ -84,28 +95,12 @@ const createProductFormValidationSchema = yup.object().shape({
 
 const NewProductForm = ({ onSubmit }) => {
 
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    {label: 'Apple', value: 'apple'},
-    {label: 'Banana', value: 'banana'}
-  ]);
-
   // Component will render everything inside of (...) back to the user.
   return (
     <View>
       <FormikTextInput name="productTitle" placeholder="Please enter title for your item." />
       <FormikTextInput name="productDescription" placeholder="Please enter description for your item." />
       <FormikTextInput name="productPrice" placeholder="Please enter price for your item." />
-      <DropDownPicker
-        name="productGroupName"
-        open={open}
-        value={value}
-        items={items}
-        setOpen={setOpen}
-        setValue={setValue}
-        setItems={setItems}
-      />
       <View style={buttonContainer.container}>
         <Pressable style={buttonContainer.buttonContent} onPress={onSubmit}>
           <Text style={buttonContainer.buttonContentText}>Create an item</Text>
@@ -116,6 +111,13 @@ const NewProductForm = ({ onSubmit }) => {
 };
 
 const NewProduct = ({ currentUserData }) => {
+
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: 'T-shirt', value: 't-shirt', icon: () => <Image source={require('../../assets/icons/clothes/t-24x24-455076.png')} />},
+    {label: 'Sweater', value: 'sweater', icon: () => <Image source={require('../../assets/icons/clothes/sweater-24x24-455072.png')} />}
+  ]);
 
   const [submitNewProduct] = useCreateNewProduct(); // Define "submitNewProduct" variable from => "useCreateNewProduct(...)" hook.
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
@@ -131,9 +133,9 @@ const NewProduct = ({ currentUserData }) => {
   const onSubmit = async (values) => {
 
     const { productTitle, productDescription, productPrice } = values;
-    console.log(values);
+
     const owner = currentUserData._id;
-    const productGroupName = "aarni";
+    const productGroupName = value;
 
     try {
       const { data } = await submitNewProduct({ productTitle, productDescription, productPrice, productGroupName, owner })
@@ -162,6 +164,21 @@ const NewProduct = ({ currentUserData }) => {
         <Appbar.Content titleStyle={newItemContainer.appBarContent} title="Add new item to the app" subtitle="Please fill all the required fields." subtitleStyle={newItemContainer.appBarContent} />
         <Appbar.Action icon="dots-vertical" onPress={handleMore} />
       </Appbar.Header>
+      <View style={dropdownContainer.container}>
+        <DropDownPicker
+          showBadgeDot={true}
+          placeholder='Please choose a product group first.'
+          style={{ backgroundColor: styling.colors.VistaWhite }}
+          containerStyle={dropdownContainer.options}
+          dropDownContainerStyle={{ backgroundColor: styling.colors.VistaWhite }}
+          value={value}
+          items={items}
+          open={open}
+          setOpen={setOpen}
+          setValue={setValue}
+          setItems={setItems}
+        />
+      </View>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={createProductFormValidationSchema}>
         {({ handleSubmit }) => <NewProductForm onSubmit={handleSubmit} />}
       </Formik>
