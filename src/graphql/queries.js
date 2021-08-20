@@ -8,10 +8,11 @@ import { gql } from '@apollo/client' // Define "gql" function from "@apollo/clie
 export const CURRENT_LOGGED_USER = gql`
   query {
     me {
-      id
+      _id
       name
       username
       email
+      rating
     }
   }
 `

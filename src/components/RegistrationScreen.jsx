@@ -131,8 +131,8 @@ const RegistrationForm = ({ history, onSubmit }) => {
     <View>
       <FormikTextInput name="name" placeholder="Please enter your name." />
       <FormikTextInput name="username" placeholder="Please enter your username." />
-      <FormikTextInput name="password" placeholder="Please enter your password." />
-      <FormikTextInput name="passwordConfirm" placeholder="Please confirm your password." />
+      <FormikTextInput name="password" placeholder="Please enter your password." secureTextEntry={true} />
+      <FormikTextInput name="passwordConfirm" placeholder="Please confirm your password." secureTextEntry={true} />
       <FormikTextInput name="email" placeholder="Please enter your email." />
       <View style={buttonContainer.container}>
         <Pressable style={buttonContainer.buttonContent} onPress={cancelRegistration}>

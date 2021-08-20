@@ -7,10 +7,11 @@ import { gql } from '@apollo/client' // Define "gql" function from "@apollo/clie
 export const CREATE_NEW_USER = gql`
   mutation createNewUser($nameData: String!, $usernameData: String!, $passwordData: String!, $emailData: String!) {
     createUser(name: $nameData, username: $usernameData, password: $passwordData, email: $emailData) {
-      id
+      _id
       name
       username
       email
+      rating
     }
   }
 `
@@ -20,6 +21,25 @@ export const USER_LOGIN = gql`
   mutation getUserCredentials($usernameData: String!, $passwordData: String!) {
     login(username: $usernameData, password: $passwordData) {
       value
+    }
+  }
+`
+
+// Define "CREATE_NEW_PRODUCT" mutation, so user is able to add new item to the database.
+export const CREATE_NEW_PRODUCT = gql`
+  mutation createNewProduct($productTitle: String!, $productDescription: String!, $productPrice: String!, $productGroupName: String!, $owner: String!) {
+    createProduct(
+      productTitle: $productTitle,
+      productDescription: $productDescription,
+      productPrice: $productPrice,
+      productGroupName: $productGroupName,
+      owner: $owner
+    ) {
+      _id
+      productTitle
+      productDescription
+      productPrice
+      productGroupName
     }
   }
 `

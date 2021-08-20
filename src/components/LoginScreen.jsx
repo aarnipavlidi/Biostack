@@ -100,8 +100,8 @@ const LoginForm = ({ history, onSubmit }) => {
 
   return (
     <View>
-      <FormikTextInput name="username" placeholder="Enter your username..." />
-      <FormikTextInput name="password" placeholder="Enter your password..." secureTextEntry={true} />
+      <FormikTextInput name="username" placeholder="Please enter your username." />
+      <FormikTextInput name="password" placeholder="Please enter your password." secureTextEntry={true} />
       <View style={buttonContainer.container}>
         <Pressable style={buttonContainer.buttonContent} onPress={onSubmit}>
           <Text style={buttonContainer.buttonContentText}>Sign In</Text>

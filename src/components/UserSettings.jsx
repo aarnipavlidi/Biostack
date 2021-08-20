@@ -61,7 +61,7 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
   // with deletion then "error.message" variable will be returned back to the user.
   const removeUserToken = async () => {
     try { // First we will execute "try" section, if there will be a problem => "catch" section.
-      await deleteUserFromDatabase(currentUserData.id);
+      await deleteUserFromDatabase(currentUserData._id);
       await authStorage.removeAccessToken(); // Remove token value from "authStorage" after account deletion.
       client.resetStore(); // Clear mutation from "active" and refetch all other active queries again.
       setCurrentToken(null); // Change "currentToken" variable state into original value => "null".
