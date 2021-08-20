@@ -65,34 +65,12 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
     try { // First we will execute "try" section, if there will be a problem => "catch" section.
       await deleteUserFromDatabase(currentUserData._id);
       await authStorage.removeAccessToken(); // Remove token value from "authStorage" after account deletion.
-      client.resetStore(); // Clear mutation from "active" and refetch all other active queries again.
+      //client.resetStore(); // Clear mutation from "active" and refetch all other active queries again.
+      client.clearStore();
       setCurrentToken(null); // Change "currentToken" variable state into original value => "null".
     } catch (error) {
       console.log(error.message); // Console.log "erro.message" variable data back to the user.
     }
-  };
-
-  // Define "confirmUserDelete" function, which will execute everything inside of
-  // {...}, so if user presses button to delete his/her account => "Alert" component
-  // will be rendered back to the user and user has to confirm that he/she wants to
-  // delete account from database. If user chooses to confirm, then "removeUserToken()"
-  // function will be executed and app will try delete account from the database.
-  const confirmUserDelete = () => {
-    Alert.alert(
-      "Biostack",
-      "Are you sure you want to delete your account from the app?",
-      [
-        {
-          text: "CANCEL",
-          onPress: () => console.log('User has cancelled account deletion process!'),
-          style: "cancel"
-        },
-        {
-          text: "OK",
-          onPress: () => removeUserToken(),
-        }
-      ]
-    )
   };
 
   const getUserListedProducts = currentUserData
@@ -128,7 +106,7 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
       />
 
       <View style={buttonContainer.container}>
-        <Pressable style={buttonContainer.buttonContent} onPress={confirmUserDelete}>
+        <Pressable style={buttonContainer.buttonContent} onPress={removeUserToken}>
           <Text style={buttonContainer.buttonContentText}>Delete your account.</Text>
         </Pressable>
       </View>
