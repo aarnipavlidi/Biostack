@@ -9,7 +9,7 @@ import styling from '../styling'; // Import "styling" variable from "styling.js"
 
 const listedProductsContainer = StyleSheet.create({
   mainContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   cardContainer: {
     elevation: 15,

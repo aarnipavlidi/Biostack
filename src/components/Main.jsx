@@ -23,7 +23,8 @@ import styling from '../styling'; // Import "styling" variable from "styling.js"
 // of phones "StatusBar" (where are battery icons etc.) container.
 const mainContainer = StyleSheet.create({
   container: {
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 50 : 0,
+    bottom: 50,
     backgroundColor: styling.colors.VistaWhite,
   }
 });
@@ -59,7 +60,7 @@ const Main = () => {
           </Route>
         </Switch>
       </View>
-        {currentToken ? <NavigationBottom /> : null}
+      {currentToken ? <NavigationBottom /> : null}
     </SafeAreaView>
   );
 };

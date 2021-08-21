@@ -2,9 +2,9 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
-import { Alert, ActivityIndicator, FlatList, ScrollView, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Card, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { Alert, ActivityIndicator, FlatList, View, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
+import UserSettingsHeader from './UserSettingsHeader';
 import UserListedProducts from './UserListedProducts';
 
 import { useApolloClient } from '@apollo/client'; // Import following functions from "@apollo/client" libary for this component usage.
@@ -22,50 +22,6 @@ const loadingContainer = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   }
-});
-
-const userSettingsContainer = StyleSheet.create({
-  mainContainer: {
-    backgroundColor: styling.colors.VistaWhite,
-    flexGrow: 1,
-  },
-  titleContainer: {
-    justifyContent: 'center',
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 10
-  },
-  titleText: {
-    textAlign: 'center',
-    color: styling.colors.Asphalt,
-    borderBottomWidth: 2,
-    borderBottomColor: styling.colors.Asphalt
-  },
-  productSeperator: {
-    height: 10
-  },
-});
-
-// Define "buttonContainer" variable, which will be used to create style
-// for buttons, if for example user wants to delete his account from db.
-const buttonContainer = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  buttonContent: {
-    marginTop: 15,
-    width: '75%',
-    height: 40,
-    backgroundColor: styling.colors.Asphalt,
-    borderWidth: 3,
-    borderColor: styling.colors.Asphalt,
-  },
-  buttonContentText: {
-    marginTop: 5,
-    textAlign: 'center',
-    color: styling.colors.VistaWhite
-  },
 });
 
 // Define "UserSettings" component, which will execute everything inside of {...}
@@ -136,32 +92,13 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
 
   // Otherwise component will render everything inside of (...) back to the user.
   return (
-    <ScrollView nestedScrollEnabled={true} style={userSettingsContainer.mainContainer}>
-      <Card>
-        <Card.Content>
-          <Title>Your account information:</Title>
-          <Paragraph>Username: {currentUserData.username}</Paragraph>
-          <Paragraph>Name: {currentUserData.name}</Paragraph>
-          <Paragraph>Email: {currentUserData.email}</Paragraph>
-        </Card.Content>
-      </Card>
-      <View style={buttonContainer.container}>
-        <Pressable style={buttonContainer.buttonContent} onPress={confirmUserDelete}>
-          <Text style={buttonContainer.buttonContentText}>Delete your account.</Text>
-        </Pressable>
-      </View>
-      <View style={userSettingsContainer.titleContainer}>
-        <Title style={userSettingsContainer.titleText}>Your current listed items on the app</Title>
-      </View>
-
-      <FlatList
-        data={getUserListedProducts}
-        keyExtractor={(item, index) => item._id}
-        renderItem={({ item }) => <UserListedProducts item={item} />}
-        ItemSeparatorComponent={() => <View style={userSettingsContainer.productSeperator} />}
-      />
-
-    </ScrollView>
+    <FlatList
+      data={getUserListedProducts}
+      keyExtractor={(item, index) => item._id}
+      renderItem={({ item }) => <UserListedProducts item={item} />}
+      ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+      ListHeaderComponent={<UserSettingsHeader currentUserData={currentUserData} confirmUserDelete={confirmUserDelete} />}
+    />
   );
 };
 
