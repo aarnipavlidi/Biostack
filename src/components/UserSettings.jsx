@@ -2,7 +2,7 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
-import { Alert, ActivityIndicator, FlatList, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Alert, ActivityIndicator, FlatList, ScrollView, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Card, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
 import UserListedProducts from './UserListedProducts';
@@ -19,10 +19,31 @@ import styling from '../styling'; // Import "styling" variable from "styling.js"
 const loadingContainer = StyleSheet.create({
   container: {
     backgroundColor: styling.colors.VistaWhite,
-    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
   }
+});
+
+const userSettingsContainer = StyleSheet.create({
+  mainContainer: {
+    backgroundColor: styling.colors.VistaWhite,
+    flexGrow: 1,
+  },
+  titleContainer: {
+    justifyContent: 'center',
+    marginLeft: 15,
+    marginRight: 15,
+    marginBottom: 10
+  },
+  titleText: {
+    textAlign: 'center',
+    color: styling.colors.Asphalt,
+    borderBottomWidth: 2,
+    borderBottomColor: styling.colors.Asphalt
+  },
+  productSeperator: {
+    height: 10
+  },
 });
 
 // Define "buttonContainer" variable, which will be used to create style
@@ -66,11 +87,37 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
       await deleteUserFromDatabase(currentUserData._id);
       await authStorage.removeAccessToken(); // Remove token value from "authStorage" after account deletion.
       //client.resetStore(); // Clear mutation from "active" and refetch all other active queries again.
-      client.clearStore();
+      // App was getting errors after account deletion and changing "resetStore()" into
+      // "clearStore()" function solved the issue. Need to find out later what caused
+      // the original problem when deleting account and going back to login screen.
+      client.clearStore(); // Does same thing as upper function "client.resetStore()", but won't refetch all other active queries again.
       setCurrentToken(null); // Change "currentToken" variable state into original value => "null".
     } catch (error) {
       console.log(error.message); // Console.log "erro.message" variable data back to the user.
     }
+  };
+
+  // Define "confirmUserDelete" function, which will execute everything inside of
+  // {...}, so if user presses button to delete his/her account => "Alert" component
+  // will be rendered back to the user and user has to confirm that he/she wants to
+  // delete account from database. If user chooses to confirm, then "removeUserToken()"
+  // function will be executed and app will try delete account from the database.
+  const confirmUserDelete = () => {
+    Alert.alert(
+      "Biostack",
+      "Are you sure you want to delete your account from the app?",
+      [
+        {
+          text: "CANCEL",
+          onPress: () => console.log('User has cancelled account deletion process!'),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => removeUserToken(),
+        }
+      ]
+    )
   };
 
   const getUserListedProducts = currentUserData
@@ -89,7 +136,7 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
 
   // Otherwise component will render everything inside of (...) back to the user.
   return (
-    <View>
+    <ScrollView nestedScrollEnabled={true} style={userSettingsContainer.mainContainer}>
       <Card>
         <Card.Content>
           <Title>Your account information:</Title>
@@ -98,19 +145,23 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
           <Paragraph>Email: {currentUserData.email}</Paragraph>
         </Card.Content>
       </Card>
+      <View style={buttonContainer.container}>
+        <Pressable style={buttonContainer.buttonContent} onPress={confirmUserDelete}>
+          <Text style={buttonContainer.buttonContentText}>Delete your account.</Text>
+        </Pressable>
+      </View>
+      <View style={userSettingsContainer.titleContainer}>
+        <Title style={userSettingsContainer.titleText}>Your current listed items on the app</Title>
+      </View>
 
       <FlatList
         data={getUserListedProducts}
         keyExtractor={(item, index) => item._id}
         renderItem={({ item }) => <UserListedProducts item={item} />}
+        ItemSeparatorComponent={() => <View style={userSettingsContainer.productSeperator} />}
       />
 
-      <View style={buttonContainer.container}>
-        <Pressable style={buttonContainer.buttonContent} onPress={removeUserToken}>
-          <Text style={buttonContainer.buttonContentText}>Delete your account.</Text>
-        </Pressable>
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
