@@ -40,9 +40,19 @@ const profileOverviewContainer = StyleSheet.create({
   },
   contentPrimary: {
     alignItems: 'flex-start',
+    justifyContent: 'center',
   },
   contentSecondary: {
     alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  contentButton: {
+    height: 25,
+    borderWidth: 10,
+    borderRadius: 25 / 2,
+    backgroundColor: styling.colors.Asphalt,
+    textAlign: 'center',
+    color: styling.colors.VistaWhite
   },
 });
 
@@ -121,11 +131,11 @@ const UserSettingsHeader = ({ currentUserData, confirmUserDelete }) => {
           <View style={profileOverviewContainer.contentContainer}>
 
             <View style={profileOverviewContainer.contentPrimary}>
-              <Text>Username</Text>
+              <Text style={profileOverviewContainer.contentButton}>Username</Text>
               <Text>{currentUserData.username}</Text>
             </View>
             <View style={profileOverviewContainer.contentSecondary}>
-              <Text>Name</Text>
+              <Text style={profileOverviewContainer.contentButton}>Name</Text>
               <Text>{currentUserData.name}</Text>
             </View>
           </View>
@@ -133,12 +143,12 @@ const UserSettingsHeader = ({ currentUserData, confirmUserDelete }) => {
           <View style={profileOverviewContainer.contentContainer}>
 
             <View style={profileOverviewContainer.contentPrimary}>
-              <Text>Rating</Text>
+              <Text style={profileOverviewContainer.contentButton}>Rating</Text>
               <Text>{currentUserData.rating}</Text>
             </View>
 
             <View style={profileOverviewContainer.contentSecondary}>
-              <Text>Email</Text>
+              <Text style={profileOverviewContainer.contentButton}>Email</Text>
               <Text>{currentUserData.email}</Text>
             </View>
 
