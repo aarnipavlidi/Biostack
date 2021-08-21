@@ -96,7 +96,7 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
       data={getUserListedProducts}
       keyExtractor={(item, index) => item._id}
       renderItem={({ item }) => <UserListedProducts item={item} />}
-      ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+      ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
       ListHeaderComponent={<UserSettingsHeader currentUserData={currentUserData} confirmUserDelete={confirmUserDelete} />}
     />
   );

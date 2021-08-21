@@ -10,6 +10,7 @@ import styling from '../styling'; // Import "styling" variable from "styling.js"
 const listedProductsContainer = StyleSheet.create({
   mainContainer: {
     alignItems: 'center',
+    marginBottom: 10
   },
   cardContainer: {
     elevation: 15,

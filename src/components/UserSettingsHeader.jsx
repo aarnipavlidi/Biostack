@@ -2,7 +2,7 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
-import { View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Image, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Appbar, Card, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
@@ -16,6 +16,34 @@ const settingsHeaderContainer = StyleSheet.create({
   appBarContent: {
     color: styling.colors.VistaWhite
   }
+});
+
+const profileOverviewContainer = StyleSheet.create({
+  mainContainer: {
+    elevation: 15,
+    width: '90%',
+    marginTop: 10,
+    alignSelf: 'center'
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    height: 50,
+  },
+  avatarContainer: {
+    position: 'absolute',
+    right: 0,
+  },
+  contentContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 5
+  },
+  contentPrimary: {
+    alignItems: 'flex-start',
+  },
+  contentSecondary: {
+    alignItems: 'flex-end',
+  },
 });
 
 const userSettingsContainer = StyleSheet.create({
@@ -80,14 +108,45 @@ const UserSettingsHeader = ({ currentUserData, confirmUserDelete }) => {
         <Appbar.Content titleStyle={settingsHeaderContainer.appBarContent} title="Your profile information" />
         <Appbar.Action icon="dots-vertical" onPress={handleMore} />
       </Appbar.Header>
-      <Card>
+
+      <Card style={profileOverviewContainer.mainContainer}>
         <Card.Content>
-          <Title>Your account information:</Title>
-          <Paragraph>Username: {currentUserData.username}</Paragraph>
-          <Paragraph>Name: {currentUserData.name}</Paragraph>
-          <Paragraph>Email: {currentUserData.email}</Paragraph>
+          <View style={profileOverviewContainer.headerContainer}>
+            <Title>Profile Overview</Title>
+            <View style={profileOverviewContainer.avatarContainer}>
+              <Image style={{ width: 50, height: 50, borderRadius: 50 / 2 }} source={{ uri: 'https://picsum.photos/50/50?grayscale'}} />
+            </View>
+          </View>
+
+          <View style={profileOverviewContainer.contentContainer}>
+
+            <View style={profileOverviewContainer.contentPrimary}>
+              <Text>Username</Text>
+              <Text>{currentUserData.username}</Text>
+            </View>
+            <View style={profileOverviewContainer.contentSecondary}>
+              <Text>Name</Text>
+              <Text>{currentUserData.name}</Text>
+            </View>
+          </View>
+
+          <View style={profileOverviewContainer.contentContainer}>
+
+            <View style={profileOverviewContainer.contentPrimary}>
+              <Text>Rating</Text>
+              <Text>{currentUserData.rating}</Text>
+            </View>
+
+            <View style={profileOverviewContainer.contentSecondary}>
+              <Text>Email</Text>
+              <Text>{currentUserData.email}</Text>
+            </View>
+
+          </View>
         </Card.Content>
       </Card>
+
+
       <View style={buttonContainer.container}>
         <Pressable style={buttonContainer.buttonContent} onPress={confirmUserDelete}>
           <Text style={buttonContainer.buttonContentText}>Delete your account.</Text>
