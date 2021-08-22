@@ -13,7 +13,7 @@ const listedProductsContainer = StyleSheet.create({
     marginBottom: 10
   },
   cardContainer: {
-    elevation: 15,
+    elevation: 5,
     width: '90%',
     backgroundColor: styling.colors.VistaWhite
   },

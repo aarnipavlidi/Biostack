@@ -5,6 +5,8 @@ import React from 'react'; // Import "react" library's content for this componen
 import { Image, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Appbar, Card, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
+import { Ionicons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
+
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
 
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
@@ -20,10 +22,11 @@ const settingsHeaderContainer = StyleSheet.create({
 
 const profileOverviewContainer = StyleSheet.create({
   mainContainer: {
-    elevation: 15,
+    elevation: 5,
     width: '90%',
     marginTop: 10,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    backgroundColor: styling.colors.VistaWhite
   },
   headerContainer: {
     flexDirection: 'row',
@@ -96,6 +99,51 @@ const buttonContainer = StyleSheet.create({
   },
 });
 
+const UserRating = ({ currentRating }) => {
+
+  const formatRating = parseInt(currentRating);
+
+  if (formatRating < 1) {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <Ionicons name="heart-outline" size={22} color={styling.colors.Asphalt} />
+        <Ionicons name="heart-outline" size={22} color={styling.colors.Asphalt} />
+        <Ionicons name="heart-outline" size={22} color={styling.colors.Asphalt} />
+      </View>
+    );
+  };
+
+  if (formatRating >= 1 && formatRating < 2) {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <Ionicons name="heart-sharp" size={22} color={styling.colors.Asphalt} />
+        <Ionicons name="heart-outline" size={22} color={styling.colors.Asphalt} />
+        <Ionicons name="heart-outline" size={22} color={styling.colors.Asphalt} />
+      </View>
+    );
+  };
+
+  if (formatRating >= 2 && formatRating < 3) {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <Ionicons name="heart-sharp" size={22} color={styling.colors.Asphalt} />
+        <Ionicons name="heart-sharp" size={22} color={styling.colors.Asphalt} />
+        <Ionicons name="heart-outline" size={22} color={styling.colors.Asphalt} />
+      </View>
+    );
+  };
+
+  if (formatRating >= 3) {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <Ionicons name="heart-sharp" size={22} color={styling.colors.Asphalt} />
+        <Ionicons name="heart-sharp" size={22} color={styling.colors.Asphalt} />
+        <Ionicons name="heart-sharp" size={22} color={styling.colors.Asphalt} />
+      </View>
+    );
+  };
+};
+
 const UserSettingsHeader = ({ currentUserData, confirmUserDelete }) => {
 
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
@@ -144,7 +192,7 @@ const UserSettingsHeader = ({ currentUserData, confirmUserDelete }) => {
 
             <View style={profileOverviewContainer.contentPrimary}>
               <Text style={profileOverviewContainer.contentButton}>Rating</Text>
-              <Text>{currentUserData.rating}</Text>
+              <UserRating currentRating={currentUserData.rating} />
             </View>
 
             <View style={profileOverviewContainer.contentSecondary}>
