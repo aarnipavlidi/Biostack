@@ -71,6 +71,7 @@ const buttonContainer = StyleSheet.create({
 const initialValues = {
   productTitle: '',
   productDescription: '',
+  productSize: '',
   productPrice: '',
 };
 
@@ -87,6 +88,12 @@ const createProductFormValidationSchema = yup.object().shape({
     .string()
     .min(5, 'Description has to be minimum of 5 characters.')
     .required('Description for your item is required.'),
+  productSize: yup
+    .string()
+    .uppercase()
+    .matches(/(XS|S|M|L|XL|XXL)/, { message: 'We support unfortunately following sizes only: XS, S, M, L, XL and XXL.', excludeEmptyString: false })
+    .max(3, 'Size can be only maximum of 3 characters.')
+    .required('Size for your item is required.'),
   productPrice: yup
     .string()
     .min(1, 'Price has to be minimum of 1 character.')
@@ -100,6 +107,7 @@ const NewProductForm = ({ onSubmit }) => {
     <View>
       <FormikTextInput name="productTitle" placeholder="Please enter title for your item." />
       <FormikTextInput name="productDescription" placeholder="Please enter description for your item." />
+      <FormikTextInput name="productSize" placeholder="Please enter size for your item." />
       <FormikTextInput name="productPrice" placeholder="Please enter price for your item." />
       <View style={buttonContainer.container}>
         <Pressable style={buttonContainer.buttonContent} onPress={onSubmit}>
@@ -132,13 +140,13 @@ const NewProduct = ({ currentUserData }) => {
 
   const onSubmit = async (values) => {
 
-    const { productTitle, productDescription, productPrice } = values;
+    const { productTitle, productDescription, productSize, productPrice } = values;
 
     const owner = currentUserData._id;
     const productGroupName = value;
 
     try {
-      const { data } = await submitNewProduct({ productTitle, productDescription, productPrice, productGroupName, owner })
+      const { data } = await submitNewProduct({ productTitle, productDescription, productSize, productPrice, productGroupName, owner })
       history.push("/dashboard"); // Redirect user to "/dashboard" after adding new product successfully.
     } catch (error) { // If there is a problem at "try" section, then "Alert" component will be rendered.
       Alert.alert(

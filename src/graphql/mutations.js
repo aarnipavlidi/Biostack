@@ -27,10 +27,11 @@ export const USER_LOGIN = gql`
 
 // Define "CREATE_NEW_PRODUCT" mutation, so user is able to add new item to the database.
 export const CREATE_NEW_PRODUCT = gql`
-  mutation createNewProduct($productTitle: String!, $productDescription: String!, $productPrice: String!, $productGroupName: String!, $owner: String!) {
+  mutation createNewProduct($productTitle: String!, $productDescription: String!, $productSize: String!, $productPrice: String!, $productGroupName: String!, $owner: String!) {
     createProduct(
       productTitle: $productTitle,
       productDescription: $productDescription,
+      productSize: $productSize,
       productPrice: $productPrice,
       productGroupName: $productGroupName,
       owner: $owner
@@ -38,6 +39,7 @@ export const CREATE_NEW_PRODUCT = gql`
       _id
       productTitle
       productDescription
+      productSize
       productPrice
       productGroupName
     }

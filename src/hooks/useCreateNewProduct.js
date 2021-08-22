@@ -13,12 +13,13 @@ const useCreateNewProduct = () => {
     }]
   });
 
-  const submitNewProduct = async ({ productTitle, productDescription, productPrice, productGroupName, owner }) => {
+  const submitNewProduct = async ({ productTitle, productDescription, productSize, productPrice, productGroupName, owner }) => {
 
     const response = await createNewProduct({
       variables: {
         productTitle: productTitle,
         productDescription: productDescription,
+        productSize: productSize,
         productPrice: productPrice,
         productGroupName: productGroupName,
         owner: owner

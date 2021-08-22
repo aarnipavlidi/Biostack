@@ -17,6 +17,7 @@ export const CURRENT_LOGGED_USER = gql`
         _id
         productTitle
         productDescription
+        productSize
         productPrice
         productGroupName
       }
