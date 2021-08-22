@@ -3,13 +3,14 @@
 
 import { useMutation } from '@apollo/client'; // Import following functions from "@apollo/client" library for this hook usage.
 import { CREATE_NEW_PRODUCT } from '../graphql/mutations'; // Import following mutations from "mutations.js" file for this hook usage.
+import { CURRENT_LOGGED_USER } from '../graphql/queries'; // Import following queries from "queries.js" file for this hook usage.
 
 const useCreateNewProduct = () => {
 
   const [createNewProduct, result] = useMutation(CREATE_NEW_PRODUCT, {
-    onError: (error) => {
-      console.log(error)
-    }
+    refetchQueries: [{
+      query: CURRENT_LOGGED_USER
+    }]
   });
 
   const submitNewProduct = async ({ productTitle, productDescription, productPrice, productGroupName, owner }) => {
