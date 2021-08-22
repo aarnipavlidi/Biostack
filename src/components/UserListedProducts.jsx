@@ -2,9 +2,10 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
-import { Image, View, StyleSheet, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Image, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Badge, Card, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
+import { AntDesign } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 const listedProductsContainer = StyleSheet.create({
@@ -17,7 +18,8 @@ const listedProductsContainer = StyleSheet.create({
   },
   primaryContainer: {
     flexDirection: 'row',
-    height: 'auto',
+    justifyContent: 'space-between',
+    marginBottom: 5,
   },
   secondaryContainer: {
     flexDirection: 'row',
@@ -35,7 +37,7 @@ const listedProductsContainer = StyleSheet.create({
   },
   contentContainer: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: 5,
     justifyContent: 'space-evenly',
   },
   productGroupNameContainer: {
@@ -91,10 +93,14 @@ const UserListedProducts = ({ item }) => {
     <View>
       <Card style={listedProductsContainer.cardContainer}>
         <Card.Content>
+
           <View style={listedProductsContainer.primaryContainer}>
             <View>
               <Title>{item.productTitle}</Title>
             </View>
+            <Pressable onPress={() => console.log("testi")}>
+              <AntDesign style={{ alignSelf: 'center' }} name="delete" size={20} color={styling.colors.Asphalt} />
+            </Pressable>
           </View>
 
           <View style={listedProductsContainer.secondaryContainer}>
@@ -106,15 +112,15 @@ const UserListedProducts = ({ item }) => {
 
           <View style={listedProductsContainer.contentContainer}>
             <View>
-              <Text style={listedProductsContainer.productGroupNameTitle}>Item type</Text>
+              <Text style={listedProductsContainer.productGroupNameTitle}>Item Type</Text>
               <ItemType currentItemType={item.productGroupName} />
             </View>
             <View>
-              <Text style={listedProductsContainer.productSizeTitle}>Item size</Text>
+              <Text style={listedProductsContainer.productSizeTitle}>Item Size</Text>
               <Badge style={listedProductsContainer.productSizeContainer} size={24}>{item.productSize}</Badge>
             </View>
             <View>
-              <Text style={listedProductsContainer.productPriceTitle}>Item price (€)</Text>
+              <Text style={listedProductsContainer.productPriceTitle}>Item Price (€)</Text>
               <Badge style={listedProductsContainer.productPriceContainer} size={24}>{item.productPrice}</Badge>
             </View>
           </View>
