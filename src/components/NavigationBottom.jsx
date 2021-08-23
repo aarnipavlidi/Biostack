@@ -24,7 +24,7 @@ const navigationContainer = StyleSheet.create({
     bottom: 0,
   },
   pressableContainer: {
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   iconContainer: {
     textAlign: 'center'

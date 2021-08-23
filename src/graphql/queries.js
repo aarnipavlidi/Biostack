@@ -24,3 +24,20 @@ export const CURRENT_LOGGED_USER = gql`
     }
   }
 `
+
+export const SHOW_ALL_PRODUCTS = gql`
+  query {
+    showAllProducts {
+      _id
+      productTitle
+      productDescription
+      productSize
+      productPrice
+      productGroupName
+      owner {
+        name
+        rating
+      }
+    }
+  }
+`
