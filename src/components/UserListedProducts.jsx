@@ -2,8 +2,10 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
-import { Image, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Alert, Image, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Badge, Card, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+
+import useDeleteProduct from '../hooks/useDeleteProduct'; // Import "useDeleteProduct" hook from "useDeleteProduct.js" file for this component usage.
 
 import { AntDesign } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
@@ -89,6 +91,34 @@ const ItemType = ({ currentItemType }) => {
 
 const UserListedProducts = ({ item }) => {
 
+  const [deleteProductFromDatabase] = useDeleteProduct(); // Define "deleteProductFromDatabase" variable from => "useDeleteProduct(...)" hook.
+
+  const removeUserProduct = async () => {
+    try {
+      await deleteProductFromDatabase(item._id);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const confirmProductDelete = () => {
+    Alert.alert(
+      "Biostack",
+      "Are you sure you want to delete this item from the app?",
+      [
+        {
+          text: "CANCEL",
+          onPress: () => console.log('User has cancelled account deletion process!'),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => removeUserProduct(),
+        }
+      ]
+    )
+  };
+
   return (
     <View>
       <Card style={listedProductsContainer.cardContainer}>
@@ -98,7 +128,7 @@ const UserListedProducts = ({ item }) => {
             <View>
               <Title>{item.productTitle}</Title>
             </View>
-            <Pressable onPress={() => console.log("testi")}>
+            <Pressable onPress={confirmProductDelete}>
               <AntDesign style={{ alignSelf: 'center' }} name="delete" size={20} color={styling.colors.Asphalt} />
             </Pressable>
           </View>

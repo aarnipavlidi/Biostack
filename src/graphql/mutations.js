@@ -46,6 +46,16 @@ export const CREATE_NEW_PRODUCT = gql`
   }
 `
 
+// Define "DELETE_CURRENT_PRODUCT" mutation, so user is able to delete his listed items
+// from the database, so they won't be visible to other users after deletion.
+export const DELETE_CURRENT_PRODUCT = gql`
+  mutation deleteCurrentProduct($getCurrentID: String!) {
+    deleteProduct(currentProductID: $getCurrentID) {
+      response
+    }
+  }
+`
+
 // Define "DELETE_CURRENT_USER" mutation, so user is able delete his/her account for the database.
 export const DELETE_CURRENT_USER = gql`
   mutation deleteCurrentUser($getCurrentID: String!) {

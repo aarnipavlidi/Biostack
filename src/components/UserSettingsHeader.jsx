@@ -14,6 +14,7 @@ import styling from '../styling'; // Import "styling" variable from "styling.js"
 const settingsHeaderContainer = StyleSheet.create({
   appBarContainer: {
     backgroundColor: styling.colors.Asphalt,
+    height: 50,
   },
   appBarContent: {
     color: styling.colors.VistaWhite

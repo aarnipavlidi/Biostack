@@ -65,7 +65,7 @@ const ItemSizeCheck = ({ currentItemSize }) => {
 
 const productContainer = StyleSheet.create({
   cardContainer: {
-    flex: 1,
+    flex: 1/2,
     marginLeft: 5,
     marginRight: 5,
     elevation: 3
