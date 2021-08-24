@@ -13,7 +13,7 @@ import FormikTextInput from './FormikTextInput'; // Import "FormikTextInput" com
 import { Formik } from 'formik'; // Import "Formik" component from "formik" libary's content for this component usage.
 import * as yup from 'yup'; // Import everything as "yup" from "yup" libary's content for this component usage.
 
-import useLogin from '../hooks/useLogin';
+import useLogin from '../hooks/useLogin'; // Import "useLogin" hook from "useLogin.js" file for this component usage.
 
 const container = StyleSheet.create({
   container: {
@@ -92,12 +92,20 @@ const loginFormValidationSchema = yup.object().shape({
     .required('Password is required.')
 });
 
+// Define "LoginForm" component, which will execute everything inside of {...}. Component
+// will render "username" and "password" input fields, so user has possibility to log in
+// to the app. If user does not have currently registered account, then user can create
+// one with via "Sign Up" button, which then user will be pushed to the "/register" path
+// and app will render "RegistrationScreen" component back to the user.
 const LoginForm = ({ history, onSubmit }) => {
 
+  // Define "goRegistration" variable, which will push the user to the
+  // "/register" path everytime function is being referenced.
   const goRegistration = () => {
     history.push("/register")
   };
 
+  // Component will render everything inside of (...) back to the user.
   return (
     <View>
       <FormikTextInput name="username" placeholder="Please enter your username." />
@@ -114,17 +122,35 @@ const LoginForm = ({ history, onSubmit }) => {
   );
 };
 
+// Define "LoginScreen" component, which will execute everything inside of {...}. Component
+// handles the all the logic behind, so the user is able to login to the app with given
+// credentials information. Component is using "useLogin" hook, so we are able to use
+// "userLogin" function, which will execute the mutation. If user credentials are right,
+// then user will be redirected back to the homepage => "/dashboard", which lets user
+// then use the whole app. We are also storing logged user's token value into "authStorage",
+// which then we able to change "currentToken" variable state by using "setCurrentToken(...)"
+// function. Purpose of this is that, app will render specific component based on that if
+// user is logged or not to the app.
 const LoginScreen = ({ setCurrentToken }) => {
 
   const [userLogin] = useLogin(); // Define "userLogin" variable from => "useLogin(...)" hook.
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
-  const authStorage = useAuthStorage();
+  const authStorage = useAuthStorage(); // Define "authStorage" variable, which is equal to "useAuthStorage(...)" function.
 
+  // Define "onSubmit" variable, which will execute everything inside of {...} every time
+  // it's being referenced. So whenever user is trying to login to the app, this function
+  // will be executed and we are checking if user's given input field values match with
+  // backend data via "userLogin" function (mutation). If there is a matching data on the
+  // backend, then user will be redirected to the homepage. If there is no matching data,
+  // then user will be alerted the reason behind it via "Alert" component.
   const onSubmit = async (values, { resetForm }) => {
 
-    const { username, password } = values;
+    const { username, password } = values; // Define "username" and "password" variables to be equal => "values".
 
+    // Function "onSubmit" will try execute first "try" section, if there is
+    // going to be problem during this, then we will go into "catch" section
+    // and execute everything inside of {...}.
     try {
       const { data } = await userLogin({ username, password });
       const response = await authStorage.getAccessToken();
@@ -146,6 +172,7 @@ const LoginScreen = ({ setCurrentToken }) => {
     };
   };
 
+  // Component will render everything inside of (...) back to the user.
   return (
     <View style={container.container}>
       <View style={titleContainer.container}>
@@ -159,4 +186,5 @@ const LoginScreen = ({ setCurrentToken }) => {
   );
 };
 
+// Export "LoginScreen" component, so other components like "App.js" are able to use this hooks's content.
 export default LoginScreen;
