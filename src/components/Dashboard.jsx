@@ -5,6 +5,7 @@ import React from 'react'; // Import "react" library's content for this componen
 import { ActivityIndicator, FlatList, Text, StyleSheet, View } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
 import ProductRenderAll from './ProductRenderAll'; // Import "ProductRenderAll" component from "ProductRenderAll.jsx" file this component usage.
+import DashboardHeader from './DashboardHeader'; // Import "DashboardHeader" component from "DashboardHeader.jsx" file this component usage.
 
 import useProducts from '../hooks/useProducts'; // Import "useProducts" hook from "useProducts.js" file for this component usage.
 
@@ -52,6 +53,8 @@ const Dashboard = () => {
       ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
       numColumns={2}
       columnWrapperStyle={{ flex: 1, justifyContent: 'space-between' }}
+      ListHeaderComponent={<DashboardHeader />}
+      ListHeaderComponentStyle={{ marginBottom: 7 }}
     />
   );
 };
