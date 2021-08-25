@@ -27,6 +27,8 @@ const newItemContainer = StyleSheet.create({
   }
 });
 
+// Define "dropdownContainer" variable, which will be used for styling
+// "dropdown" element, which has diffent "item types" to choose from.
 const dropdownContainer = StyleSheet.create({
   container: {
     marginTop: 15,
@@ -118,10 +120,17 @@ const NewProductForm = ({ onSubmit }) => {
   );
 };
 
+// Define "NewProduct" component, which will execute everything inside of {...}, component handles
+// all the logic when user wants to add new item to the app. User types required input fields with
+// given values and those values we can get from "values" variable, so we are able to make mutation
+// via function called => "submitNewProduct(...)" with given parameter values.
 const NewProduct = ({ currentUserData }) => {
 
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const [open, setOpen] = useState(false); // Define variable "open" into state, which gets value "false" as default.
+  const [value, setValue] = useState(null); // Define variable "value" into state, which gets value "null" as default.
+  // Define variable "items" into state, which gets inside of array different set
+  // of values. These values are being used on a dropdown, where user can choose
+  // which "type" matches the best of the item user wants to sell on the app.
   const [items, setItems] = useState([
     {label: 'T-shirt', value: 't-shirt', icon: () => <Image source={require('../../assets/icons/clothes/t-24x24-455076.png')} />},
     {label: 'Sweater', value: 'sweater', icon: () => <Image source={require('../../assets/icons/clothes/sweater-24x24-455072.png')} />}
@@ -138,12 +147,17 @@ const NewProduct = ({ currentUserData }) => {
     history.goBack();
   };
 
+  // Define variable "onSubmit", which will execute everything inside of {...},
+  // when function is being referenced. When user is trying to add new product
+  // to the app, function will try execute mutation via "submitNewProduct(...)"
+  // function and if adding new item failed (error) then we will let the user
+  // know about it via "Alert" component and render "error" variable message.
   const onSubmit = async (values) => {
 
-    const { productTitle, productDescription, productSize, productPrice } = values;
+    const { productTitle, productDescription, productSize, productPrice } = values; // Define variables inside of {...}, which are equal to "values" variable.
 
-    const owner = currentUserData._id;
-    const productGroupName = value;
+    const owner = currentUserData._id; // Define variable "owner", which is equal to "currentUserData._id" variable.
+    const productGroupName = value; // Define variable "productGroupName", which is equal to "value" variable.
 
     try {
       const { data } = await submitNewProduct({ productTitle, productDescription, productSize, productPrice, productGroupName, owner })

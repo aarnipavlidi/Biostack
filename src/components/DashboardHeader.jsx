@@ -17,10 +17,12 @@ const dashboardHeaderContainer = StyleSheet.create({
   },
 });
 
+// Define "DashboardHeader" component, which will execute everything inside of {...}.
 const DashboardHeader = () => {
 
   const handleSearch = () => console.log("Searching");
 
+  // Component will render everything inside of (...) back to the user.
   return (
     <Appbar.Header style={dashboardHeaderContainer.appBarContainer} statusBarHeight={0}>
       <Appbar.Content style={dashboardHeaderContainer.appBarContent} title="Biostack" />
