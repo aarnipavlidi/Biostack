@@ -8,6 +8,7 @@ import { SafeAreaView, StatusBar, Platform, StyleSheet, View } from 'react-nativ
 import LoginScreen from './LoginScreen'; // Import "LoginScreen" component from "LoginScreen.jsx" file for this component usage.
 import RegistrationScreen from './RegistrationScreen'; // Import "RegistrationScreen" component from "RegistrationScreen.jsx" file for this component usage.
 import Dashboard from './Dashboard'; // Import "Dashboard" component from "Dashboard.jsx" file for this component usage.
+import CurrentProduct from './CurrentProduct'; // Import "CurrentProduct" component from "CurrentProduct.jsx" file for this component usage.
 import NewProduct from './NewProduct'; // Import "NewProduct" component from "NewProduct.jsx" file for this component usage.
 import UserSettings from './UserSettings'; // Import "UserSettings" component from "UserSettings.jsx" file for this component usage.
 import NavigationBottom from './NavigationBottom'; // Import "NavigationBottom" component from "NavigationBottom.jsx" file for this component usage.
@@ -51,6 +52,9 @@ const Main = () => {
           </Route>
           <Route exact path="/dashboard/profile">
             {currentToken ? <UserSettings setCurrentToken={setCurrentToken} currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
+          </Route>
+          <Route exact path="/dashboard/:id">
+            {currentToken ? <CurrentProduct /> : <Redirect to="/" />}
           </Route>
           <Route exact path='/register'>
             <RegistrationScreen />
