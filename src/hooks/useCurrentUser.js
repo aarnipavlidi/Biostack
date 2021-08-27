@@ -27,7 +27,6 @@ const useCurrentUser = () => {
   useEffect(() => {
     if (data) {
       setCurrentUserData(data.me)
-      console.log(data.me)
     }
   }, [data]);
 

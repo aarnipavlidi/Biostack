@@ -44,3 +44,23 @@ export const SHOW_ALL_PRODUCTS = gql`
     }
   }
 `
+
+export const SHOW_CURRENT_PRODUCT = gql`
+  query showCurrentProduct($getProductID: String) {
+    showCurrentProduct(productID: $getProductID) {
+      _id
+      productTitle
+      productDescription
+      productPrice
+      productSize
+      productGroupName
+      owner {
+        _id
+        name
+        username
+        email
+        rating
+      }
+    }
+  }
+`

@@ -5,7 +5,7 @@ import React from 'react'; // Import "react" library's content for this componen
 import { Image, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Appbar, Card, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
-import { Ionicons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
+import UserRating from './UserRating'; // Import "UserRating" component from "UserRating.jsx" file for this component usage.
 
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
 
@@ -99,51 +99,6 @@ const buttonContainer = StyleSheet.create({
     color: styling.colors.VistaWhite
   },
 });
-
-const UserRating = ({ currentRating }) => {
-
-  const formatRating = parseInt(currentRating);
-
-  if (formatRating < 1) {
-    return (
-      <View style={{ flexDirection: 'row' }}>
-        <Ionicons name="heart-outline" size={22} color={styling.colors.Asphalt} />
-        <Ionicons name="heart-outline" size={22} color={styling.colors.Asphalt} />
-        <Ionicons name="heart-outline" size={22} color={styling.colors.Asphalt} />
-      </View>
-    );
-  };
-
-  if (formatRating >= 1 && formatRating < 2) {
-    return (
-      <View style={{ flexDirection: 'row' }}>
-        <Ionicons name="heart-sharp" size={22} color={styling.colors.Asphalt} />
-        <Ionicons name="heart-outline" size={22} color={styling.colors.Asphalt} />
-        <Ionicons name="heart-outline" size={22} color={styling.colors.Asphalt} />
-      </View>
-    );
-  };
-
-  if (formatRating >= 2 && formatRating < 3) {
-    return (
-      <View style={{ flexDirection: 'row' }}>
-        <Ionicons name="heart-sharp" size={22} color={styling.colors.Asphalt} />
-        <Ionicons name="heart-sharp" size={22} color={styling.colors.Asphalt} />
-        <Ionicons name="heart-outline" size={22} color={styling.colors.Asphalt} />
-      </View>
-    );
-  };
-
-  if (formatRating >= 3) {
-    return (
-      <View style={{ flexDirection: 'row' }}>
-        <Ionicons name="heart-sharp" size={22} color={styling.colors.Asphalt} />
-        <Ionicons name="heart-sharp" size={22} color={styling.colors.Asphalt} />
-        <Ionicons name="heart-sharp" size={22} color={styling.colors.Asphalt} />
-      </View>
-    );
-  };
-};
 
 const UserSettingsHeader = ({ currentUserData, confirmUserDelete }) => {
 
