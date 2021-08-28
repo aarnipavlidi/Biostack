@@ -3,8 +3,9 @@
 
 import React from 'react'; // Import "react" library's content for this component usage.
 import { useHistory } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
-import { ActivityIndicator, Image, StyleSheet, ScrollView, View, Text, FlatList } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Appbar, Card, Divider, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { ActivityIndicator, Image, StyleSheet, Pressable, ScrollView, View, Text, FlatList } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Appbar, Card, Divider, Title, Paragraph, List } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { FontAwesome5, Ionicons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import UserRating from '../UserRating'; // Import "UserRating" component from "UserRating.jsx" file for this component usage.
 import ItemTypeCheck from '../ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
@@ -55,44 +56,29 @@ const productContainer = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 5,
   },
-});
-
-const profileOverviewContainer = StyleSheet.create({
-  mainContainer: {
-    elevation: 5,
-    width: '90%',
-    marginTop: 10,
-    alignSelf: 'center',
-    backgroundColor: styling.colors.VistaWhite
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    height: 50,
-  },
-  avatarContainer: {
-    position: 'absolute',
-    right: 0,
-  },
-  contentContainer: {
+  productButtonContainer: {
+    flexGrow: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 5
+    marginTop: 10,
+    marginBottom: 10,
   },
-  contentPrimary: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  contentSecondary: {
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-  contentButton: {
-    height: 25,
-    borderWidth: 10,
-    borderRadius: 25 / 2,
+  productButton: {
     backgroundColor: styling.colors.Asphalt,
-    textAlign: 'center',
-    color: styling.colors.VistaWhite
+    flex: 1/3,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 45,
+    borderRadius: 45 / 2,
+    paddingRight: 7,
+    elevation: 5,
+  },
+  productButtonText: {
+    color: styling.colors.VistaWhite,
+    fontSize: 18,
+    marginLeft: 7,
+    marginRight: 7,
   },
 });
 
@@ -152,14 +138,19 @@ const CurrentProduct = () => {
               </View>
             </View>
           </View>
-
-
-
-
         </Card.Content>
       </Card>
 
-
+      <View style={productContainer.productButtonContainer}>
+        <Pressable style={productContainer.productButton} onPress={() => console.log('Checkout has been pressed.')}>
+          <Text style={productContainer.productButtonText}>Checkout</Text>
+          <FontAwesome5 name="hand-holding-heart" size={18} color={styling.colors.VistaWhite} />
+        </Pressable>
+        <Pressable style={productContainer.productButton} onPress={() => console.log('Bookmark has been pressed.')}>
+          <Text style={productContainer.productButtonText}>Bookmark</Text>
+          <Ionicons name="bookmarks" size={18} color={styling.colors.VistaWhite} />
+        </Pressable>
+      </View>
     </ScrollView>
   );
 };
