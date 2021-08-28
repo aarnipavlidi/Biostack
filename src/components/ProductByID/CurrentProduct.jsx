@@ -3,13 +3,15 @@
 
 import React from 'react'; // Import "react" library's content for this component usage.
 import { useHistory } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
-import { ActivityIndicator, Image, StyleSheet, View, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Appbar, Card, Title } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { ActivityIndicator, Image, StyleSheet, ScrollView, View, Text, FlatList } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Appbar, Card, Divider, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
-import UserRating from './UserRating'; // Import "UserRating" component from "UserRating.jsx" file for this component usage.
-import useCurrentProduct from '../hooks/useCurrentProduct'; // Import "useCurrentProduct" hook from "useCurrentProduct.js" file for this component usage.
+import UserRating from '../UserRating'; // Import "UserRating" component from "UserRating.jsx" file for this component usage.
+import ItemTypeCheck from '../ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
+import ItemSizeCheck from '../ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
+import useCurrentProduct from '../../hooks/useCurrentProduct'; // Import "useCurrentProduct" hook from "useCurrentProduct.js" file for this component usage.
 
-import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
+import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 // Define "loadingContainer" variable, which will be used to create style
 // if data is "loading" we will return => "loading spinner".
@@ -30,13 +32,28 @@ const headerContainer = StyleSheet.create({
   },
 });
 
-const imageContainer = StyleSheet.create({
+const productContainer = StyleSheet.create({
   container: {
     alignItems: 'center',
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
-    elevation: 3
+    elevation: 3,
+  },
+  productTitle: {
+    backgroundColor: styling.colors.Asphalt,
+    borderWidth: 1,
+    borderColor: styling.colors.Asphalt,
+    color: styling.colors.VistaWhite,
+    fontSize: styling.fontSizes.subheading,
+    textAlign: 'center',
+    height: 'auto',
+    width: 55,
+    elevation: 5,
+  },
+  productContent: {
+    alignSelf: 'center',
+    marginTop: 5,
   },
 });
 
@@ -103,54 +120,48 @@ const CurrentProduct = () => {
     );
   };
 
+  // Otherwise component will render everything inside of (...) back to the user.
   return (
-    <View>
+    <ScrollView>
       <Appbar.Header style={headerContainer.appBarContainer} statusBarHeight={0}>
         <Appbar.BackAction onPress={goBackPreviousRoute} />
         <Appbar.Content style={headerContainer.appBarContent} title={getCurrentProduct.productTitle} />
       </Appbar.Header>
-      <Card style={imageContainer.container}>
-        <Card.Cover style={{ width: 360, height: 362 }} source={require('../../assets/images/clothes/Vanilla_Front_900x.jpg')} />
-      </Card>
-      <Card style={profileOverviewContainer.mainContainer}>
+      <Card style={productContainer.container}>
+        <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5 }} source={require('../../../assets/images/clothes/Vanilla_Front_900x.jpg')} />
         <Card.Content>
-          <View style={profileOverviewContainer.headerContainer}>
-            <Title>Profile Overview</Title>
-            <View style={profileOverviewContainer.avatarContainer}>
-              <Image style={{ width: 50, height: 50, borderRadius: 50 / 2 }} source={{ uri: 'https://picsum.photos/50/50?grayscale'}} />
+          <Paragraph>{getCurrentProduct.productDescription}</Paragraph>
+          <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+          <View style={{ flexDirection: 'row', justifyContent: 'space-evenly'}}>
+            <View>
+              <Text style={productContainer.productTitle}>Type</Text>
+              <View style={productContainer.productContent}>
+                <ItemTypeCheck currentItemType={getCurrentProduct.productGroupName} />
+              </View>
+            </View>
+            <View>
+              <Text style={productContainer.productTitle}>Size</Text>
+              <View style={productContainer.productContent}>
+                <ItemSizeCheck currentItemSize={getCurrentProduct.productSize} />
+              </View>
+            </View>
+            <View>
+              <Text style={productContainer.productTitle}>Price</Text>
+              <View style={productContainer.productContent}>
+                <Text style={{ fontSize: 16}}>{getCurrentProduct.productPrice} €</Text>
+              </View>
             </View>
           </View>
 
-          <View style={profileOverviewContainer.contentContainer}>
 
-            <View style={profileOverviewContainer.contentPrimary}>
-              <Text style={profileOverviewContainer.contentButton}>Username</Text>
-              <Text>{getCurrentProduct.owner.username}</Text>
-            </View>
-            <View style={profileOverviewContainer.contentSecondary}>
-              <Text style={profileOverviewContainer.contentButton}>Name</Text>
-              <Text>{getCurrentProduct.owner.name}</Text>
-            </View>
-          </View>
 
-          <View style={profileOverviewContainer.contentContainer}>
 
-            <View style={profileOverviewContainer.contentPrimary}>
-              <Text style={profileOverviewContainer.contentButton}>Rating</Text>
-              <UserRating currentRating={getCurrentProduct.owner.rating} />
-            </View>
-
-            <View style={profileOverviewContainer.contentSecondary}>
-              <Text style={profileOverviewContainer.contentButton}>Email</Text>
-              <Text>{getCurrentProduct.owner.email}</Text>
-            </View>
-
-          </View>
         </Card.Content>
       </Card>
-    </View>
-  );
 
+
+    </ScrollView>
+  );
 };
 
 // Export "CurrentProduct" component, so other components like "App.js" are able to use this hooks's content.

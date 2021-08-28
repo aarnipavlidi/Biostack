@@ -16,7 +16,7 @@ const useCurrentProduct = () => {
       getProductID: id
     },
   });
-  
+
   // Return variables inside of {...} to be used with this hook.
   return {
     getCurrentProduct: data?.showCurrentProduct,
