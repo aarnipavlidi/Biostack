@@ -4,7 +4,7 @@
 import React from 'react'; // Import "react" library's content for this component usage.
 import { useHistory } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
 import { ActivityIndicator, Image, StyleSheet, Pressable, ScrollView, View, Text, FlatList } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Appbar, Card, Divider, Title, Paragraph, List } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { Appbar, Caption, Card, Divider, Title, Paragraph, List } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { FontAwesome5, Ionicons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import UserRating from '../UserRating'; // Import "UserRating" component from "UserRating.jsx" file for this component usage.
@@ -60,8 +60,8 @@ const productContainer = StyleSheet.create({
     flexGrow: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 15,
+    marginBottom: 15,
   },
   productButton: {
     backgroundColor: styling.colors.Asphalt,
@@ -79,6 +79,31 @@ const productContainer = StyleSheet.create({
     fontSize: 18,
     marginLeft: 7,
     marginRight: 7,
+  },
+});
+
+const sellerContainer = StyleSheet.create({
+  container: {
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    elevation: 3,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  headerTitle: {
+    alignSelf: 'center',
+    borderBottomWidth: 2,
+    borderBottomColor: styling.colors.Asphalt
+  },
+  sellerContent: {
+    marginTop: 5,
+    marginLeft: 5,
+    marginRight: 5,
+    alignItems: 'center',
+    justifyContent: 'space-around'
   },
 });
 
@@ -138,6 +163,42 @@ const CurrentProduct = () => {
               </View>
             </View>
           </View>
+        </Card.Content>
+      </Card>
+
+      <Card style={sellerContainer.container}>
+        <Card.Content>
+
+          <View style={sellerContainer.header}>
+
+            <View>
+
+              <View style={sellerContainer.headerTitle}>
+                <Title style={{ color: styling.colors.Asphalt }}>Seller information</Title>
+              </View>
+
+              <View style={{ flexDirection: 'row' }}>
+
+                <View style={sellerContainer.sellerContent}>
+                  <Text style={{ fontSize: 17.5 }}>{getCurrentProduct.owner.name}</Text>
+                  <Caption>Product owner</Caption>
+                </View>
+
+                <View style={sellerContainer.sellerContent}>
+                  <UserRating currentRating={getCurrentProduct.owner.rating} />
+                  <Caption>Current rating</Caption>
+                </View>
+
+              </View>
+
+            </View>
+
+            <View>
+              <Image style={{ width: 75, height: 75, borderRadius: 75 / 2 }} source={{ uri: 'https://picsum.photos/75/75?grayscale'}} />
+            </View>
+
+          </View>
+
         </Card.Content>
       </Card>
 
