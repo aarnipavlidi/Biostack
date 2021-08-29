@@ -10,7 +10,8 @@ import RegistrationScreen from './RegistrationScreen'; // Import "RegistrationSc
 import Dashboard from './Dashboard'; // Import "Dashboard" component from "Dashboard.jsx" file for this component usage.
 import CurrentProduct from './ProductByID/CurrentProduct'; // Import "CurrentProduct" component from "CurrentProduct.jsx" file for this component usage.
 import NewProduct from './NewProduct'; // Import "NewProduct" component from "NewProduct.jsx" file for this component usage.
-import UserSettings from './UserSettings'; // Import "UserSettings" component from "UserSettings.jsx" file for this component usage.
+import UserSettings from './Profile/UserSettings'; // Import "UserSettings" component from "UserSettings.jsx" file for this component usage.
+import UserClothes from './Profile/UserClothes'; // Import "UserClothes" component from "UserClothes.jsx" file for this component usage.
 import NavigationBottom from './NavigationBottom'; // Import "NavigationBottom" component from "NavigationBottom.jsx" file for this component usage.
 
 import useCurrentUser from '../hooks/useCurrentUser'; // Import "useCurrentUser" hook from "useCurrentUser.js" file for this component usage.
@@ -49,6 +50,9 @@ const Main = () => {
           </Route>
           <Route exact path="/dashboard/new-item">
             {currentToken ? <NewProduct currentUserData={currentUserData} /> : <Redirect to="/" />}
+          </Route>
+          <Route exact path="/dashboard/profile/clothes">
+            {currentToken ? <UserClothes currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/profile">
             {currentToken ? <UserSettings setCurrentToken={setCurrentToken} currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
