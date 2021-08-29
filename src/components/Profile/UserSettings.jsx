@@ -3,7 +3,7 @@
 
 import React from 'react'; // Import "react" library's content for this component usage.
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
-import { Alert, ActivityIndicator, Image, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Alert, ActivityIndicator, Image, ScrollView, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Avatar, Appbar, Card, IconButton, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
 import UserRating from '../UserRating'; // Import "UserRating" component from "UserRating.jsx" file for this component usage.
@@ -88,11 +88,12 @@ const cardTitleContainer = StyleSheet.create({
 // for buttons, if for example user wants to delete his account from db.
 const buttonContainer = StyleSheet.create({
   container: {
+    marginTop: 15,
+    marginBottom: 15,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonContent: {
-    marginTop: 15,
     width: '75%',
     height: 40,
     backgroundColor: styling.colors.Asphalt,
@@ -174,7 +175,7 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
 
   // Component will render everything inside of (...) back to the user.
   return (
-    <View>
+    <ScrollView>
       <Appbar.Header statusBarHeight={0} style={settingsHeaderContainer.appBarContainer}>
         <Appbar.Content titleStyle={settingsHeaderContainer.appBarContent} title="Your profile information" />
         <Appbar.Action icon="dots-vertical" onPress={handleMore} />
@@ -213,8 +214,29 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
       <Card.Title
         style={cardTitleContainer.container}
         title="Clothes"
-        subtitle="Your current clothes on the app."
+        subtitle="Your listed clothes on the app."
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="hanger" />}
+        right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/clothes') } />}
+      />
+      <Card.Title
+        style={cardTitleContainer.container}
+        title="Bookmarks"
+        subtitle="Bookmarked clothes on the app."
+        left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="bookmark-multiple-outline" />}
+        right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/clothes') } />}
+      />
+      <Card.Title
+        style={cardTitleContainer.container}
+        title="Purchases"
+        subtitle="Purchased clothes on the app."
+        left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="basket-outline" />}
+        right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/clothes') } />}
+      />
+      <Card.Title
+        style={cardTitleContainer.container}
+        title="Edit Account"
+        subtitle="Edit your account information."
+        left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="account-edit-outline" />}
         right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/clothes') } />}
       />
 
@@ -223,8 +245,7 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
           <Text style={buttonContainer.buttonContentText}>Delete your account.</Text>
         </Pressable>
       </View>
-
-    </View>
+    </ScrollView>
   );
 };
 

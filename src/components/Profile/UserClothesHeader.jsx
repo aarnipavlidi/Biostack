@@ -37,7 +37,7 @@ const UserClothesHeader = () => {
     <View>
       <Appbar.Header statusBarHeight={0} style={clothesHeaderContainer.appBarContainer}>
         <Appbar.BackAction onPress={goBackPreviousRoute} />
-        <Appbar.Content titleStyle={clothesHeaderContainer.appBarContent} title="Your listed clothes" />
+        <Appbar.Content titleStyle={clothesHeaderContainer.appBarContent} title="Clothes" />
         <Appbar.Action icon="dots-vertical" onPress={handleMore} />
       </Appbar.Header>
     </View>
