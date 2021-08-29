@@ -58,7 +58,7 @@ const Main = () => {
             {currentToken ? <UserSettings setCurrentToken={setCurrentToken} currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/:id">
-            {currentToken ? <CurrentProduct /> : <Redirect to="/" />}
+            {currentToken ? <CurrentProduct currentUserData={currentUserData} loadingUserData={loading} /> : <Redirect to="/" />}
           </Route>
           <Route exact path='/register'>
             <RegistrationScreen />
