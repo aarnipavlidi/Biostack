@@ -205,7 +205,7 @@ const CurrentProduct = ({ currentUserData, loadingUserData }) => {
             <Ionicons name="bookmarks" size={18} color={styling.colors.VistaWhite} />
           </Pressable>
         </View>
-        <Checkout currentUserData={currentUserData} visible={visible} hideModal={hideModal} />
+        <Checkout getCurrentProduct={getCurrentProduct} currentUserData={currentUserData} visible={visible} hideModal={hideModal} />
       </Provider>
     </ScrollView>
   );
