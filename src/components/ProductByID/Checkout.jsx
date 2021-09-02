@@ -3,9 +3,9 @@
 
 import React, { useState } from 'react'; // Import "react" library's content for this component usage.
 import { ImageBackground, View, Text, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Modal, Portal, Title, Caption, Divider, RadioButton } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { Modal, Portal, Title, Caption, Divider, RadioButton, Button } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
-import { Fontisto, Feather, MaterialIcons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
+import { Fontisto, Feather, MaterialIcons, Entypo } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 import ItemSizeCheck from '../ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
 import ItemTypeCheck from '../ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
 
@@ -92,11 +92,12 @@ const modal = StyleSheet.create({
 
 const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) => {
 
-  const [chosenDelivery, setChosenDelivery] = useState('Pickup');
-  console.log(chosenDelivery);
-  const [chosenPayment, setChosenPayment] = useState('MobilePay');
-  console.log(chosenPayment);
+  const [chosenDelivery, setChosenDelivery] = useState({ name: null, price: '0' });
+  console.log(chosenDelivery)
+  const [chosenPayment, setChosenPayment] = useState({ name: null, price: '0' });
+  console.log(chosenPayment)
 
+  const orderTotalPrice = Number(getCurrentProduct.productPrice) + Number(chosenPayment.price) + Number(chosenDelivery.price);
 
   return (
     <Portal>
@@ -156,8 +157,8 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
               <RadioButton
                 value="Pickup"
                 color={styling.colors.Asphalt}
-                status={ chosenDelivery === 'Pickup' ? 'checked' : 'unchecked' }
-                onPress={() => setChosenDelivery('Pickup')}
+                status={ chosenDelivery.name === 'Pickup' ? 'checked' : 'unchecked' }
+                onPress={() => setChosenDelivery({ name: 'Pickup', price: '0' })}
               />
             </View>
           </View>
@@ -171,15 +172,13 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
               <RadioButton
                 value="Delivery"
                 color={styling.colors.Asphalt}
-                status={ chosenDelivery === 'Delivery' ? 'checked' : 'unchecked' }
-                onPress={() => setChosenDelivery('Delivery')}
+                status={ chosenDelivery.name === 'Delivery' ? 'checked' : 'unchecked' }
+                onPress={() => setChosenDelivery({ name: 'Delivery', price: '5.90' })}
               />
             </View>
           </View>
         </View>
       </View>
-
-      <Divider />
 
       <View style={modal.shippingContainer}>
         <View style={modal.shippingTitle}>
@@ -196,8 +195,8 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
               <RadioButton
                 value="MobilePay"
                 color={styling.colors.Asphalt}
-                status={ chosenPayment === 'MobilePay' ? 'checked' : 'unchecked' }
-                onPress={() => setChosenPayment('MobilePay')}
+                status={ chosenPayment.name === 'MobilePay' ? 'checked' : 'unchecked' }
+                onPress={() => setChosenPayment({ name: 'MobilePay', price: '0' })}
               />
             </View>
           </View>
@@ -211,12 +210,56 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
               <RadioButton
                 value="Cash"
                 color={styling.colors.Asphalt}
-                status={ chosenPayment === 'Cash' ? 'checked' : 'unchecked' }
-                onPress={() => setChosenPayment('Cash')}
+                status={ chosenPayment.name === 'Cash' ? 'checked' : 'unchecked' }
+                onPress={() => setChosenPayment({ name: 'Cash', price: '2.50' })}
               />
             </View>
           </View>
         </View>
+      </View>
+
+      <Divider />
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
+
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10, marginRight: 20, }}>
+          <Title>Summary</Title>
+          <Entypo name="price-tag" size={24} color={styling.colors.Asphalt} />
+        </View>
+
+        <View style={{ flex: 1, justifyContent: 'flex-start', marginRight: 10 }}>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
+            <Text>Product price :</Text>
+            <Text>{getCurrentProduct.productPrice} €</Text>
+          </View>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
+            <Text>Shipping :</Text>
+            <Text>{chosenDelivery.price} €</Text>
+          </View>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
+            <Text>Payment :</Text>
+            <Text>{chosenPayment.price} €</Text>
+          </View>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderTopWidth: 2, alignItems: 'center' }}>
+            <View style={{ backgroundColor: styling.colors.Asphalt, borderWidth: 2 }}>
+              <Text style={{ color: styling.colors.VistaWhite }}>Total :</Text>
+            </View>
+            <Text>{orderTotalPrice} €</Text>
+          </View>
+
+        </View>
+      </View>
+
+      <Divider style={{ marginBottom: 5 }} />
+
+      <View style={{ alignItems: 'center', marginTop: 10, marginBottom: 10 }}>
+        <Button style={{ width: '90%' }} disabled={false} loading={false} icon="camera" mode="contained" onPress={() => console.log('Pressed')}>
+          <Text>sadas</Text>
+        </Button>
       </View>
 
 
