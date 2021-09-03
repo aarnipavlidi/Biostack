@@ -14,7 +14,7 @@ import styling from '../../styling'; // Import "styling" variable from "styling.
 const modal = StyleSheet.create({
   mainContainer: {
     backgroundColor: styling.colors.VistaWhite,
-    marginTop: -120,
+    marginTop: -75,
     marginLeft: 10,
     marginRight: 10,
   },
@@ -98,6 +98,20 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
   console.log(chosenPayment)
 
   const orderTotalPrice = Number(getCurrentProduct.productPrice) + Number(chosenPayment.price) + Number(chosenDelivery.price);
+
+  const preventSubmit = chosenDelivery.name && chosenPayment.name ? false : true;
+
+  const buttonText = () => {
+    if (chosenDelivery.name && chosenPayment.name) {
+      return (
+        <Text style={{ color: styling.colors.VistaWhite }}>Buy an item</Text>
+      )
+    } else {
+      return (
+        <Text style={{ color: styling.colors.VistaWhite }}>Choose shipping & payment</Text>
+      )
+    };
+  };
 
   return (
     <Portal>
@@ -257,8 +271,8 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
       <Divider style={{ marginBottom: 5 }} />
 
       <View style={{ alignItems: 'center', marginTop: 10, marginBottom: 10 }}>
-        <Button style={{ width: '90%' }} disabled={false} loading={false} icon="camera" mode="contained" onPress={() => console.log('Pressed')}>
-          <Text>sadas</Text>
+        <Button style={{ width: '90%' }} color={styling.colors.Asphalt} disabled={preventSubmit} loading={false} mode="contained" onPress={() => console.log('Pressed')}>
+          {buttonText()}
         </Button>
       </View>
 
