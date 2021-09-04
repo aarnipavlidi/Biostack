@@ -121,6 +121,7 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
 
     const getOrderData = {
       date: Date.now().toString(),
+      productID: getCurrentProduct._id,
       productTitle: getCurrentProduct.productTitle,
       productSize: getCurrentProduct.productSize,
       productPrice: getCurrentProduct.productPrice,

@@ -17,11 +17,12 @@ const useCreateNewTransaction = () => {
   });
 
   const submitNewTransaction = async ({ getOrderData }) => {
-    console.log(getOrderData)
+    console.log(getOrderData);
 
     const response = await createNewTransaction({
       variables: {
         date: getOrderData.date,
+        productID: getOrderData.productID,
         productTitle: getOrderData.productTitle,
         productSize: getOrderData.productSize,
         productPrice: getOrderData.productPrice,

@@ -52,6 +52,7 @@ export const CREATE_NEW_PRODUCT = gql`
 export const CREATE_NEW_TRANSACTION = gql`
   mutation createNewTransaction(
     $date: String!,
+    $productID: String!,
     $productTitle: String!,
     $productSize: String!,
     $productPrice: String!,
@@ -65,6 +66,7 @@ export const CREATE_NEW_TRANSACTION = gql`
   ) {
     createTransaction(
       date: $date,
+      productID: $productID,
       productTitle: $productTitle,
       productSize: $productSize,
       productPrice: $productPrice,
