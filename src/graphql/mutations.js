@@ -46,6 +46,53 @@ export const CREATE_NEW_PRODUCT = gql`
   }
 `
 
+// Define "CREATE_NEW_TRANSACTION" mutation, so once user is going to buy specific item
+// from the app, then this mutation will add new transaction for both seller and buyer
+// and save the values to the database.
+export const CREATE_NEW_TRANSACTION = gql`
+  mutation createNewTransaction(
+    $date: String!,
+    $productTitle: String!,
+    $productSize: String!,
+    $productPrice: String!,
+    $productGroupName: String!,
+    $sellerID: String!,
+    $sellerName: String!,
+    $sellerEmail: String!,
+    $shippingMethod: String!,
+    $paymentMethod: String!,
+    $paymentTotal: String!
+  ) {
+    createTransaction(
+      date: $date,
+      productTitle: $productTitle,
+      productSize: $productSize,
+      productPrice: $productPrice,
+      productGroupName: $productGroupName,
+      sellerID: $sellerID,
+      sellerName: $sellerName,
+      sellerEmail: $sellerEmail,
+      shippingMethod: $shippingMethod,
+      paymentMethod: $paymentMethod,
+      paymentTotal: $paymentTotal
+    ) {
+      _id
+      date
+      type
+      productID
+      productTitle
+      productSize
+      productPrice
+      productGroupName
+      sellerID
+      sellerName
+      shippingMethod
+      paymentMethod
+      paymentTotal
+    }
+  }
+`
+
 // Define "DELETE_CURRENT_PRODUCT" mutation, so user is able to delete his listed items
 // from the database, so they won't be visible to other users after deletion.
 export const DELETE_CURRENT_PRODUCT = gql`

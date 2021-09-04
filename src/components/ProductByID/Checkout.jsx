@@ -2,8 +2,11 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React, { useState } from 'react'; // Import "react" library's content for this component usage.
+import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
 import { ImageBackground, View, Text, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Modal, Portal, Title, Caption, Divider, RadioButton, Button } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+
+import useCreateNewTransaction from '../../hooks/useCreateNewTransaction'; // Import "useCreateNewTransaction" hook from "useCreateNewTransaction.js" file for this component usage.
 
 import { Fontisto, Feather, MaterialIcons, Entypo } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 import ItemSizeCheck from '../ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
@@ -92,10 +95,11 @@ const modal = StyleSheet.create({
 
 const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) => {
 
+  const [submitNewTransaction, { loading }] = useCreateNewTransaction();
+  const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
+
   const [chosenDelivery, setChosenDelivery] = useState({ name: null, price: '0' });
-  console.log(chosenDelivery)
   const [chosenPayment, setChosenPayment] = useState({ name: null, price: '0' });
-  console.log(chosenPayment)
 
   const orderTotalPrice = Number(getCurrentProduct.productPrice) + Number(chosenPayment.price) + Number(chosenDelivery.price);
 
@@ -110,6 +114,31 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
       return (
         <Text style={{ color: styling.colors.VistaWhite }}>Choose shipping & payment</Text>
       )
+    };
+  };
+
+  const onSubmit = async () => {
+
+    const getOrderData = {
+      date: Date.now().toString(),
+      productTitle: getCurrentProduct.productTitle,
+      productSize: getCurrentProduct.productSize,
+      productPrice: getCurrentProduct.productPrice,
+      productGroupName: getCurrentProduct.productGroupName,
+      sellerID: getCurrentProduct.owner._id,
+      sellerName: getCurrentProduct.owner.name,
+      sellerEmail: getCurrentProduct.owner.email,
+      shippingMethod: chosenDelivery.name,
+      paymentMethod: chosenPayment.name,
+      paymentTotal: String(orderTotalPrice)
+    };
+
+    try {
+      const { data } = await submitNewTransaction({ getOrderData });
+      console.log(data);
+      history.push("/dashboard");
+    } catch (error) {
+      console.log(error.message)
     };
   };
 
@@ -271,7 +300,7 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
       <Divider style={{ marginBottom: 5 }} />
 
       <View style={{ alignItems: 'center', marginTop: 10, marginBottom: 10 }}>
-        <Button style={{ width: '90%' }} color={styling.colors.Asphalt} disabled={preventSubmit} loading={false} mode="contained" onPress={() => console.log('Pressed')}>
+        <Button style={{ width: '90%' }} color={styling.colors.Asphalt} disabled={preventSubmit} loading={loading} mode="contained" onPress={onSubmit}>
           {buttonText()}
         </Button>
       </View>
