@@ -2,7 +2,8 @@ const styling = {
   colors: {
     VistaWhite: '#Fdfcfa', // First "primary" color for whole app.
     Asphalt: '#0b0904', // Second "primary" color for whole app.
-    ShimmeringBlush: '#db8b93' // Color for input validation messages for example.
+    ShimmeringBlush: '#db8b93', // Color for input validation messages for example.
+    Greenery: '#82b148', // Color for order confirmation icon for example.
   },
   fontSizes: {
     default: 14,

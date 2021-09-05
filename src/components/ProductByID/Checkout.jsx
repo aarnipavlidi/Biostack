@@ -135,8 +135,8 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
     };
 
     try {
-      const { data } = await submitNewTransaction({ getOrderData });
-      console.log(data);
+      const response = await submitNewTransaction({ getOrderData });
+      console.log(response.data.createTransaction);
       history.push("/dashboard");
     } catch (error) {
       console.log(error.message)

@@ -5,9 +5,9 @@ import React, { useState } from 'react'; // Import "react" library's content for
 import { useHistory } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
 import { ActivityIndicator, Image, StyleSheet, Pressable, ScrollView, View, Text, FlatList } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Appbar, Caption, Card, Divider, Title, Paragraph, List, Provider } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
-import { FontAwesome5, Ionicons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import Checkout from './Checkout'; // Import "Checkout" component from "Checkout.jsx" file for this component usage.
+import ButtonOptions from './ButtonOptions'; // Import "ButtonOptions" component from "ButtonOptions.jsx" file for this component usage.
 import UserRating from '../UserRating'; // Import "UserRating" component from "UserRating.jsx" file for this component usage.
 import ItemTypeCheck from '../ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
 import ItemSizeCheck from '../ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
@@ -56,30 +56,6 @@ const productContainer = StyleSheet.create({
   productContent: {
     alignSelf: 'center',
     marginTop: 5,
-  },
-  productButtonContainer: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 15,
-    marginBottom: 15,
-  },
-  productButton: {
-    backgroundColor: styling.colors.Asphalt,
-    flex: 1/3,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 45,
-    borderRadius: 45 / 2,
-    paddingRight: 7,
-    elevation: 5,
-  },
-  productButtonText: {
-    color: styling.colors.VistaWhite,
-    fontSize: 18,
-    marginLeft: 7,
-    marginRight: 7,
   },
 });
 
@@ -195,16 +171,7 @@ const CurrentProduct = ({ currentUserData, loadingUserData }) => {
             </View>
           </Card.Content>
         </Card>
-        <View style={productContainer.productButtonContainer}>
-          <Pressable style={productContainer.productButton} onPress={showModal}>
-            <Text style={productContainer.productButtonText}>Checkout</Text>
-            <FontAwesome5 name="hand-holding-heart" size={18} color={styling.colors.VistaWhite} />
-          </Pressable>
-          <Pressable style={productContainer.productButton} onPress={() => console.log('Bookmark has been pressed.')}>
-            <Text style={productContainer.productButtonText}>Bookmark</Text>
-            <Ionicons name="bookmarks" size={18} color={styling.colors.VistaWhite} />
-          </Pressable>
-        </View>
+        <ButtonOptions getCurrentProduct={getCurrentProduct} currentUserData={currentUserData} showModal={showModal} />
         <Checkout getCurrentProduct={getCurrentProduct} currentUserData={currentUserData} visible={visible} hideModal={hideModal} />
       </Provider>
     </ScrollView>

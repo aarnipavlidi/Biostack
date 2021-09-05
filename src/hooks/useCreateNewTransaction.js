@@ -17,7 +17,6 @@ const useCreateNewTransaction = () => {
   });
 
   const submitNewTransaction = async ({ getOrderData }) => {
-    console.log(getOrderData);
 
     const response = await createNewTransaction({
       variables: {
@@ -37,7 +36,8 @@ const useCreateNewTransaction = () => {
     });
 
     if (response.data) {
-      return response.data;
+      return response;
+      console.log(response.data.createTransaction);
     } else {
       throw new Error('Buying current product was unsuccessful, please try again!')
     };

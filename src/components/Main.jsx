@@ -9,6 +9,7 @@ import LoginScreen from './LoginScreen'; // Import "LoginScreen" component from 
 import RegistrationScreen from './RegistrationScreen'; // Import "RegistrationScreen" component from "RegistrationScreen.jsx" file for this component usage.
 import Dashboard from './Dashboard'; // Import "Dashboard" component from "Dashboard.jsx" file for this component usage.
 import CurrentProduct from './ProductByID/CurrentProduct'; // Import "CurrentProduct" component from "CurrentProduct.jsx" file for this component usage.
+import OrderConfirmation from './ProductByID/OrderConfirmation'; // Import "OrderConfirmation" component from "OrderConfirmation.jsx" file for this component usage.
 import NewProduct from './NewProduct'; // Import "NewProduct" component from "NewProduct.jsx" file for this component usage.
 import UserSettings from './Profile/UserSettings'; // Import "UserSettings" component from "UserSettings.jsx" file for this component usage.
 import UserClothes from './Profile/UserClothes'; // Import "UserClothes" component from "UserClothes.jsx" file for this component usage.
@@ -25,6 +26,7 @@ import styling from '../styling'; // Import "styling" variable from "styling.js"
 // of phones "StatusBar" (where are battery icons etc.) container.
 const mainContainer = StyleSheet.create({
   container: {
+    flex: 1,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 50 : 0,
     bottom: 50,
     backgroundColor: styling.colors.VistaWhite,
@@ -64,11 +66,11 @@ const Main = () => {
             <RegistrationScreen />
           </Route>
           <Route exact path="/">
-            <LoginScreen setCurrentToken={setCurrentToken} />
+            <OrderConfirmation />
           </Route>
         </Switch>
       </View>
-      {currentToken ? <NavigationBottom /> : null}
+      {!currentToken ? <NavigationBottom /> : null}
     </SafeAreaView>
   );
 };
