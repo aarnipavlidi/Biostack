@@ -95,16 +95,40 @@ const modal = StyleSheet.create({
 
 const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) => {
 
+  // Define "useCreateNewTransaction()" hook and get access "submitNewTransaction" and
+  // "loading" variables. With "submitNewTransaction" function, we are able to submit
+  // current product info + chosen delivery/payment and execute mutation in order to
+  // save order transaction into database. With variable "loading", we are able render
+  // "loading spinner" into button (where user is pressing to buy the item), which will
+  // keep "spinning" (aka loading) untill it has finished mutation and saved data to db.
   const [submitNewTransaction, { loading }] = useCreateNewTransaction();
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
+  // Define "chosenDelivery" variable into state, which has two (2) different object
+  // values, where "name" gets "null" as default and "price" gets "0" as default value.
   const [chosenDelivery, setChosenDelivery] = useState({ name: null, price: '0' });
+
+  // Define "chosenPayment" variable into state, which has two (2) different object
+  // values where "name" gets "null" as default and "price" gets "0" as default value.
   const [chosenPayment, setChosenPayment] = useState({ name: null, price: '0' });
 
+  // Define "orderTotalPrice" variable, which will count total value of those three (3)
+  // variables value. We are using "Number(...)" function, because those variables are
+  // in default "String" type, because they are saved into database as strings!
   const orderTotalPrice = Number(getCurrentProduct.productPrice) + Number(chosenPayment.price) + Number(chosenDelivery.price);
 
+  // Define "preventSubmit" variable, which will be equal to either "false" or
+  // "true" value. Variable idea is to prevent the user press "Buy" button, if
+  // the user has not chosen "delivery" or "payment" option. So once user has
+  // chosen both options, then "preventSubmit" will be equal to "false" value,
+  // which means button will be "pressable" to the user.
   const preventSubmit = chosenDelivery.name && chosenPayment.name ? false : true;
 
+  // Define "buttonText" variable, which will execute everything inside of {...},
+  // and return text into button => based on if user has selected both payment
+  // and delivery option or not. If user (by default) has not chosen any option
+  // values, then function will return "Choose shipping & payment" text and
+  // otherwise will return "Buy an item" text.
   const buttonText = () => {
     if (chosenDelivery.name && chosenPayment.name) {
       return (
@@ -117,8 +141,16 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
     };
   };
 
+  // Define "onSubmit" variable, which wll execute everything inside of {...},
+  // so basically once user has chosen to buy current product from the app, then
+  // this functon wll be executed. We will store current products data into
+  // "getOrderData" variable and with that varible we pass it into "submitNewTransaction"
+  // function paramater and execute it. If mutation is successful, then user will be
+  // redirected to the new page for the "Order confirmation", otherwise we will
+  // alert the user and tell the reason why buying (mutation) failed.
   const onSubmit = async () => {
 
+    // Define "getOrderData" variable, which will get objects inside of {...}.
     const getOrderData = {
       date: Date.now().toString(),
       productID: getCurrentProduct._id,
@@ -134,8 +166,10 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
       paymentTotal: String(orderTotalPrice)
     };
 
+    // When this function is being referenced, then we wil execute "try" section first,
+    // if something goes wrong during this section then we will pass into "catch" section.
     try {
-      const response = await submitNewTransaction({ getOrderData });
+      const response = await submitNewTransaction({ getOrderData }); // Define "response" variable, which will execute following function.
       console.log(response.data.createTransaction);
       history.push("/dashboard");
     } catch (error) {
@@ -143,6 +177,7 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
     };
   };
 
+  // Component will render everything inside of (...) back to the user.
   return (
     <Portal>
       <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={modal.mainContainer}>
