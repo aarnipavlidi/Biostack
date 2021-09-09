@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b35440f-34ac-4307-b49a-3bd3ce76d8ac" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ProductByID/OrderConfirmation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProductByID/OrderConfirmation.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

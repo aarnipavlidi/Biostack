@@ -170,8 +170,11 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
     // if something goes wrong during this section then we will pass into "catch" section.
     try {
       const response = await submitNewTransaction({ getOrderData }); // Define "response" variable, which will execute following function.
-      console.log(response.data.createTransaction);
-      history.push("/dashboard");
+      const confirmationData = response.data.createTransaction;
+      history.push({
+        pathname: '/dashboard/order-confirmation',
+        state: { detail: confirmationData }
+      });
     } catch (error) {
       console.log(error.message)
     };

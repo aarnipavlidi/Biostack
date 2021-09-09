@@ -2,6 +2,7 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
+import { useHistory, useLocation } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
 import { ScrollView, View, StyleSheet, Text, Image, Pressable } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Appbar, Card, Title, Divider } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { AntDesign } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
@@ -18,14 +19,79 @@ const headerContainer = StyleSheet.create({
   }
 });
 
+const orderContainer = StyleSheet.create({
+  mainContainer: {
+    margin: 10,
+    elevation: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    backgroundColor: styling.colors.VistaWhite,
+  },
+  confirmationFlexBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  productImage: {
+    width: 125,
+    height: 125,
+    borderRadius: 25 / 2,
+  },
+  productSummary: {
+    flex: 1,
+    marginLeft: 3
+  },
+  productValueContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  productBox: {
+    marginLeft: 5,
+    marginRight: 5
+  },
+  productBoxStyle: {
+    backgroundColor: styling.colors.Asphalt,
+    borderRadius: 10 / 2,
+    elevation: 5,
+  },
+  productBoxContent: {
+    color: styling.colors.VistaWhite,
+    padding: 5,
+  },
+  productValueBox: {
+    flex: 1,
+    marginRight: 5
+  },
+  productValueContent: {
+    textAlign: 'right',
+  },
+});
+
+const emailContainer = StyleSheet.create({
+  container: {
+    marginTop: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: styling.colors.Asphalt,
+    borderTopWidth: 2,
+    borderTopColor: styling.colors.Asphalt,
+  },
+  content: {
+    padding: 9,
+    fontSize: 15,
+    textAlign: 'center',
+  },
+});
+
 const buttonContainer = StyleSheet.create({
   productButtonContainer: {
     flexGrow: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: 15,
-    marginBottom: 15,
+    marginTop: 20,
   },
   productButton: {
     backgroundColor: styling.colors.Asphalt,
@@ -47,21 +113,10 @@ const buttonContainer = StyleSheet.create({
 
 const OrderConfirmation = () => {
 
-  const getOrderData = {
-    _id: "6134f2843c8d4668580d2319",
-    date: "1630859907146",
-    paymentMethod: "MobilePay",
-    paymentTotal: "100",
-    productGroupName: "t-shirt",
-    productID: "6134d6a03c8d4668580d2224",
-    productPrice: "100",
-    productSize: "L",
-    productTitle: "Random product",
-    sellerID: "612dd3fb577665133ce4947e",
-    sellerName: "Aarni Pavlidi",
-    shippingMethod: "Pickup",
-    type: "Purchased",
-  };
+  const location = useLocation(); // Define "location" variable, which will execute => "useLocation(...)" function.
+  const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
+
+  const getOrderData = location.state.detail;
 
   const orderNumber = `#${getOrderData._id}`;
 
@@ -71,106 +126,98 @@ const OrderConfirmation = () => {
         <Appbar.Content titleStyle={headerContainer.appBarContent} title="Order Confirmation" subtitle={orderNumber} subtitleStyle={headerContainer.appBarContent} />
         <Appbar.Action icon="checkbox-marked-circle-outline" />
       </Appbar.Header>
-
-      <Card style={{ margin: 10, elevation: 6, justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: styling.colors.VistaWhite }}>
+      <Card style={orderContainer.mainContainer}>
         <Card.Content>
-
           <View style={{ alignItems: 'center' }}>
             <AntDesign name="checkcircleo" size={50} color={styling.colors.Greenery} />
             <Title style={{ textAlign: 'center', marginTop: 10 }}>You have successfully purchased item from the app.</Title>
           </View>
-
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+          <View style={orderContainer.confirmationFlexBox}>
             <View>
-              <Image style={{ width: 125, height: 125, borderRadius: 25 / 2 }} source={{ uri: 'https://picsum.photos/125/125?grayscale'}} />
+              <Image style={orderContainer.productImage} source={{ uri: 'https://picsum.photos/125/125?grayscale'}} />
             </View>
-            <View style={{ flex: 1, marginLeft: 3 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginBottom: 5 }}>
-                <View style={{ marginLeft: 5, marginRight: 5 }}>
-                  <View style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 10 / 2, elevation: 5 }}>
-                    <Text style={{ color: styling.colors.VistaWhite, padding: 5 }}>Product</Text>
+            <View style={orderContainer.productSummary}>
+              <View style={orderContainer.productValueContainer}>
+                <View style={orderContainer.productBox}>
+                  <View style={orderContainer.productBoxStyle}>
+                    <Text style={orderContainer.productBoxContent}>Product</Text>
                   </View>
                 </View>
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <Text style={{ textAlign: 'right' }}>{getOrderData.productTitle}</Text>
+                <View style={orderContainer.productValueBox}>
+                  <Text style={orderContainer.productValueContent}>{getOrderData.productTitle}</Text>
                 </View>
               </View>
               <Divider />
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginBottom: 5 }}>
-                <View style={{ marginLeft: 5, marginRight: 5 }}>
-                  <View style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 10 / 2, elevation: 5 }}>
-                    <Text style={{ color: styling.colors.VistaWhite, padding: 5 }}>Type</Text>
+              <View style={orderContainer.productValueContainer}>
+                <View style={orderContainer.productBox}>
+                  <View style={orderContainer.productBoxStyle}>
+                    <Text style={orderContainer.productBoxContent}>Type</Text>
                   </View>
                 </View>
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <Text style={{ textAlign: 'right' }}>{getOrderData.productGroupName}</Text>
+                <View style={orderContainer.productValueBox}>
+                  <Text style={orderContainer.productValueContent}>{getOrderData.productGroupName}</Text>
                 </View>
               </View>
               <Divider />
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginBottom: 5 }}>
-                <View style={{ marginLeft: 5, marginRight: 5 }}>
-                  <View style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 10 / 2, elevation: 5 }}>
-                    <Text style={{ color: styling.colors.VistaWhite, padding: 5 }}>Size</Text>
+              <View style={orderContainer.productValueContainer}>
+                <View style={orderContainer.productBox}>
+                  <View style={orderContainer.productBoxStyle}>
+                    <Text style={orderContainer.productBoxContent}>Size</Text>
                   </View>
                 </View>
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <Text style={{ textAlign: 'right' }}>{getOrderData.productSize}</Text>
+                <View style={orderContainer.productValueBox}>
+                  <Text style={orderContainer.productValueContent}>{getOrderData.productSize}</Text>
                 </View>
               </View>
               <Divider />
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginBottom: 5 }}>
-                <View style={{ marginLeft: 5, marginRight: 5 }}>
-                  <View style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 10 / 2, elevation: 5 }}>
-                    <Text style={{ color: styling.colors.VistaWhite, padding: 5 }}>Delivery</Text>
+              <View style={orderContainer.productValueContainer}>
+                <View style={orderContainer.productBox}>
+                  <View style={orderContainer.productBoxStyle}>
+                    <Text style={orderContainer.productBoxContent}>Delivery</Text>
                   </View>
                 </View>
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <Text style={{ textAlign: 'right' }}>{getOrderData.shippingMethod}</Text>
+                <View style={orderContainer.productValueBox}>
+                  <Text style={orderContainer.productValueContent}>{getOrderData.shippingMethod}</Text>
                 </View>
               </View>
               <Divider />
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginBottom: 5 }}>
-                <View style={{ marginLeft: 5, marginRight: 5 }}>
-                  <View style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 10 / 2, elevation: 5 }}>
-                    <Text style={{ color: styling.colors.VistaWhite, padding: 5 }}>Payment</Text>
+              <View style={orderContainer.productValueContainer}>
+                <View style={orderContainer.productBox}>
+                  <View style={orderContainer.productBoxStyle}>
+                    <Text style={orderContainer.productBoxContent}>Payment</Text>
                   </View>
                 </View>
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <Text style={{ textAlign: 'right' }}>{getOrderData.paymentMethod}</Text>
+                <View style={orderContainer.productValueBox}>
+                  <Text style={orderContainer.productValueContent}>{getOrderData.paymentMethod}</Text>
                 </View>
               </View>
               <Divider />
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, marginBottom: 5 }}>
-                <View style={{ marginLeft: 5, marginRight: 5 }}>
-                  <View style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 10 / 2, elevation: 5 }}>
-                    <Text style={{ color: styling.colors.VistaWhite, padding: 5 }}>Total</Text>
+              <View style={orderContainer.productValueContainer}>
+                <View style={orderContainer.productBox}>
+                  <View style={orderContainer.productBoxStyle}>
+                    <Text style={orderContainer.productBoxContent}>Total</Text>
                   </View>
                 </View>
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <Text style={{ textAlign: 'right' }}>{getOrderData.paymentTotal} €</Text>
+                <View style={orderContainer.productValueBox}>
+                  <Text style={orderContainer.productValueContent}>{getOrderData.paymentTotal} €</Text>
                 </View>
               </View>
               <Divider />
             </View>
           </View>
-
-          <View style={{ marginTop: 10, borderBottomWidth: 2, borderBottomColor: styling.colors.Asphalt, borderTopWidth: 2, borderTopColor: styling.colors.Asphalt }}>
-            <Text style={{ padding: 9, fontSize: 15, textAlign: 'center' }}>Confirmation of your order has been sent to your email. Thank you for using Biostack and supporting circular economy.</Text>
+          <View style={emailContainer.container}>
+            <Text style={emailContainer.content}>Confirmation of your order has been sent to your email. Thank you for using Biostack and supporting circular economy.</Text>
           </View>
-
-
           <View style={buttonContainer.productButtonContainer}>
-            <Pressable style={buttonContainer.productButton}>
+            <Pressable style={buttonContainer.productButton} onPress={() => history.push('/dashboard')}>
               <Text style={buttonContainer.productButtonText}>Buy more</Text>
             </Pressable>
-            <Pressable style={buttonContainer.productButton}>
+            <Pressable style={buttonContainer.productButton} onPress={() => history.push('/dashboard/profile')}>
               <Text style={buttonContainer.productButtonText}>Contact seller</Text>
             </Pressable>
           </View>
-
         </Card.Content>
       </Card>
-
     </ScrollView>
   );
 };

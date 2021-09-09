@@ -53,6 +53,9 @@ const Main = () => {
           <Route exact path="/dashboard/new-item">
             {currentToken ? <NewProduct currentUserData={currentUserData} /> : <Redirect to="/" />}
           </Route>
+          <Route exact path="/dashboard/order-confirmation">
+            {currentToken ? <OrderConfirmation /> : <Redirect to="/" />}
+          </Route>
           <Route exact path="/dashboard/profile/clothes">
             {currentToken ? <UserClothes currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
           </Route>
@@ -66,11 +69,11 @@ const Main = () => {
             <RegistrationScreen />
           </Route>
           <Route exact path="/">
-            <OrderConfirmation />
+            <LoginScreen setCurrentToken={setCurrentToken} />
           </Route>
         </Switch>
       </View>
-      {!currentToken ? <NavigationBottom /> : null}
+      {currentToken ? <NavigationBottom /> : null}
     </SafeAreaView>
   );
 };
