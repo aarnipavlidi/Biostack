@@ -21,6 +21,25 @@ export const CURRENT_LOGGED_USER = gql`
         productPrice
         productGroupName
       }
+      transactions {
+        _id
+        date
+        type
+        productID
+        productTitle
+        productSize
+        productPrice
+        productGroupName
+        sellerID
+        sellerName
+        sellerEmail
+        buyerID
+        buyerName
+        buyerEmail
+        shippingMethod
+        paymentMethod
+        paymentTotal
+      }
     }
   }
 `

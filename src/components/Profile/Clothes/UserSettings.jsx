@@ -6,14 +6,14 @@ import { useHistory } from 'react-router-native'; // Import following functions 
 import { Alert, ActivityIndicator, Image, ScrollView, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Avatar, Appbar, Card, IconButton, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
-import UserRating from '../UserRating'; // Import "UserRating" component from "UserRating.jsx" file for this component usage.
+import UserRating from '../../UserRating'; // Import "UserRating" component from "UserRating.jsx" file for this component usage.
 
 import { useApolloClient } from '@apollo/client'; // Import following functions from "@apollo/client" libary for this component usage.
 
-import useDeleteUser from '../../hooks/useDeleteUser'; // Import "useDeleteUser" hook from "useDeleteUser.js" file for this component usage.
-import useAuthStorage from '../../hooks/useAuthStorage'; // Import "useAuthStorage" hook from "useAuthStorage.js" file for this component usage.
+import useDeleteUser from '../../../hooks/useDeleteUser'; // Import "useDeleteUser" hook from "useDeleteUser.js" file for this component usage.
+import useAuthStorage from '../../../hooks/useAuthStorage'; // Import "useAuthStorage" hook from "useAuthStorage.js" file for this component usage.
 
-import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
+import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 // Define "loadingContainer" variable, which will be used to create style
 // if data is "loading" we will return => "loading spinner".
@@ -227,10 +227,10 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
       />
       <Card.Title
         style={cardTitleContainer.container}
-        title="Purchases"
-        subtitle="Purchased clothes on the app."
+        title="Transactions"
+        subtitle="Your orders history on the app."
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="basket-outline" />}
-        right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/clothes') } />}
+        right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/transactions') } />}
       />
       <Card.Title
         style={cardTitleContainer.container}

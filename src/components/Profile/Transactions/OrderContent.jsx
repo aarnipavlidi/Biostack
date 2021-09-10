@@ -4,10 +4,9 @@
 import React from 'react'; // Import "react" library's content for this component usage.
 import { Alert, ActivityIndicator, FlatList, View, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
-import UserClothesHeader from './UserClothesHeader'; // Import "UserClothesHeader" component from "UserClothesHeader.jsx" file for this component usage.
-import UserListedClothes from './UserListedClothes'; // Import "UserListedClothes" component from "UserListedClothes.jsx" file for this component usage.
+import UserOrders from './UserOrders'; // Import "UserOrders" component from "UserOrders.jsx" file for this component usage.
 
-import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
+import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 // Define "loadingContainer" variable, which will be used to create style
 // if data is "loading" we will return => "loading spinner".
@@ -19,12 +18,10 @@ const loadingContainer = StyleSheet.create({
   }
 });
 
-// Define "UserClothes" component, which will execute everything inside of {...}
-// and render back either "loading spinner" or current logged user data.
-const UserClothes = ({ currentUserData, loading }) => {
+const OrderContent = ({ currentUserData, loading }) => {
 
-  const getUserListedProducts = currentUserData
-    ? currentUserData.products.map(results => results)
+  const getUserTransactions = currentUserData
+    ? currentUserData.transactions.map(results => results)
     : [];
 
   // If "me" querys data => "currentUserData" is still loading from the dabase, component
@@ -40,13 +37,12 @@ const UserClothes = ({ currentUserData, loading }) => {
   // Otherwise component will render everything inside of (...) back to the user.
   return (
     <FlatList
-      data={getUserListedProducts}
+      data={getUserTransactions}
       keyExtractor={(item, index) => item._id}
-      renderItem={({ item }) => <UserListedClothes item={item} />}
-      ListHeaderComponent={<UserClothesHeader />}
+      renderItem={({ item }) => <UserOrders item={item} />}
     />
   );
 };
 
-// Export "UserClothes" component, so other components like "App.js" are able to use this hooks's content.
-export default UserClothes;
+// Export "OrderContent" component, so other components like "App.js" are able to use this hooks's content.
+export default OrderContent;

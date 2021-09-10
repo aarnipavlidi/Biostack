@@ -3,12 +3,14 @@
 
 import React from 'react'; // Import "react" library's content for this component usage.
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
-import { View, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Appbar } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { SafeAreaView, ScrollView, View, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Appbar, DataTable } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
-import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
+import OrderContent from './OrderContent'; // Import "OrderContent" component from "OrderContent.jsx" file for this component usage.
 
-const clothesHeaderContainer = StyleSheet.create({
+import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.
+
+const ordersHeaderContainer = StyleSheet.create({
   appBarContainer: {
     backgroundColor: styling.colors.Asphalt,
     height: 50,
@@ -18,7 +20,7 @@ const clothesHeaderContainer = StyleSheet.create({
   }
 });
 
-const UserClothesHeader = () => {
+const OrderHistory = ({ currentUserData, loading }) => {
 
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
@@ -34,15 +36,23 @@ const UserClothesHeader = () => {
 
   // Component will render everything inside of (...) back to the user.
   return (
-    <View>
-      <Appbar.Header statusBarHeight={0} style={clothesHeaderContainer.appBarContainer}>
+    <ScrollView style={{ flexGrow: 1 }}>
+      <Appbar.Header statusBarHeight={0} style={ordersHeaderContainer.appBarContainer}>
         <Appbar.BackAction onPress={goBackPreviousRoute} />
-        <Appbar.Content titleStyle={clothesHeaderContainer.appBarContent} title="Clothes" />
+        <Appbar.Content titleStyle={ordersHeaderContainer.appBarContent} title="Transactions" />
         <Appbar.Action icon="dots-vertical" onPress={handleMore} />
       </Appbar.Header>
-    </View>
+      <DataTable>
+        <DataTable.Header>
+          <DataTable.Title>Product</DataTable.Title>
+          <DataTable.Title>Type</DataTable.Title>
+          <DataTable.Title>Total price</DataTable.Title>
+        </DataTable.Header>
+        <OrderContent currentUserData={currentUserData} loading={loading} />
+      </DataTable>
+    </ScrollView>
   );
 };
 
-// Export "UserClothesHeader" component, so other components like "App.js" are able to use this hooks's content.
-export default UserClothesHeader;
+// Export "OrderHistory" component, so other components like "App.js" are able to use this hooks's content.
+export default OrderHistory;
