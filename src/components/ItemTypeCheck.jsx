@@ -16,6 +16,10 @@ const ItemTypeCheck = ({ currentItemType }) => {
     return (
       <Image style={{ height: 5, width: 5 }} source={require('../../assets/icons/clothes/sweater-24x24-455072.png')} />
     );
+  } else {
+    return (
+      <Image source={require('../../assets/icons/clothes/t-24x24-455076.png')} />
+    );
   };
 };
 

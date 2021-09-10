@@ -2,55 +2,47 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
-import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
-import { SafeAreaView, ScrollView, View, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Appbar, DataTable } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { Alert, ActivityIndicator, FlatList, View, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
-import OrderContent from './OrderContent'; // Import "OrderContent" component from "OrderContent.jsx" file for this component usage.
+import UserOrders from './UserOrders'; // Import "UserOrders" component from "UserOrders.jsx" file for this component usage.
+import OrderHistoryHeader from './OrderHistoryHeader'; // Import "OrderHistoryHeader" component from "OrderHistoryHeader.jsx" file for this component usage.
 
 import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
-const ordersHeaderContainer = StyleSheet.create({
-  appBarContainer: {
-    backgroundColor: styling.colors.Asphalt,
-    height: 50,
-  },
-  appBarContent: {
-    color: styling.colors.VistaWhite
+// Define "loadingContainer" variable, which will be used to create style
+// if data is "loading" we will return => "loading spinner".
+const loadingContainer = StyleSheet.create({
+  container: {
+    backgroundColor: styling.colors.VistaWhite,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 
 const OrderHistory = ({ currentUserData, loading }) => {
 
-  const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
+  const getUserTransactions = currentUserData
+    ? currentUserData.transactions.map(results => results)
+    : [];
 
-  // Define "goBackPreviousRoute" variable, which will execute everything inside
-  // of {...}. When app will render this component, user can choose to go back
-  // previous route where user was. If for example user came from "Home", then
-  // this function will redirect user to => "/dashboard" path when referenced.
-  const goBackPreviousRoute = () => {
-    history.goBack();
+  // If "me" querys data => "currentUserData" is still loading from the dabase, component
+  // will render everything inside of (...) (loading spinner) untill data has loaded.
+  if (loading) {
+    return (
+      <View style={loadingContainer.container}>
+        <ActivityIndicator size="large" color={styling.colors.Asphalt} />
+      </View>
+    );
   };
 
-  const handleMore = () => console.log("Show more settings from this component!");
-
-  // Component will render everything inside of (...) back to the user.
+  // Otherwise component will render everything inside of (...) back to the user.
   return (
-    <ScrollView style={{ flexGrow: 1 }}>
-      <Appbar.Header statusBarHeight={0} style={ordersHeaderContainer.appBarContainer}>
-        <Appbar.BackAction onPress={goBackPreviousRoute} />
-        <Appbar.Content titleStyle={ordersHeaderContainer.appBarContent} title="Transactions" />
-        <Appbar.Action icon="dots-vertical" onPress={handleMore} />
-      </Appbar.Header>
-      <DataTable>
-        <DataTable.Header>
-          <DataTable.Title>Product</DataTable.Title>
-          <DataTable.Title>Type</DataTable.Title>
-          <DataTable.Title>Total price</DataTable.Title>
-        </DataTable.Header>
-        <OrderContent currentUserData={currentUserData} loading={loading} />
-      </DataTable>
-    </ScrollView>
+    <FlatList
+      data={getUserTransactions}
+      keyExtractor={(item, index) => item._id}
+      renderItem={({ item }) => <UserOrders item={item} />}
+      ListHeaderComponent={<OrderHistoryHeader />}
+    />
   );
 };
 

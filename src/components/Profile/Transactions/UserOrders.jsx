@@ -5,15 +5,26 @@ import React from 'react'; // Import "react" library's content for this componen
 import { View, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { DataTable } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
+import ItemSizeCheck from '../../ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
+import ItemTypeCheck from '../../ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
+import { Entypo } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
+
 import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 const UserOrders = ({ item }) => {
 
   return (
     <DataTable.Row>
-      <DataTable.Cell>{item.productTitle}</DataTable.Cell>
-      <DataTable.Cell>{item.type}</DataTable.Cell>
-      <DataTable.Cell>{item.paymentTotal}</DataTable.Cell>
+      <DataTable.Cell>{item.date}</DataTable.Cell>
+      <DataTable.Cell numeric={true}>
+        <ItemTypeCheck currentItemType={item.productGroupName} />
+        <ItemSizeCheck currentItemSize={item.productSize} />
+      </DataTable.Cell>
+      <DataTable.Cell style={{ justifyContent: 'center' }}>{item.type}</DataTable.Cell>
+      <DataTable.Cell numeric={true}>{item.paymentTotal} €</DataTable.Cell>
+      <DataTable.Cell style={{ justifyContent: 'center' }} onPress={() => console.log("Testing :)")}>
+        <Entypo name="chevron-right" size={20} color={styling.colors.Asphalt} />
+      </DataTable.Cell>
     </DataTable.Row>
   );
 };

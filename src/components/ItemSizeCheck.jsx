@@ -41,6 +41,10 @@ const ItemSizeCheck = ({ currentItemSize }) => {
     return (
       <MaterialCommunityIcons name="size-xxl" size={24} color={styling.colors.Asphalt} />
     );
+  } else {
+    return (
+      <MaterialCommunityIcons name="size-l" size={24} color={styling.colors.Asphalt} />
+    );
   };
 };
 
