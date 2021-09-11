@@ -2,10 +2,10 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React, { useState } from 'react'; // Import "react" library's content for this component usage.
-import { Alert, Pressable, Text, StyleSheet, View, Image } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Appbar } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
-import DropDownPicker from 'react-native-dropdown-picker';
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
+import { Alert, Pressable, Text, StyleSheet, View, Image } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Appbar, Button, RadioButton } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import DropDownPicker from 'react-native-dropdown-picker';
 
 import useCreateNewProduct from '../hooks/useCreateNewProduct'; // Import "useCreateNewProduct" hook from "useCreateNewProduct.js" file for this component usage.
 import FormikTextInput from './FormikTextInput'; // Import "FormikTextInput" component from "FormikTextInput.jsx" for this component usage.
@@ -40,28 +40,41 @@ const dropdownContainer = StyleSheet.create({
   }
 });
 
+const productSizeContainer = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  titleBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  titleBackground: {
+    backgroundColor: styling.colors.Asphalt,
+    borderRadius: 25 / 2
+  },
+  titleContent: {
+    color: styling.colors.VistaWhite,
+    padding: 8,
+  },
+  valueBox: {
+    flexDirection: 'row',
+  },
+  valueOption: {
+    alignItems: 'center'
+  },
+});
+
 // Define "buttonContainer" variable, which will be used for styling
 // buttons "container" after input fields.
 const buttonContainer = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 10,
   },
-  buttonContent: {
-    flexGrow: 1,
-    marginTop: 15,
-    marginLeft: 15,
-    marginRight: 15,
-    height: 40,
-    backgroundColor: styling.colors.Asphalt,
-    borderWidth: 3,
-    borderColor: styling.colors.Asphalt,
-  },
-  buttonContentText: {
-    marginTop: 5,
-    textAlign: 'center',
-    color: styling.colors.VistaWhite
+  button: {
+    width: '90%'
   },
 });
 
@@ -90,31 +103,49 @@ const createProductFormValidationSchema = yup.object().shape({
     .string()
     .min(5, 'Description has to be minimum of 5 characters.')
     .required('Description for your item is required.'),
-  productSize: yup
-    .string()
-    .uppercase()
-    .matches(/(XS|S|M|L|XL|XXL)/, { message: 'We support unfortunately following sizes only: XS, S, M, L, XL and XXL.', excludeEmptyString: false })
-    .max(3, 'Size can be only maximum of 3 characters.')
-    .required('Size for your item is required.'),
   productPrice: yup
     .string()
     .min(1, 'Price has to be minimum of 1 character.')
     .required('Price for your item is required.'),
 });
 
-const NewProductForm = ({ onSubmit }) => {
+
+const NewProductForm = ({ currentItemType, currentItemSize, onSubmit, loading }) => {
+
+  // Define "preventSubmit" variable, which will be equal to either "false" or
+  // "true" value. Variable idea is to prevent the user press "Create an item"
+  // button, if the user has not chosen "item type" or "size" option. So once
+  // user has chosen both options, then "preventSubmit" will be equal to "false" value,
+  // which means button will be "pressable" to the user.
+  const preventSubmit = currentItemType && currentItemSize ? false : true;
+
+  // Define "buttonText" variable, which will execute everything inside of {...},
+  // and return text into button => based on if user has selected both payment
+  // and delivery option or not. If user (by default) has not chosen any option
+  // values, then function will return "Choose shipping & payment" text and
+  // otherwise will return "Buy an item" text.
+  const buttonText = () => {
+    if (currentItemType && currentItemSize) {
+      return (
+        <Text style={{ color: styling.colors.VistaWhite }}>Create an item</Text>
+      )
+    } else {
+      return (
+        <Text style={{ color: styling.colors.VistaWhite }}>Choose item type & size</Text>
+      )
+    };
+  };
 
   // Component will render everything inside of (...) back to the user.
   return (
     <View>
       <FormikTextInput name="productTitle" placeholder="Please enter title for your item." />
       <FormikTextInput name="productDescription" placeholder="Please enter description for your item." />
-      <FormikTextInput name="productSize" placeholder="Please enter size for your item." />
       <FormikTextInput name="productPrice" placeholder="Please enter price for your item." />
       <View style={buttonContainer.container}>
-        <Pressable style={buttonContainer.buttonContent} onPress={onSubmit}>
-          <Text style={buttonContainer.buttonContentText}>Create an item</Text>
-        </Pressable>
+        <Button style={buttonContainer.button} color={styling.colors.Asphalt} disabled={preventSubmit} loading={loading} mode="contained" onPress={onSubmit}>
+          {buttonText()}
+        </Button>
       </View>
     </View>
   );
@@ -136,16 +167,10 @@ const NewProduct = ({ currentUserData }) => {
     {label: 'Sweater', value: 'sweater', icon: () => <Image source={require('../../assets/icons/clothes/sweater-24x24-455072.png')} />}
   ]);
 
-  const [submitNewProduct] = useCreateNewProduct(); // Define "submitNewProduct" variable from => "useCreateNewProduct(...)" hook.
-  const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
+  const [currentSize, setCurrentSize] = useState(null); // Define variable "currentSize" into state, which gets value "null" as default.
 
-  // Define "goBackPreviousRoute" variable, which will execute everything inside
-  // of {...}. When app will render this component, user can choose to go back
-  // previous route where user was. If for example user came from "Home", then
-  // this function will redirect user to => "/dashboard" path when referenced.
-  const goBackPreviousRoute = () => {
-    history.goBack();
-  };
+  const [submitNewProduct, { loading }] = useCreateNewProduct(); // Define "submitNewProduct" variable from => "useCreateNewProduct(...)" hook.
+  const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
   // Define variable "onSubmit", which will execute everything inside of {...},
   // when function is being referenced. When user is trying to add new product
@@ -154,10 +179,11 @@ const NewProduct = ({ currentUserData }) => {
   // know about it via "Alert" component and render "error" variable message.
   const onSubmit = async (values) => {
 
-    const { productTitle, productDescription, productSize, productPrice } = values; // Define variables inside of {...}, which are equal to "values" variable.
+    const { productTitle, productDescription, productPrice } = values; // Define variables inside of {...}, which are equal to "values" variable.
 
     const owner = currentUserData._id; // Define variable "owner", which is equal to "currentUserData._id" variable.
     const productGroupName = value; // Define variable "productGroupName", which is equal to "value" variable.
+    const productSize = currentSize; // Define variable "productSize", which is equal to "currentSize" variable.
 
     try {
       const { data } = await submitNewProduct({ productTitle, productDescription, productSize, productPrice, productGroupName, owner })
@@ -182,14 +208,13 @@ const NewProduct = ({ currentUserData }) => {
   return (
     <View style={newItemContainer.mainContainer}>
       <Appbar.Header statusBarHeight={0} style={newItemContainer.appBarContainer}>
-        <Appbar.BackAction onPress={goBackPreviousRoute} />
         <Appbar.Content titleStyle={newItemContainer.appBarContent} title="Add new item to the app" subtitle="Please fill all the required fields." subtitleStyle={newItemContainer.appBarContent} />
         <Appbar.Action icon="dots-vertical" onPress={handleMore} />
       </Appbar.Header>
       <View style={dropdownContainer.container}>
         <DropDownPicker
           showBadgeDot={true}
-          placeholder='Please choose a product group first.'
+          placeholder='Product Type'
           style={{ backgroundColor: styling.colors.VistaWhite }}
           containerStyle={dropdownContainer.options}
           dropDownContainerStyle={{ backgroundColor: styling.colors.VistaWhite }}
@@ -201,8 +226,97 @@ const NewProduct = ({ currentUserData }) => {
           setItems={setItems}
         />
       </View>
+      <View style={productSizeContainer.container}>
+        <View style={productSizeContainer.titleBox}>
+          <View style={productSizeContainer.titleBackground}>
+            <Text style={productSizeContainer.titleContent}>Product Size</Text>
+          </View>
+        </View>
+        <View>
+          <View style={productSizeContainer.valueBox}>
+            <View style={productSizeContainer.valueOption}>
+              <View>
+                <Text>XS</Text>
+              </View>
+              <View>
+                <RadioButton
+                  value="XS"
+                  color={styling.colors.Asphalt}
+                  status={currentSize === 'XS' ? 'checked' : 'unchecked'}
+                  onPress={() => setCurrentSize('XS')}
+                />
+              </View>
+            </View>
+            <View style={productSizeContainer.valueOption}>
+              <View>
+                <Text>S</Text>
+              </View>
+              <View>
+                <RadioButton
+                  value="S"
+                  color={styling.colors.Asphalt}
+                  status={currentSize === 'S' ? 'checked' : 'unchecked'}
+                  onPress={() => setCurrentSize('S')}
+                />
+              </View>
+            </View>
+            <View style={productSizeContainer.valueOption}>
+              <View>
+                <Text>M</Text>
+              </View>
+              <View>
+                <RadioButton
+                  value="M"
+                  color={styling.colors.Asphalt}
+                  status={currentSize === 'M' ? 'checked' : 'unchecked'}
+                  onPress={() => setCurrentSize('M')}
+                />
+              </View>
+            </View>
+            <View style={productSizeContainer.valueOption}>
+              <View>
+                <Text>L</Text>
+              </View>
+              <View>
+                <RadioButton
+                  value="L"
+                  color={styling.colors.Asphalt}
+                  status={currentSize === 'L' ? 'checked' : 'unchecked'}
+                  onPress={() => setCurrentSize('L')}
+                />
+              </View>
+            </View>
+            <View style={productSizeContainer.valueOption}>
+              <View>
+                <Text>XL</Text>
+              </View>
+              <View>
+                <RadioButton
+                  value="XL"
+                  color={styling.colors.Asphalt}
+                  status={currentSize === 'XL' ? 'checked' : 'unchecked'}
+                  onPress={() => setCurrentSize('XL')}
+                />
+              </View>
+            </View>
+            <View style={productSizeContainer.valueOption}>
+              <View>
+                <Text>XXL</Text>
+              </View>
+              <View>
+                <RadioButton
+                  value="XXL"
+                  color={styling.colors.Asphalt}
+                  status={currentSize === 'XXL' ? 'checked' : 'unchecked'}
+                  onPress={() => setCurrentSize('XXL')}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={createProductFormValidationSchema}>
-        {({ handleSubmit }) => <NewProductForm onSubmit={handleSubmit} />}
+        {({ handleSubmit }) => <NewProductForm currentItemType={value} currentItemSize={currentSize} onSubmit={handleSubmit} loading={loading} />}
       </Formik>
     </View>
   );

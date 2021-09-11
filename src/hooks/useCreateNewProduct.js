@@ -3,7 +3,7 @@
 
 import { useMutation } from '@apollo/client'; // Import following functions from "@apollo/client" library for this hook usage.
 import { CREATE_NEW_PRODUCT } from '../graphql/mutations'; // Import following mutations from "mutations.js" file for this hook usage.
-import { CURRENT_LOGGED_USER } from '../graphql/queries'; // Import following queries from "queries.js" file for this hook usage.
+import { SHOW_ALL_PRODUCTS, CURRENT_LOGGED_USER } from '../graphql/queries'; // Import following queries from "queries.js" file for this hook usage.
 
 // Define "useCreateNewProduct" hook, which will execute everything inside of {...}, so everytime
 // user wants to add new item to the app via "NewProduct" component, this hook will be referenced.
@@ -16,9 +16,12 @@ const useCreateNewProduct = () => {
   // Define "CREATE_NEW_PRODUCT" mutation and use variables inside of [...] to be
   // used within following mutation. When we want to execute mutation, we can use
   // "createNewProduct" variable to execute and return data back after it's done.
-  const [createNewProduct, result] = useMutation(CREATE_NEW_PRODUCT, {
+  const [createNewProduct, { data, loading, error }] = useMutation(CREATE_NEW_PRODUCT, {
     refetchQueries: [{
-      query: CURRENT_LOGGED_USER
+      query: SHOW_ALL_PRODUCTS,
+    },
+    {
+      query: CURRENT_LOGGED_USER,
     }]
   });
 
@@ -52,7 +55,7 @@ const useCreateNewProduct = () => {
   };
 
   // Return variables inside of [...] to be used with this hook.
-  return [submitNewProduct, result];
+  return [submitNewProduct, { loading }];
 };
 
 // Export "useCreateNewProduct" hook, so other components like "App.js" are able to use this hook's content.

@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b35440f-34ac-4307-b49a-3bd3ce76d8ac" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/Transactions/OrderHistory.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Transactions/OrderHistory.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NewProduct.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewProduct.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ProductByID/Checkout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProductByID/Checkout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useCreateNewProduct.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useCreateNewProduct.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,9 +40,9 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="272" y="136" width="1119" height="771" key="AVDManager" timestamp="1631291119302">
+    <state x="653" y="245" width="1119" height="771" key="AVDManager" timestamp="1631374814969">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="272" y="136" width="1119" height="771" key="AVDManager/0.0.1920.1040/-3840.-208.2560.1400@0.0.1920.1040" timestamp="1631291119302" />
+    <state x="653" y="245" width="1119" height="771" key="AVDManager/0.0.1920.1040/-3840.-208.2560.1400@0.0.1920.1040" timestamp="1631374814969" />
   </component>
 </project>

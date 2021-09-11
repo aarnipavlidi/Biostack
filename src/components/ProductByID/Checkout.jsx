@@ -150,9 +150,21 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
   // alert the user and tell the reason why buying (mutation) failed.
   const onSubmit = async () => {
 
+    const currentDate = new Date(); // Define "currentDate" variable, which is equal to following function.
+
+    const getDate = currentDate.getUTCDate(); // Define "getDate" variable, which will get current date.
+    const getMonth = currentDate.getUTCMonth() + 1; // Define "getMonth" variable, which will get current month.
+    const getYear = currentDate.getUTCFullYear(); // Define "getYear" variable, which will get current year.
+
+    // Define "showCurrentDate" variable, which show all those 3x variable
+    // datas and between each value we add "/", so for example when user is
+    // buying new item from the app, then "date" object will be equal to
+    // for example => "11/9/2021".
+    const showCurrentDate = getDate + "/" + getMonth + "/" + getYear;
+
     // Define "getOrderData" variable, which will get objects inside of {...}.
     const getOrderData = {
-      date: Date.now().toString(),
+      date: showCurrentDate,
       productID: getCurrentProduct._id,
       productTitle: getCurrentProduct.productTitle,
       productSize: getCurrentProduct.productSize,
