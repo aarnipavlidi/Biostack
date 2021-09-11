@@ -1,5 +1,5 @@
 .env
-assets/images/*
+assets/images/clothes/*
 node_modules/**/*
 .expo/*
 npm-debug.*

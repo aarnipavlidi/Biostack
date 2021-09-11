@@ -31,7 +31,7 @@ const mainContainer = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 50 : 0,
     bottom: 50,
     backgroundColor: styling.colors.VistaWhite,
-  }
+  },
 });
 
 // Define "Main" component, which will execute everything inside of {...}, this component
