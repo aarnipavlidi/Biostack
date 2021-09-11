@@ -132,8 +132,18 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
       client.clearStore(); // Does same thing as upper function "client.resetStore()", but won't refetch all other active queries again.
       setCurrentToken(null); // Change "currentToken" variable state into original value => "null".
     } catch (error) {
-      console.log(error.message); // Console.log "erro.message" variable data back to the user.
+      console.log(error.message); // Console.log "error.message" variable data back to the user.
     }
+  };
+
+  const logoutUserToken = async () => {
+    try {
+      await authStorage.removeAccessToken();
+      client.clearStore();
+      setCurrentToken(null);
+    } catch (error) {
+      console.log(error.message);
+    };
   };
 
   // Define "confirmUserDelete" function, which will execute everything inside of
@@ -159,6 +169,24 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
     )
   };
 
+  const confirmUserLogout = () => {
+    Alert.alert(
+      "Biostack",
+      "Are you sure you want to logout from the app?",
+      [
+        {
+          text: "CANCEL",
+          onPress: () => console.log('User has cancelled logout process!'),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => logoutUserToken(),
+        }
+      ]
+    )
+  };
+
   // If "me" querys data => "currentUserData" is still loading from the dabase, component
   // will render everything inside of (...) (loading spinner) untill data has loaded.
   if (loading) {
@@ -171,14 +199,12 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
 
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
-  const handleMore = () => console.log("Show more settings from this component!");
-
   // Component will render everything inside of (...) back to the user.
   return (
     <ScrollView>
       <Appbar.Header statusBarHeight={0} style={settingsHeaderContainer.appBarContainer}>
         <Appbar.Content titleStyle={settingsHeaderContainer.appBarContent} title="Your profile information" />
-        <Appbar.Action icon="dots-vertical" onPress={handleMore} />
+        <Appbar.Action icon="logout" onPress={confirmUserLogout} />
       </Appbar.Header>
       <Card style={profileOverviewContainer.mainContainer}>
         <Card.Content>
@@ -223,7 +249,7 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
         title="Bookmarks"
         subtitle="Bookmarked clothes on the app."
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="bookmark-multiple-outline" />}
-        right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/clothes') } />}
+        right={(props) => <IconButton {...props} icon="chevron-right" />}
       />
       <Card.Title
         style={cardTitleContainer.container}
@@ -237,7 +263,7 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
         title="Edit Account"
         subtitle="Edit your account information."
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="account-edit-outline" />}
-        right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/clothes') } />}
+        right={(props) => <IconButton {...props} icon="chevron-right" />}
       />
 
       <View style={buttonContainer.container}>
