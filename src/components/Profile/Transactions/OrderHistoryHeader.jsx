@@ -42,7 +42,7 @@ const OrderHistoryHeader = () => {
       </Appbar.Header>
       <DataTable.Header>
         <DataTable.Title>Date</DataTable.Title>
-        <DataTable.Title numeric={true}>Products</DataTable.Title>
+        <DataTable.Title numeric={true}>Product</DataTable.Title>
         <DataTable.Title style={{ justifyContent: 'center' }}>Type</DataTable.Title>
         <DataTable.Title numeric={true}>Total price</DataTable.Title>
         <DataTable.Title style={{ justifyContent: 'center' }}>More</DataTable.Title>

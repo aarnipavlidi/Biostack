@@ -164,7 +164,10 @@ const NewProduct = ({ currentUserData }) => {
   // which "type" matches the best of the item user wants to sell on the app.
   const [items, setItems] = useState([
     {label: 'T-shirt', value: 't-shirt', icon: () => <Image source={require('../../assets/icons/clothes/t-24x24-455076.png')} />},
-    {label: 'Sweater', value: 'sweater', icon: () => <Image source={require('../../assets/icons/clothes/sweater-24x24-455072.png')} />}
+    {label: 'Sweater', value: 'sweater', icon: () => <Image source={require('../../assets/icons/clothes/sweater-24x24-455072.png')} />},
+    {label: 'Hoodie', value: 'hoodie', icon: () => <Image source={require('../../assets/icons/clothes/hoodie-24x24-455064.png')} />},
+    {label: 'Jacket', value: 'jacket', icon: () => <Image source={require('../../assets/icons/clothes/jacket-24x24-455063.png')} />},
+    {label: 'Hat', value: 'hat', icon: () => <Image source={require('../../assets/icons/clothes/hat-24x24-455060.png')} />},
   ]);
 
   const [currentSize, setCurrentSize] = useState(null); // Define variable "currentSize" into state, which gets value "null" as default.
