@@ -31,6 +31,9 @@ export default {
   },
   extra: {
     env: process.env.ENV,
-    server: process.env.APOLLO_URI
+    server: process.env.APOLLO_URI,
+    email_service_id: process.env.EMAIL_SERVICE_ID,
+    email_template_id: process.env.EMAIL_TEMPLATE_ID,
+    email_user_id: process.env.EMAIL_USER_ID
   }
 }

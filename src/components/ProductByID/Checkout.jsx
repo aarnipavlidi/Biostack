@@ -7,6 +7,8 @@ import { ImageBackground, View, Text, StyleSheet } from 'react-native'; // Impor
 import { Modal, Portal, Title, Caption, Divider, RadioButton, Button } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
 import useCreateNewTransaction from '../../hooks/useCreateNewTransaction'; // Import "useCreateNewTransaction" hook from "useCreateNewTransaction.js" file for this component usage.
+import Constants from 'expo-constants'; // Import "Constants" component from "expo-constants" for this component usage.
+import emailjs from 'emailjs-com'; // Import "emailjs" library content from "emailjs-com" for this component usage.
 
 import { Fontisto, Feather, MaterialIcons, Entypo } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 import ItemSizeCheck from '../ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
@@ -178,15 +180,28 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
       paymentTotal: String(orderTotalPrice)
     };
 
+    const emailService = Constants.manifest.extra.email_service_id;
+    const emailTemplate = Constants.manifest.extra.email_template_id;
+    const emailUser = Constants.manifest.extra.email_user_id;
+
     // When this function is being referenced, then we wil execute "try" section first,
     // if something goes wrong during this section then we will pass into "catch" section.
     try {
       const response = await submitNewTransaction({ getOrderData }); // Define "response" variable, which will execute following function.
       const confirmationData = response.data.createTransaction;
+
+      const emailOrderConfirmation = {
+        user_email: "andreas.pavlidi@gmail.com",
+        user_name: "currentUserData.name",
+        reply_to: "me@aarnipavlidi.fi",
+        message: "tesdasda",
+      };
+
       history.push({
         pathname: '/dashboard/order-confirmation',
         state: { detail: confirmationData }
       });
+      const emailResponse = await emailjs.send(emailService, emailTemplate, emailOrderConfirmation, emailUser);
     } catch (error) {
       console.log(error.message)
     };
