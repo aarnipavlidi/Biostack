@@ -3,6 +3,7 @@
 
 import React from 'react'; // Import "react" library's content for this component usage.
 import { TextInput as NativeTextInput, View, Text, StyleSheet, Platform } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { TextInput as NewTextInput } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
 

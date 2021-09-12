@@ -9,7 +9,6 @@ import useAuthStorage from '../hooks/useAuthStorage'; // Import "useAuthStorage"
 
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
 import FormikTextInput from './FormikTextInput'; // Import "FormikTextInput" component from "FormikTextInput.jsx" for this component usage.
-import BackgroundAnimation from './Background/AnimatedBackground'; // Import "BackgroundAnimation" component from "AnimatedBackground.jsx" for this component usage.
 
 import { Formik } from 'formik'; // Import "Formik" component from "formik" libary's content for this component usage.
 import * as yup from 'yup'; // Import everything as "yup" from "yup" libary's content for this component usage.
@@ -119,7 +118,6 @@ const LoginForm = ({ history, onSubmit }) => {
           <Text style={buttonContainer.buttonContentText}>Sign Up</Text>
         </Pressable>
       </View>
-      <BackgroundAnimation />
     </View>
   );
 };

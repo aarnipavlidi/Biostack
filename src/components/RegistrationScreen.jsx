@@ -2,7 +2,7 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
-import { Alert, View, Pressable, Text, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Alert, View, ScrollView, Pressable, Text, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
 

@@ -16,6 +16,8 @@ import UserSettings from './Profile/Clothes/UserSettings'; // Import "UserSettin
 import UserClothes from './Profile/Clothes/UserClothes'; // Import "UserClothes" component from "UserClothes.jsx" file for this component usage.
 import NavigationBottom from './NavigationBottom'; // Import "NavigationBottom" component from "NavigationBottom.jsx" file for this component usage.
 
+import BackgroundAnimation from './Background/AnimatedBackground'; // Import "BackgroundAnimation" component from "AnimatedBackground.jsx" for this component usage.
+
 import useCurrentUser from '../hooks/useCurrentUser'; // Import "useCurrentUser" hook from "useCurrentUser.js" file for this component usage.
 
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
@@ -71,9 +73,11 @@ const Main = () => {
           </Route>
           <Route exact path='/register'>
             <RegistrationScreen />
+            <BackgroundAnimation />
           </Route>
           <Route exact path="/">
             <LoginScreen setCurrentToken={setCurrentToken} />
+            <BackgroundAnimation />
           </Route>
         </Switch>
       </View>

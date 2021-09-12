@@ -5,8 +5,8 @@ import styled from 'styled-components/native'; // Import "styled" from "styled-c
 
 export const BackgoundImage = styled.ImageBackground.attrs(props => ({
   imageStyle: {
-    width: '400%',
-    height: '400%',
+    width: '250%',
+    height: '250%',
     transform: [
       {
         translateX: props.translateIn.inX,
@@ -21,6 +21,7 @@ export const BackgoundImage = styled.ImageBackground.attrs(props => ({
   },
 }))`
   position: absolute;
+  left: 0;
   flex: 1;
   width: 100%;
   height: 100%;

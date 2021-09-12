@@ -41,7 +41,7 @@ const AnimatedBackground = () => {
   return (
     <AnimatedImage
       source={require('../../../assets/images/background/hipster-fashion-clothing-doodle-seamless-pattern_1284-6445.jpg')}
-      resizeMode="repeat"
+      resizeMode="cover"
       style={{
         zIndex: 10,
         transform: [
