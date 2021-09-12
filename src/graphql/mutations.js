@@ -88,6 +88,7 @@ export const CREATE_NEW_TRANSACTION = gql`
       productGroupName
       sellerID
       sellerName
+      sellerEmail
       shippingMethod
       paymentMethod
       paymentTotal

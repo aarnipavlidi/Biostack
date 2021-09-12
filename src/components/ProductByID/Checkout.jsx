@@ -189,21 +189,27 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
     try {
       const response = await submitNewTransaction({ getOrderData }); // Define "response" variable, which will execute following function.
       const confirmationData = response.data.createTransaction;
-
       const emailOrderConfirmation = {
-        user_email: "andreas.pavlidi@gmail.com",
-        user_name: "currentUserData.name",
+        to_name: currentUserData.name, // tuotteen ostaja
+        to_email: currentUserData.email, // ostajan email
         reply_to: "me@aarnipavlidi.fi",
-        message: "tesdasda",
+        orderID: confirmationData._id, // oston id
+        orderName: confirmationData.productTitle,
+        orderSize: confirmationData.productSize,
+        orderType: confirmationData.productGroupName,
+        orderShipping: confirmationData.shippingMethod,
+        orderPayment: confirmationData.paymentMethod,
+        orderTotal: confirmationData.paymentTotal,
+        sellerName: confirmationData.sellerName,
+        contactEmail: confirmationData.sellerEmail,
       };
-
       history.push({
         pathname: '/dashboard/order-confirmation',
         state: { detail: confirmationData }
       });
-      const emailResponse = await emailjs.send(emailService, emailTemplate, emailOrderConfirmation, emailUser);
+      await emailjs.send(emailService, emailTemplate, emailOrderConfirmation, emailUser);
     } catch (error) {
-      console.log(error.message)
+      console.log(error)
     };
   };
 
