@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b35440f-34ac-4307-b49a-3bd3ce76d8ac" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Background/Styling.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Background/Styling.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/LoginScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginScreen.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main.jsx" afterDir="false" />
@@ -39,9 +40,9 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="447" y="203" width="1119" height="771" key="AVDManager" timestamp="1631439610097">
+    <state x="447" y="203" width="1119" height="771" key="AVDManager" timestamp="1631464151579">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="447" y="203" width="1119" height="771" key="AVDManager/0.0.1920.1040/-3840.-208.2560.1400@0.0.1920.1040" timestamp="1631439610097" />
+    <state x="447" y="203" width="1119" height="771" key="AVDManager/0.0.1920.1040/-3840.-208.2560.1400@0.0.1920.1040" timestamp="1631464151579" />
   </component>
 </project>
