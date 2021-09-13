@@ -14,14 +14,44 @@ const useProducts = () => {
   // to be used within this query. If query returns data, we can access
   // it via "data" variable and if data itself from backend is loading,
   // then we can use "loading" variable and render "spinner" for example.
-  const { loading, error, data } = useQuery(SHOW_ALL_PRODUCTS);
+  const { data, loading, fetchMore, error } = useQuery(SHOW_ALL_PRODUCTS);
 
-  // Return variables inside of {...} to be used with this hook.
-  return {
-    getAllProducts: data?.showAllProducts,
-    loading,
+  const handleFetchMore = () => {
+
+    const canFetchMore = !loading && data?.showAllProducts.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    } else {
+      return fetchMore({
+        variables: {
+          getCursorID: data.showAllProducts.pageInfo.endCursor,
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          const newEdges = fetchMoreResult.showAllProducts.edges;
+          const pageInfo = fetchMoreResult.showAllProducts.pageInfo;
+
+          return newEdges.length
+            ? {
+                showAllProducts: {
+                  __typename: previousResult.showAllProducts.__typename,
+                  edges: [...previousResult.showAllProducts.edges, ...newEdges],
+                  pageInfo,
+                },
+              }
+            : previousResult;
+          },
+        });
+      };
+    };
+
+    // Return variables inside of {...} to be used with this hook.
+    return {
+      getAllProducts: data?.showAllProducts,
+      fetchMore: handleFetchMore,
+      loading,
+    };
   };
-};
 
 // Export "useProducts" hook, so other components like "App.js" are able to use this hooks's content.
 export default useProducts;

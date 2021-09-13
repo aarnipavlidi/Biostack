@@ -2,7 +2,7 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
-import { ActivityIndicator, FlatList, Text, StyleSheet, View } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { ActivityIndicator, FlatList, Text, StyleSheet, View, LogBox } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
 import ProductRenderAll from './ProductRenderAll'; // Import "ProductRenderAll" component from "ProductRenderAll.jsx" file this component usage.
 import DashboardHeader from './DashboardHeader'; // Import "DashboardHeader" component from "DashboardHeader.jsx" file this component usage.
@@ -25,14 +25,19 @@ const loadingContainer = StyleSheet.create({
 // render every product which has been added to the app by various different users.
 const Dashboard = () => {
 
-  const { getAllProducts, loading } = useProducts(); // Define following variables from "useProducts(...)" hook.
+  const { getAllProducts, fetchMore, loading } = useProducts(); // Define following variables from "useProducts(...)" hook.
 
   // Define "showAllProducts" variable, which will return either function =>
   // "getAllProducts.map(results => results)" if "getAllProducts" variable
   // has data or empty array => [] if variable has no data to show for the user.
   const showAllProducts = getAllProducts
-    ? getAllProducts.map(results => results)
+    ? getAllProducts.edges.map(results => results.node)
     : [];
+
+  const onEndReach = () => {
+    console.log('Fetching more products from server!');
+    fetchMore();
+  };
 
   // If data from the hook "useProducts(...)" is loading, then component
   // will render everything inside of (...) back to the user.
@@ -44,11 +49,15 @@ const Dashboard = () => {
     );
   };
 
+  LogBox.ignoreAllLogs();
+
   // Component will render everything inside of (...) back to the user.
   return (
     <FlatList
       data={showAllProducts}
-      keyExtractor={(item, index) => item._id}
+      onEndReached={() => onEndReach()}
+      onEndReachedThreshold={0.2}
+      keyExtractor={(item, index) => String(index)}
       renderItem={({ item }) => <ProductRenderAll item={item} />}
       ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
       numColumns={2}
