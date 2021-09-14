@@ -35,14 +35,13 @@ const titleContainer = StyleSheet.create({
   containerTitle: {
     textAlign: 'center',
     color: styling.colors.Asphalt,
-    fontFamily: styling.fonts.android,
-    fontWeight: styling.fontWeights.bold,
+    fontFamily: styling.fonts.loginScreenTitle,
     fontSize: styling.fontSizes.title,
   },
   containerText: {
     textAlign: 'center',
     color: styling.colors.Asphalt,
-    fontFamily: styling.fonts.android,
+    fontFamily: styling.fonts.loginScreenSubtitle,
     fontWeight: styling.fontWeights.normal,
     fontSize: styling.fontSizes.subheading,
   }

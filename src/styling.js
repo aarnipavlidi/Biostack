@@ -14,7 +14,9 @@ const styling = {
   fonts: {
     default: 'System',
     android: 'Roboto',
-    ios: 'Arial'
+    ios: 'Arial',
+    loginScreenTitle: 'PermanentMarker_400Regular',
+    loginScreenSubtitle: 'PermanentMarker_400Regular',
   },
   fontWeights: {
     normal: '400',

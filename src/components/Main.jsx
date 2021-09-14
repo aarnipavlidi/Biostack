@@ -20,7 +20,9 @@ import BackgroundAnimation from './Background/AnimatedBackground'; // Import "Ba
 
 import useCurrentUser from '../hooks/useCurrentUser'; // Import "useCurrentUser" hook from "useCurrentUser.js" file for this component usage.
 
+import AppLoading from 'expo-app-loading'; // Import "AppLoading" component from "expo-app-loading" libary for thos component usage.
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
+import { useFonts, PermanentMarker_400Regular } from '@expo-google-fonts/permanent-marker';
 
 // Define "mainContainer" variable, which will style whole "Main" component,
 // which means it does not matter which component is being rendered back to
@@ -42,8 +44,16 @@ const mainContainer = StyleSheet.create({
 // be redirected back to the login screen => "LoginScreen" component => path "/".
 const Main = () => {
 
+  const [fontsLoaded] = useFonts({
+    PermanentMarker_400Regular,
+  });
+
   const [currentToken, setCurrentToken] = useState(null); // Define "currentToken" variable into state, which will get default value of "null".
   const { currentUserData, loading } = useCurrentUser(); // Define "currentUserData" and "loading" variables from => "useCurrentUser(...)" hook.
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  };
 
   // Component will render everything inside of (...) back to the user.
   return (
