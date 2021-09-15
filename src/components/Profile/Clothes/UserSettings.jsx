@@ -203,7 +203,7 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
   return (
     <ScrollView>
       <Appbar.Header statusBarHeight={0} style={settingsHeaderContainer.appBarContainer}>
-        <Appbar.Content titleStyle={settingsHeaderContainer.appBarContent} title="Your profile information" />
+        <Appbar.Content titleStyle={settingsHeaderContainer.appBarContent} title="Your profile information" titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
         <Appbar.Action icon="logout" onPress={confirmUserLogout} />
       </Appbar.Header>
       <Card style={profileOverviewContainer.mainContainer}>

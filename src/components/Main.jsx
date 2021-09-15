@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react'; // Import "react" library's content for this component usage.
 import { Switch, Route, Redirect } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
-import { SafeAreaView, StatusBar, Platform, StyleSheet, View } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { SafeAreaView, StatusBar, Platform, StyleSheet, View, useWindowDimensions } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
 import LoginScreen from './LoginScreen'; // Import "LoginScreen" component from "LoginScreen.jsx" file for this component usage.
 import RegistrationScreen from './RegistrationScreen'; // Import "RegistrationScreen" component from "RegistrationScreen.jsx" file for this component usage.
@@ -44,6 +44,8 @@ const mainContainer = StyleSheet.create({
 // be redirected back to the login screen => "LoginScreen" component => path "/".
 const Main = () => {
 
+  const windowHeight = useWindowDimensions().height;
+
   const [fontsLoaded] = useFonts({
     PermanentMarker_400Regular,
   });
@@ -57,7 +59,7 @@ const Main = () => {
 
   // Component will render everything inside of (...) back to the user.
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: styling.colors.VistaWhite}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: styling.colors.VistaWhite, minHeight: Math.round(windowHeight) }}>
       <View style={mainContainer.container}>
         <Switch>
           <Route exact path="/dashboard">

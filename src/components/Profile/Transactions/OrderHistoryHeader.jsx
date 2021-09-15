@@ -37,7 +37,7 @@ const OrderHistoryHeader = () => {
     <View>
       <Appbar.Header statusBarHeight={0} style={ordersHeaderContainer.appBarContainer}>
         <Appbar.BackAction onPress={goBackPreviousRoute} />
-        <Appbar.Content titleStyle={ordersHeaderContainer.appBarContent} title="Transactions" />
+        <Appbar.Content titleStyle={ordersHeaderContainer.appBarContent} title="Transactions" titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
         <Appbar.Action icon="dots-vertical" onPress={handleMore} />
       </Appbar.Header>
       <DataTable.Header>
