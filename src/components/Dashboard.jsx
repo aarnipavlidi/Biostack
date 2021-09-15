@@ -3,6 +3,8 @@
 
 import React, { useState } from 'react'; // Import "react" library's content for this component usage.
 import { ActivityIndicator, FlatList, Text, StyleSheet, View, LogBox } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Appbar, Searchbar } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { MaterialIcons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import ProductRenderAll from './ProductRenderAll'; // Import "ProductRenderAll" component from "ProductRenderAll.jsx" file this component usage.
 import DashboardHeader from './DashboardHeader'; // Import "DashboardHeader" component from "DashboardHeader.jsx" file this component usage.
@@ -16,9 +18,19 @@ import styling from '../styling'; // Import "styling" variable from "styling.js"
 // if data is "loading" we will return => "loading spinner".
 const loadingContainer = StyleSheet.create({
   container: {
-    height: '100%',
-    justifyContent: 'center',
+    flex: 1
   },
+  appBarContainer: {
+    backgroundColor: styling.colors.Asphalt,
+    height: 50,
+  },
+  appBarContent: {
+    color: styling.colors.VistaWhite,
+  },
+  loadingSpinner: {
+    flex: 1,
+    justifyContent: 'center'
+  }
 });
 
 // Define component "Dashboard", which will execute everything inside of {...}, component
@@ -26,10 +38,18 @@ const loadingContainer = StyleSheet.create({
 // render every product which has been added to the app by various different users.
 const Dashboard = () => {
 
+  const [searchStatus, setSearchStatus] = useState(false);
   const [currentSearchValue, setCurrentSearchValue] = useState('');
   const [debouncedSearchValue] = useDebounce(currentSearchValue, 1000);
 
-  console.log(currentSearchValue)
+  const activateSearchBar = () => {
+    setSearchStatus(true)
+  };
+
+  const resetSearchBar = () => {
+    setSearchStatus(false)
+    setCurrentSearchValue('')
+  };
 
   const { getAllProducts, fetchMore, loading } = useProducts({ productSearchValue: debouncedSearchValue }); // Define following variables from "useProducts(...)" hook.
 
@@ -50,7 +70,16 @@ const Dashboard = () => {
   if (loading) {
     return (
       <View style={loadingContainer.container}>
-        <ActivityIndicator size="large" color={styling.colors.Asphalt} />
+        <Appbar.Header style={loadingContainer.appBarContainer} statusBarHeight={0}>
+          <Appbar.Content style={loadingContainer.appBarContent} title="Biostack" titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
+          {searchStatus === true
+            ? <Searchbar style={{ height: 30, width: 80, marginRight: 5, flexGrow: 1 }} placeholder="Search for item" value={currentSearchValue} onChangeText={(getInputValue) => setCurrentSearchValue(getInputValue)} inputStyle={{ fontSize: 13 }} clearIcon={() => <MaterialIcons name="clear" size={24} onPress={() => resetSearchBar()} color={styling.colors.Asphalt} />}/>
+            : <Appbar.Action icon="magnify" onPress={activateSearchBar} />
+          }
+        </Appbar.Header>
+        <View style={loadingContainer.loadingSpinner}>
+          <ActivityIndicator size="large" color={styling.colors.Asphalt} />
+        </View>
       </View>
     );
   };
@@ -68,7 +97,7 @@ const Dashboard = () => {
       ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
       numColumns={2}
       columnWrapperStyle={{ flex: 1, justifyContent: 'space-between' }}
-      ListHeaderComponent={<DashboardHeader currentSearchValue={currentSearchValue} setCurrentSearchValue={setCurrentSearchValue} />}
+      ListHeaderComponent={<DashboardHeader searchStatus={searchStatus} resetSearchBar={resetSearchBar} activateSearchBar={activateSearchBar} currentSearchValue={currentSearchValue} setCurrentSearchValue={setCurrentSearchValue} />}
       ListHeaderComponentStyle={{ marginBottom: 7 }}
     />
   );
