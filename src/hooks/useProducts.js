@@ -8,13 +8,15 @@ import { SHOW_ALL_PRODUCTS } from '../graphql/queries'; // Import following quer
 // Define "useProducts" hook, which will execute everything inside of {...}, so basically
 // hook's purpose is to get all products from backend via "SHOW_ALL_PRODUCTS" query and
 // show them back to the user at "Dashboard" component.
-const useProducts = () => {
+const useProducts = (variables) => {
 
   // Define "SHOW_ALL_PRODUCTS" query and use variables inside of {...}
   // to be used within this query. If query returns data, we can access
   // it via "data" variable and if data itself from backend is loading,
   // then we can use "loading" variable and render "spinner" for example.
-  const { data, loading, fetchMore, error } = useQuery(SHOW_ALL_PRODUCTS);
+  const { data, loading, fetchMore, error } = useQuery(SHOW_ALL_PRODUCTS, {
+    variables,
+  });
 
   const handleFetchMore = () => {
 
@@ -26,6 +28,7 @@ const useProducts = () => {
       return fetchMore({
         variables: {
           getCursorID: data.showAllProducts.pageInfo.endCursor,
+          ...variables,
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
           const newEdges = fetchMoreResult.showAllProducts.edges;

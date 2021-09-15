@@ -118,7 +118,7 @@ const CurrentProduct = ({ currentUserData, loadingUserData }) => {
       <Provider>
         <Appbar.Header style={headerContainer.appBarContainer} statusBarHeight={0}>
           <Appbar.BackAction onPress={goBackPreviousRoute} />
-          <Appbar.Content style={headerContainer.appBarContent} title={getCurrentProduct.productTitle} />
+          <Appbar.Content style={headerContainer.appBarContent} title={getCurrentProduct.productTitle} titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
         </Appbar.Header>
         <Card style={productContainer.container}>
           <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5 }} source={require('../../../assets/images/clothes/Vanilla_Front_900x.jpg')} />

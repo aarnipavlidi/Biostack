@@ -48,8 +48,8 @@ export const CURRENT_LOGGED_USER = gql`
 // "Dashboard" (home) and app will show every product which has been added by the
 // different users back to the logged user.
 export const SHOW_ALL_PRODUCTS = gql`
-  query showAllProducts($getCursorID: ID) {
-    showAllProducts(first: 8, cursor: $getCursorID) {
+  query showAllProducts($getCursorID: ID, $productSearchValue: String) {
+    showAllProducts(first: 8, cursor: $getCursorID, search: $productSearchValue) {
       edges {
         node {
           _id

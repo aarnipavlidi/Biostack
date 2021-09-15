@@ -19,10 +19,9 @@ const dashboardHeaderContainer = StyleSheet.create({
 });
 
 // Define "DashboardHeader" component, which will execute everything inside of {...}.
-const DashboardHeader = () => {
+const DashboardHeader = ({ currentSearchValue, setCurrentSearchValue }) => {
 
   const [searchStatus, setSearchStatus] = useState(false);
-
   const handleSearch = () => setSearchStatus(true);
 
   // Component will render everything inside of (...) back to the user.
@@ -30,7 +29,7 @@ const DashboardHeader = () => {
     <Appbar.Header style={dashboardHeaderContainer.appBarContainer} statusBarHeight={0}>
       <Appbar.Content style={dashboardHeaderContainer.appBarContent} title="Biostack" titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
       {searchStatus === true
-        ? <Searchbar style={{ height: 30, width: 80, marginRight: 5, flexGrow: 1 }} placeholder="Search for item" inputStyle={{ fontSize: 13 }} clearIcon={() => <MaterialIcons name="clear" size={24} onPress={() => setSearchStatus(false)} color={styling.colors.Asphalt} />}/>
+        ? <Searchbar style={{ height: 30, width: 80, marginRight: 5, flexGrow: 1 }} placeholder="Search for item" currentSearchValue={currentSearchValue} onChangeText={(getInputValue) => setCurrentSearchValue(getInputValue)} inputStyle={{ fontSize: 13 }} clearIcon={() => <MaterialIcons name="clear" size={24} onPress={() => setSearchStatus(false)} color={styling.colors.Asphalt} />}/>
         : <Appbar.Action icon="magnify" onPress={handleSearch} />
       }
     </Appbar.Header>

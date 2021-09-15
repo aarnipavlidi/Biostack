@@ -1,13 +1,14 @@
 // This project has been commented by Aarni Pavlidi, if you have any questions or suggestions with the code,
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
-import React from 'react'; // Import "react" library's content for this component usage.
+import React, { useState } from 'react'; // Import "react" library's content for this component usage.
 import { ActivityIndicator, FlatList, Text, StyleSheet, View, LogBox } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
 import ProductRenderAll from './ProductRenderAll'; // Import "ProductRenderAll" component from "ProductRenderAll.jsx" file this component usage.
 import DashboardHeader from './DashboardHeader'; // Import "DashboardHeader" component from "DashboardHeader.jsx" file this component usage.
 
 import useProducts from '../hooks/useProducts'; // Import "useProducts" hook from "useProducts.js" file for this component usage.
+import { useDebounce } from 'use-debounce';
 
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
@@ -25,7 +26,12 @@ const loadingContainer = StyleSheet.create({
 // render every product which has been added to the app by various different users.
 const Dashboard = () => {
 
-  const { getAllProducts, fetchMore, loading } = useProducts(); // Define following variables from "useProducts(...)" hook.
+  const [currentSearchValue, setCurrentSearchValue] = useState('');
+  const [debouncedSearchValue] = useDebounce(currentSearchValue, 1000);
+
+  console.log(currentSearchValue)
+
+  const { getAllProducts, fetchMore, loading } = useProducts({ productSearchValue: debouncedSearchValue }); // Define following variables from "useProducts(...)" hook.
 
   // Define "showAllProducts" variable, which will return either function =>
   // "getAllProducts.map(results => results)" if "getAllProducts" variable
@@ -62,7 +68,7 @@ const Dashboard = () => {
       ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
       numColumns={2}
       columnWrapperStyle={{ flex: 1, justifyContent: 'space-between' }}
-      ListHeaderComponent={<DashboardHeader />}
+      ListHeaderComponent={<DashboardHeader currentSearchValue={currentSearchValue} setCurrentSearchValue={setCurrentSearchValue} />}
       ListHeaderComponentStyle={{ marginBottom: 7 }}
     />
   );
