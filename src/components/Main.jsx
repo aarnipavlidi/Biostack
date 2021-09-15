@@ -7,7 +7,7 @@ import { SafeAreaView, StatusBar, Platform, StyleSheet, View, useWindowDimension
 
 import LoginScreen from './LoginScreen'; // Import "LoginScreen" component from "LoginScreen.jsx" file for this component usage.
 import RegistrationScreen from './RegistrationScreen'; // Import "RegistrationScreen" component from "RegistrationScreen.jsx" file for this component usage.
-import Dashboard from './Dashboard'; // Import "Dashboard" component from "Dashboard.jsx" file for this component usage.
+import Dashboard from './Home/Dashboard'; // Import "Dashboard" component from "Dashboard.jsx" file for this component usage.
 import CurrentProduct from './ProductByID/CurrentProduct'; // Import "CurrentProduct" component from "CurrentProduct.jsx" file for this component usage.
 import OrderConfirmation from './ProductByID/OrderConfirmation'; // Import "OrderConfirmation" component from "OrderConfirmation.jsx" file for this component usage.
 import NewProduct from './NewProduct'; // Import "NewProduct" component from "NewProduct.jsx" file for this component usage.

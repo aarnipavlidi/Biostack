@@ -6,13 +6,13 @@ import { ActivityIndicator, FlatList, Text, StyleSheet, View, LogBox } from 'rea
 import { Appbar, Searchbar } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { MaterialIcons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
-import ProductRenderAll from './ProductRenderAll'; // Import "ProductRenderAll" component from "ProductRenderAll.jsx" file this component usage.
+import ProductRenderAll from '../ProductRenderAll'; // Import "ProductRenderAll" component from "ProductRenderAll.jsx" file this component usage.
 import DashboardHeader from './DashboardHeader'; // Import "DashboardHeader" component from "DashboardHeader.jsx" file this component usage.
 
-import useProducts from '../hooks/useProducts'; // Import "useProducts" hook from "useProducts.js" file for this component usage.
+import useProducts from '../../hooks/useProducts'; // Import "useProducts" hook from "useProducts.js" file for this component usage.
 import { useDebounce } from 'use-debounce';
 
-import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
+import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 // Define "loadingContainer" variable, which will be used to create style
 // if data is "loading" we will return => "loading spinner".
@@ -90,6 +90,7 @@ const Dashboard = () => {
   return (
     <FlatList
       data={showAllProducts}
+      ListEmptyComponent={() => <View><Text>no results :()</Text></View>}
       onEndReached={() => onEndReach()}
       onEndReachedThreshold={0.2}
       keyExtractor={(item, index) => String(index)}

@@ -6,7 +6,7 @@ import { View, StyleSheet } from 'react-native'; // Import following components 
 import { Appbar, Searchbar } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { MaterialIcons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
-import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
+import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 const dashboardHeaderContainer = StyleSheet.create({
   appBarContainer: {
