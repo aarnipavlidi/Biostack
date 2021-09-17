@@ -23,6 +23,7 @@ import useCurrentUser from '../hooks/useCurrentUser'; // Import "useCurrentUser"
 import AppLoading from 'expo-app-loading'; // Import "AppLoading" component from "expo-app-loading" libary for thos component usage.
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
 import { useFonts, PermanentMarker_400Regular } from '@expo-google-fonts/permanent-marker';
+import { AnnieUseYourTelescope_400Regular } from '@expo-google-fonts/annie-use-your-telescope';
 
 // Define "mainContainer" variable, which will style whole "Main" component,
 // which means it does not matter which component is being rendered back to
@@ -48,6 +49,7 @@ const Main = () => {
 
   const [fontsLoaded] = useFonts({
     PermanentMarker_400Regular,
+    AnnieUseYourTelescope_400Regular
   });
 
   const [currentToken, setCurrentToken] = useState(null); // Define "currentToken" variable into state, which will get default value of "null".
