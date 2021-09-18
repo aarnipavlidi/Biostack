@@ -11,8 +11,7 @@ import DashboardHeader from './DashboardHeader'; // Import "DashboardHeader" com
 import DashboardEmpty from './DashboardEmpty'; // Import "DashboardEmpty" component from "DashboardEmpty.jsx" file for this component usage.
 
 import useProducts from '../../hooks/useProducts'; // Import "useProducts" hook from "useProducts.js" file for this component usage.
-import { useDebounce } from 'use-debounce';
-
+import useProductFilter from '../../hooks/useProductFilter'; // Import "useProductFilter" hook from "useProductFilter.js" file for this component usage.
 import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 // Define "loadingContainer" variable, which will be used to create style
@@ -37,20 +36,7 @@ const loadingContainer = StyleSheet.create({
 // Define component "Dashboard", which will execute everything inside of {...}, component
 // will be rendered everytime user has successfully logged to the app. Component will
 // render every product which has been added to the app by various different users.
-const Dashboard = () => {
-
-  const [searchStatus, setSearchStatus] = useState(false);
-  const [currentSearchValue, setCurrentSearchValue] = useState('');
-  const [debouncedSearchValue] = useDebounce(currentSearchValue, 1000);
-
-  const activateSearchBar = () => {
-    setSearchStatus(true)
-  };
-
-  const resetSearchBar = () => {
-    setSearchStatus(false)
-    setCurrentSearchValue('')
-  };
+const Dashboard = ({ searchStatus, resetSearchBar, activateSearchBar, currentSearchValue, setCurrentSearchValue, debouncedSearchValue }) => {
 
   const { getAllProducts, fetchMore, loading } = useProducts({ productSearchValue: debouncedSearchValue }); // Define following variables from "useProducts(...)" hook.
 

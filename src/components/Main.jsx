@@ -19,6 +19,7 @@ import NavigationBottom from './NavigationBottom'; // Import "NavigationBottom" 
 import BackgroundAnimation from './Background/AnimatedBackground'; // Import "BackgroundAnimation" component from "AnimatedBackground.jsx" for this component usage.
 
 import useCurrentUser from '../hooks/useCurrentUser'; // Import "useCurrentUser" hook from "useCurrentUser.js" file for this component usage.
+import useProductFilter from '../hooks/useProductFilter'; // Import "useProductFilter" hook from "useProductFilter.js" file for this component usage.
 
 import AppLoading from 'expo-app-loading'; // Import "AppLoading" component from "expo-app-loading" libary for thos component usage.
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
@@ -54,6 +55,7 @@ const Main = () => {
 
   const [currentToken, setCurrentToken] = useState(null); // Define "currentToken" variable into state, which will get default value of "null".
   const { currentUserData, loading } = useCurrentUser(); // Define "currentUserData" and "loading" variables from => "useCurrentUser(...)" hook.
+  const { searchStatus, activateSearchBar, resetSearchBar, currentSearchValue, setCurrentSearchValue, debouncedSearchValue } = useProductFilter();
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -65,7 +67,7 @@ const Main = () => {
       <View style={mainContainer.container}>
         <Switch>
           <Route exact path="/dashboard">
-            {currentToken ? <Dashboard /> : <Redirect to="/" />}
+            {currentToken ? <Dashboard searchStatus={searchStatus} resetSearchBar={resetSearchBar} activateSearchBar={activateSearchBar} currentSearchValue={currentSearchValue} setCurrentSearchValue={setCurrentSearchValue} debouncedSearchValue={debouncedSearchValue} /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/new-item">
             {currentToken ? <NewProduct currentUserData={currentUserData} /> : <Redirect to="/" />}
