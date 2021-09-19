@@ -242,7 +242,7 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
         title="Clothes"
         subtitle="Your listed clothes on the app."
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="hanger" />}
-        right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/clothes') } />}
+        right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/clothes')} />}
       />
       <Card.Title
         style={cardTitleContainer.container}
@@ -256,14 +256,14 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
         title="Transactions"
         subtitle="Your orders history on the app."
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="basket-outline" />}
-        right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/transactions') } />}
+        right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/transactions')} />}
       />
       <Card.Title
         style={cardTitleContainer.container}
         title="Edit Account"
         subtitle="Edit your account information."
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="account-edit-outline" />}
-        right={(props) => <IconButton {...props} icon="chevron-right" />}
+        right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/edit-account')} />}
       />
 
       <View style={buttonContainer.container}>
