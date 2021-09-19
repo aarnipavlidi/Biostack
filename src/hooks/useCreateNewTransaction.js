@@ -10,10 +10,13 @@ const useCreateNewTransaction = () => {
   const [createNewTransaction, { data, loading, error }] = useMutation(CREATE_NEW_TRANSACTION, {
     refetchQueries: [{
       query: SHOW_ALL_PRODUCTS,
+      variables: {
+        productSearchValue: ''
+      }
     },
     {
       query: CURRENT_LOGGED_USER,
-    }]
+    }],
   });
 
   const submitNewTransaction = async ({ getOrderData }) => {
