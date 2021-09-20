@@ -77,6 +77,7 @@ const profileOverviewContainer = StyleSheet.create({
 const cardTitleContainer = StyleSheet.create({
   container: {
     marginTop: 10,
+    marginBottom: 3,
     backgroundColor: styling.colors.VistaWhite,
     width: '90%',
     alignSelf: 'center',
@@ -111,30 +112,8 @@ const buttonContainer = StyleSheet.create({
 // and render back either "loading spinner" or current logged user data.
 const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
 
-  const [deleteUserFromDatabase] = useDeleteUser(); // Define "deleteUserFromDatabase" variable from => "useDeleteUser(...)" hook.
-
   const client = useApolloClient(); // Define "client" variable, which is equal to "useApolloClient(...)" function.
   const authStorage = useAuthStorage(); // Define "authStorage" variable, which is equal to "useAuthStorage(...)" function.
-
-  // Define "removeUserToken" function, which will execute everything inside of {...},
-  // so if user wants to delete his account and confirms deletion via "Alert" method,
-  // then this function will be executed. If account deletion is successful, then
-  // user will be redirected back to login screen and else if there is a problem
-  // with deletion then "error.message" variable will be returned back to the user.
-  const removeUserToken = async () => {
-    try { // First we will execute "try" section, if there will be a problem => "catch" section.
-      await deleteUserFromDatabase(currentUserData._id);
-      await authStorage.removeAccessToken(); // Remove token value from "authStorage" after account deletion.
-      //client.resetStore(); // Clear mutation from "active" and refetch all other active queries again.
-      // App was getting errors after account deletion and changing "resetStore()" into
-      // "clearStore()" function solved the issue. Need to find out later what caused
-      // the original problem when deleting account and going back to login screen.
-      client.clearStore(); // Does same thing as upper function "client.resetStore()", but won't refetch all other active queries again.
-      setCurrentToken(null); // Change "currentToken" variable state into original value => "null".
-    } catch (error) {
-      console.log(error.message); // Console.log "error.message" variable data back to the user.
-    }
-  };
 
   const logoutUserToken = async () => {
     try {
@@ -144,29 +123,6 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
     } catch (error) {
       console.log(error.message);
     };
-  };
-
-  // Define "confirmUserDelete" function, which will execute everything inside of
-  // {...}, so if user presses button to delete his/her account => "Alert" component
-  // will be rendered back to the user and user has to confirm that he/she wants to
-  // delete account from database. If user chooses to confirm, then "removeUserToken()"
-  // function will be executed and app will try delete account from the database.
-  const confirmUserDelete = () => {
-    Alert.alert(
-      "Biostack",
-      "Are you sure you want to delete your account from the app?",
-      [
-        {
-          text: "CANCEL",
-          onPress: () => console.log('User has cancelled account deletion process!'),
-          style: "cancel"
-        },
-        {
-          text: "OK",
-          onPress: () => removeUserToken(),
-        }
-      ]
-    )
   };
 
   const confirmUserLogout = () => {
@@ -266,11 +222,6 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
         right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/edit-account')} />}
       />
 
-      <View style={buttonContainer.container}>
-        <Pressable style={buttonContainer.buttonContent} onPress={confirmUserDelete}>
-          <Text style={buttonContainer.buttonContentText}>Delete your account.</Text>
-        </Pressable>
-      </View>
     </ScrollView>
   );
 };

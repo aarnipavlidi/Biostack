@@ -17,6 +17,7 @@ const styling = {
     ios: 'Arial',
     loginScreenTitle: 'PermanentMarker_400Regular',
     loginScreenSubtitle: 'PermanentMarker_400Regular',
+    buttonContent: 'Merienda_700Bold',
   },
   fontWeights: {
     normal: '400',

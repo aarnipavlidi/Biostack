@@ -26,6 +26,7 @@ import AppLoading from 'expo-app-loading'; // Import "AppLoading" component from
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
 import { useFonts, PermanentMarker_400Regular } from '@expo-google-fonts/permanent-marker';
 import { AnnieUseYourTelescope_400Regular } from '@expo-google-fonts/annie-use-your-telescope';
+import { Merienda_400Regular, Merienda_700Bold } from '@expo-google-fonts/merienda';
 
 // Define "mainContainer" variable, which will style whole "Main" component,
 // which means it does not matter which component is being rendered back to
@@ -51,7 +52,9 @@ const Main = () => {
 
   const [fontsLoaded] = useFonts({
     PermanentMarker_400Regular,
-    AnnieUseYourTelescope_400Regular
+    AnnieUseYourTelescope_400Regular,
+    Merienda_400Regular,
+    Merienda_700Bold
   });
 
   const [currentToken, setCurrentToken] = useState(null); // Define "currentToken" variable into state, which will get default value of "null".
@@ -77,7 +80,7 @@ const Main = () => {
             {currentToken ? <OrderConfirmation /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/profile/edit-account">
-            {currentToken ? <EditAccount currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
+            {currentToken ? <EditAccount setCurrentToken={setCurrentToken} currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/profile/transactions">
             {currentToken ? <OrderHistory currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
