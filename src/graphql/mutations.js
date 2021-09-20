@@ -106,6 +106,14 @@ export const DELETE_CURRENT_PRODUCT = gql`
   }
 `
 
+export const DELETE_ALL_PRODUCTS = gql`
+  mutation deleteAllProducts($getUserID: String!) {
+    deleteManyProduct(productOwner: $getUserID) {
+      response
+    }
+  }
+`
+
 // Define "DELETE_CURRENT_USER" mutation, so user is able delete his/her account for the database.
 export const DELETE_CURRENT_USER = gql`
   mutation deleteCurrentUser($getCurrentID: String!) {

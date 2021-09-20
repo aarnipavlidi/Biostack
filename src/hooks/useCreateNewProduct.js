@@ -19,10 +19,13 @@ const useCreateNewProduct = () => {
   const [createNewProduct, { data, loading, error }] = useMutation(CREATE_NEW_PRODUCT, {
     refetchQueries: [{
       query: SHOW_ALL_PRODUCTS,
+      variables: {
+        productSearchValue: ''
+      }
     },
     {
       query: CURRENT_LOGGED_USER,
-    }]
+    }],
   });
 
   // Define "submitNewProduct" function, which will execute everything inside of {...}, so basically

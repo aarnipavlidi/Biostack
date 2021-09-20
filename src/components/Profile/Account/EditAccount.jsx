@@ -9,6 +9,7 @@ import { FontAwesome5 } from '@expo/vector-icons'; // Import following component
 
 import { useApolloClient } from '@apollo/client'; // Import following functions from "@apollo/client" libary for this component usage.
 import useDeleteUser from '../../../hooks/useDeleteUser'; // Import "useDeleteUser" hook from "useDeleteUser.js" file for this component usage.
+import useDeleteManyProduct from '../../../hooks/useDeleteManyProduct'; // Import "useDeleteManyProduct" hook from "useDeleteManyProduct.js" file for this component usage.
 import useAuthStorage from '../../../hooks/useAuthStorage'; // Import "useAuthStorage" hook from "useAuthStorage.js" file for this component usage.
 
 import SelectedOption from './SelectedOption'; // Import "SelectedOption" component from "SelectedOption.jsx" file for this component usage.
@@ -84,6 +85,7 @@ const cardTitleContainer = StyleSheet.create({
 const EditAccount = ({ setCurrentToken, currentUserData, loading }) => {
 
   const [deleteUserFromDatabase] = useDeleteUser(); // Define "deleteUserFromDatabase" variable from => "useDeleteUser(...)" hook.
+  const [deleteProductsFromDatabase] = useDeleteManyProduct(); // Define "deleteProductsFromDatabase" variable from => "useDeleteManyProduct(...)" hook.
   const client = useApolloClient(); // Define "client" variable, which is equal to "useApolloClient(...)" function.
   const authStorage = useAuthStorage(); // Define "authStorage" variable, which is equal to "useAuthStorage(...)" function.
 
@@ -105,6 +107,28 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading }) => {
     } catch (error) {
       console.log(error.message); // Console.log "error.message" variable data back to the user.
     }
+  };
+
+  const removeUserProducts = async () => {
+    await deleteProductsFromDatabase();
+  };
+
+  const confirmProductDelete = () => {
+    Alert.alert(
+      "Biostack",
+      "Are you sure you want to delete your listed items from the app?",
+      [
+        {
+          text: "CANCEL",
+          onPress: () => console.log('User has cancelled account deletion process!'),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => removeUserProducts(),
+        }
+      ]
+    )
   };
 
   // Define "confirmUserDelete" function, which will execute everything inside of
@@ -249,7 +273,7 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading }) => {
           title="Delete products"
           subtitle="Delete your products from the app."
           left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="basket-outline" />}
-          right={(props) => <IconButton {...props} icon="delete-outline" />}
+          right={(props) => <IconButton {...props} icon="delete-outline" onPress={confirmProductDelete}/>}
         />
 
 

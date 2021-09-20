@@ -17,10 +17,13 @@ const useDeleteProduct = () => {
   const [deleteCurrentProduct, result] = useMutation(DELETE_CURRENT_PRODUCT, {
     refetchQueries: [{
       query: SHOW_ALL_PRODUCTS,
+      variables: {
+        productSearchValue: ''
+      }
     },
     {
       query: CURRENT_LOGGED_USER,
-    }]
+    }],
   });
 
   // Define variable "deleteProductFromDatabase", which will execute everything inside of
