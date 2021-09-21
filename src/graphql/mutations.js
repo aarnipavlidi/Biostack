@@ -107,8 +107,8 @@ export const DELETE_CURRENT_PRODUCT = gql`
 `
 
 export const DELETE_ALL_PRODUCTS = gql`
-  mutation deleteAllProducts($getUserID: String) {
-    deleteManyProduct(productOwner: $getUserID) {
+  mutation deleteAllProducts {
+    deleteManyProduct {
       response
     }
   }

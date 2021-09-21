@@ -15,6 +15,7 @@ const useProducts = (variables) => {
   // it via "data" variable and if data itself from backend is loading,
   // then we can use "loading" variable and render "spinner" for example.
   const { data, loading, fetchMore, error } = useQuery(SHOW_ALL_PRODUCTS, {
+    fetchPolicy: 'cache-and-network',
     variables,
   });
 
