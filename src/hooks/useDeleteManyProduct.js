@@ -19,18 +19,14 @@ const useDeleteManyProduct = () => {
     }],
   });
 
-  const deleteProductsFromDatabase = async () => {
-    try {
-      const response = await deleteAllProducts({
-        variables: {
-          getUserID: "moro :D"
-        }
-      });
+  const deleteProductsFromDatabase = async (value) => {
 
-      return response.data
-    } catch (error) {
-      console.log(error)
-    }
+    await deleteAllProducts({
+      variables: {
+        getUserID: value
+      },
+    });
+
   };
 
   return [deleteProductsFromDatabase, result];

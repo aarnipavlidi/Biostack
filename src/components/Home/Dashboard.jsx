@@ -52,8 +52,6 @@ const Dashboard = ({ searchStatus, resetSearchBar, activateSearchBar, currentSea
     fetchMore();
   };
 
-  console.log(showAllProducts)
-
   // If data from the hook "useProducts(...)" is loading, then component
   // will render everything inside of (...) back to the user.
   if (loading) {

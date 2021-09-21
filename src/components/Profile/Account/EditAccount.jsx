@@ -110,7 +110,8 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading }) => {
   };
 
   const removeUserProducts = async () => {
-    await deleteProductsFromDatabase();
+    const testi = "aarni"
+    await deleteProductsFromDatabase(testi);
   };
 
   const confirmProductDelete = () => {
