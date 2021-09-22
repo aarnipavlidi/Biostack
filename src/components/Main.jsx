@@ -18,9 +18,11 @@ import UserClothes from './Profile/Clothes/UserClothes'; // Import "UserClothes"
 import NavigationBottom from './NavigationBottom'; // Import "NavigationBottom" component from "NavigationBottom.jsx" file for this component usage.
 
 import BackgroundAnimation from './Background/AnimatedBackground'; // Import "BackgroundAnimation" component from "AnimatedBackground.jsx" for this component usage.
+import SnackBarAlert from './Alert/SnackBarAlert.jsx'; // Import "SnackBarAlert" component from "SnackBarAlert.jsx" for this component usage.
 
 import useCurrentUser from '../hooks/useCurrentUser'; // Import "useCurrentUser" hook from "useCurrentUser.js" file for this component usage.
 import useProductFilter from '../hooks/useProductFilter'; // Import "useProductFilter" hook from "useProductFilter.js" file for this component usage.
+import useSnackBar from '../hooks/useSnackBar'; // Import "useSnackBar" hook from "useSnackBar.js" file for this component usage.
 
 import AppLoading from 'expo-app-loading'; // Import "AppLoading" component from "expo-app-loading" libary for thos component usage.
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
@@ -59,7 +61,9 @@ const Main = () => {
 
   const [currentToken, setCurrentToken] = useState(null); // Define "currentToken" variable into state, which will get default value of "null".
   const { currentUserData, loading } = useCurrentUser(); // Define "currentUserData" and "loading" variables from => "useCurrentUser(...)" hook.
+
   const { searchStatus, activateSearchBar, resetSearchBar, currentSearchValue, setCurrentSearchValue, debouncedSearchValue } = useProductFilter();
+  const { snackBarStatus, snackBarMessage, showSnackBar, removeSnackBar } = useSnackBar();
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -80,7 +84,8 @@ const Main = () => {
             {currentToken ? <OrderConfirmation /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/profile/edit-account">
-            {currentToken ? <EditAccount setCurrentToken={setCurrentToken} currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
+            {currentToken ? <EditAccount setCurrentToken={setCurrentToken} currentUserData={currentUserData} loading={loading} showSnackBar={showSnackBar}  /> : <Redirect to="/" />}
+            <SnackBarAlert snackBarStatus={snackBarStatus} snackBarMessage={snackBarMessage} removeSnackBar={removeSnackBar} />
           </Route>
           <Route exact path="/dashboard/profile/transactions">
             {currentToken ? <OrderHistory currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}

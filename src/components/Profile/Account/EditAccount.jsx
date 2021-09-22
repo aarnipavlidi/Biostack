@@ -4,7 +4,7 @@
 import React, { useState } from 'react'; // Import "react" library's content for this component usage.
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
 import { Alert, ActivityIndicator, ScrollView, View, StyleSheet, Text, Pressable } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Appbar, TextInput, Card, Avatar, IconButton, Button,} from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { Appbar, TextInput, Card, Avatar, IconButton, Button } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { FontAwesome5 } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import { useApolloClient } from '@apollo/client'; // Import following functions from "@apollo/client" libary for this component usage.
@@ -59,7 +59,7 @@ const userInformationContainer = StyleSheet.create({
     alignItems: 'center',
   },
   inputElement: {
-    flex: 0.8,
+    flex: 0.8
   },
   buttonElement: {
     width: '90%',
@@ -78,11 +78,12 @@ const cardTitleContainer = StyleSheet.create({
     backgroundColor: styling.colors.VistaWhite,
     width: '90%',
     alignSelf: 'center',
-    elevation: 3
+    elevation: 3,
+    flex: 1
   },
 });
 
-const EditAccount = ({ setCurrentToken, currentUserData, loading }) => {
+const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }) => {
 
   const [deleteUserFromDatabase] = useDeleteUser(); // Define "deleteUserFromDatabase" variable from => "useDeleteUser(...)" hook.
   const [deleteProductsFromDatabase] = useDeleteManyProduct(); // Define "deleteProductsFromDatabase" variable from => "useDeleteManyProduct(...)" hook.
@@ -110,10 +111,9 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading }) => {
   };
 
   const removeUserProducts = async () => {
-
     try {
       const response = await deleteProductsFromDatabase();
-      console.log(response)
+      showSnackBar(response.deleteManyProduct.response);
     } catch (error) {
       console.log(error.message)
     }
@@ -203,16 +203,9 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading }) => {
         <Appbar.Content titleStyle={editAccountHeaderContainer.appBarContent} title="Edit Account" titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
         <Appbar.Action icon="cards-heart" />
       </Appbar.Header>
-
-      <View>
-
-
         <Card style={userInformationContainer.title}>
           <Text style={userInformationContainer.titleContent}>YOUR INFORMATION</Text>
         </Card>
-
-
-
         <View style={userInformationContainer.newValueElement}>
           <View style={userInformationContainer.inputElement}>
             <TextInput
@@ -230,9 +223,6 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading }) => {
           </View>
           <SelectedOption accountValue={nameValue} setAccountValue={setNameValue} />
         </View>
-
-
-
         <View style={userInformationContainer.newValueElement}>
           <View style={userInformationContainer.inputElement}>
             <TextInput
@@ -250,22 +240,17 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading }) => {
           </View>
           <SelectedOption accountValue={emailValue} setAccountValue={setEmailValue} />
         </View>
-
-
-
         <View style={userInformationContainer.buttonElement}>
-          <Button style={{ flex: 1/3 }} color={styling.colors.Asphalt} mode="contained" onPress={() => console.log('test')}>
+          <Button style={{  }} color={styling.colors.Asphalt} mode="contained" onPress={() => console.log('test')}>
             <Text style={{ fontFamily: styling.fonts.buttonContent }}>Confirm</Text>
           </Button>
-          <Button style={{ flex: 1/3 }} color={styling.colors.Asphalt} mode="contained" onPress={resetAccountValues}>
+          <Button style={{  }} color={styling.colors.Asphalt} mode="contained" onPress={resetAccountValues}>
             <Text style={{ fontFamily: styling.fonts.buttonContent }}>Cancel</Text>
           </Button>
         </View>
-
         <Card style={userInformationContainer.title}>
           <Text style={userInformationContainer.titleContent}>YOUR ACCOUNT</Text>
         </Card>
-
         <Card.Title
           style={cardTitleContainer.container}
           title="Delete account"
@@ -273,7 +258,6 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading }) => {
           left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="account-box" />}
           right={(props) => <IconButton {...props} icon="delete-outline" onPress={confirmUserDelete} />}
         />
-
         <Card.Title
           style={cardTitleContainer.container}
           title="Delete products"
@@ -281,9 +265,6 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading }) => {
           left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="basket-outline" />}
           right={(props) => <IconButton {...props} icon="delete-outline" onPress={confirmProductDelete}/>}
         />
-
-
-      </View>
     </ScrollView>
   );
 };

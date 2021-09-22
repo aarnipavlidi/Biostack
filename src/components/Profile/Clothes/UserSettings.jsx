@@ -192,7 +192,6 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
           </View>
         </Card.Content>
       </Card>
-
       <Card.Title
         style={cardTitleContainer.container}
         title="Clothes"
@@ -221,7 +220,6 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="account-edit-outline" />}
         right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/edit-account')} />}
       />
-
     </ScrollView>
   );
 };

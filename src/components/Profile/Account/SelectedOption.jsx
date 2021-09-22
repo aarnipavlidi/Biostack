@@ -12,7 +12,7 @@ const SelectedOption = ({ accountValue, setAccountValue }) => {
 
   if (accountValue.status === false) {
     return (
-      <Pressable onPress={() => setAccountValue({ status: true })} style={{ flex: 0.2 }}>
+      <Pressable onPress={() => setAccountValue({ status: true })} style={{ flex: 0.20 }}>
         <FontAwesome style={{ textAlign: 'center' }} name="edit" size={24} color={styling.colors.Asphalt} />
       </Pressable>
     )
