@@ -29,6 +29,7 @@ import styling from '../styling'; // Import "styling" variable from "styling.js"
 import { useFonts, PermanentMarker_400Regular } from '@expo-google-fonts/permanent-marker';
 import { AnnieUseYourTelescope_400Regular } from '@expo-google-fonts/annie-use-your-telescope';
 import { Merienda_400Regular, Merienda_700Bold } from '@expo-google-fonts/merienda';
+import { IndieFlower_400Regular } from '@expo-google-fonts/indie-flower';
 
 // Define "mainContainer" variable, which will style whole "Main" component,
 // which means it does not matter which component is being rendered back to
@@ -56,7 +57,8 @@ const Main = () => {
     PermanentMarker_400Regular,
     AnnieUseYourTelescope_400Regular,
     Merienda_400Regular,
-    Merienda_700Bold
+    Merienda_700Bold,
+    IndieFlower_400Regular
   });
 
   const [currentToken, setCurrentToken] = useState(null); // Define "currentToken" variable into state, which will get default value of "null".

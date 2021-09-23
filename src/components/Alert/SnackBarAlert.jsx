@@ -2,23 +2,33 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
+import { StyleSheet, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Snackbar } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
 import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
+
+const snackBarContainer = StyleSheet.create({
+  container: {
+    backgroundColor: styling.colors.Asphalt,
+  },
+  content: {
+    color: styling.colors.VistaWhite,
+    fontFamily: 'IndieFlower_400Regular',
+  },
+});
 
 const SnackBarAlert = ({ snackBarStatus, snackBarMessage, removeSnackBar }) => {
 
   return (
     <Snackbar
       visible={snackBarStatus}
+      theme={{ colors: { accent: '#C2C2C0' }}}
       onDismiss={removeSnackBar}
+      style={snackBarContainer.container}
       action={{
-      label: 'Undo',
-      onPress: () => {
-                  // Do something
-        },
+      label: 'OK'
       }}>
-      {snackBarMessage}
+      <Text style={snackBarContainer.content}>{snackBarMessage}</Text>
     </Snackbar>
   );
 };

@@ -5,7 +5,7 @@ import React, { useState } from 'react'; // Import "react" library's content for
 
 const useSnackBar = () => {
 
-  const [snackBarStatus, setSnackBarStatus] = useState(true);
+  const [snackBarStatus, setSnackBarStatus] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState('');
 
   const showSnackBar = (getCurrentResponse) => {

@@ -10,6 +10,8 @@
   "dependencies": {
     "@apollo/client": "^3.4.7",
     "@expo-google-fonts/annie-use-your-telescope": "^0.2.0",
+    "@expo-google-fonts/indie-flower": "^0.2.0",
+    "@expo-google-fonts/merienda": "^0.2.0",
     "@expo-google-fonts/permanent-marker": "^0.2.0",
     "@react-native-async-storage/async-storage": "^1.15.5",
     "dotenv": "^10.0.0",
