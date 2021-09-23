@@ -2,10 +2,10 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
-import { TextInput as NativeTextInput, View, Text, StyleSheet, Platform } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { View, Text, StyleSheet, Platform } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { TextInput as PaperTextInput } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
-import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
+import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 const loginValidationStyling = StyleSheet.create({
   container: {
@@ -44,7 +44,7 @@ const TextInput = ({ style, error, ...props }) => {
   if (error) {
     return (
       <View style={loginValidationStyling.container}>
-        <NativeTextInput style={loginValidationStyling.contentError} {...props} />
+        <PaperTextInput style={loginValidationStyling.contentError} {...props} />
         <Text style={loginValidationStyling.contentErrorMessage}>{error}</Text>
       </View>
     );
@@ -52,7 +52,7 @@ const TextInput = ({ style, error, ...props }) => {
 
   return (
     <View style={loginValidationStyling.container}>
-      <NativeTextInput style={loginValidationStyling.contentNormal} {...props} />
+      <PaperTextInput style={loginValidationStyling.contentNormal} {...props} />
     </View>
   );
 };

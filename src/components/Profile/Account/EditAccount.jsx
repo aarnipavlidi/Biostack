@@ -12,8 +12,11 @@ import useDeleteUser from '../../../hooks/useDeleteUser'; // Import "useDeleteUs
 import useDeleteManyProduct from '../../../hooks/useDeleteManyProduct'; // Import "useDeleteManyProduct" hook from "useDeleteManyProduct.js" file for this component usage.
 import useAuthStorage from '../../../hooks/useAuthStorage'; // Import "useAuthStorage" hook from "useAuthStorage.js" file for this component usage.
 
-import SelectedOption from './SelectedOption'; // Import "SelectedOption" component from "SelectedOption.jsx" file for this component usage.
+import EditAccountForm from './EditAccountForm'; // Import "EditAccountForm" component from "EditAccountForm.jsx" file for this component usage.
 import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.
+
+import { Formik } from 'formik'; // Import "Formik" component from "formik" libary's content for this component usage.
+import * as yup from 'yup'; // Import everything as "yup" from "yup" libary's content for this component usage.
 
 // Define "loadingContainer" variable, which will be used to create style
 // if data is "loading" we will return => "loading spinner".
@@ -81,6 +84,21 @@ const cardTitleContainer = StyleSheet.create({
     elevation: 3,
     flex: 1,
   },
+});
+
+const initialValues = {
+  userName: '',
+  userEmail: ''
+};
+
+const editAccountFormValidationSchema = yup.object().shape({
+  userName: yup
+    .string()
+    .required('Name is required.'),
+  userEmail: yup
+    .string()
+    .email('Invalid email format.')
+    .required('Email is required.')
 });
 
 const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }) => {
@@ -171,6 +189,10 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
     data: '',
   });
 
+  const onSubmit = (values) => {
+    console.log(values);
+  };
+
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
   // Define "goBackPreviousRoute" variable, which will execute everything inside
@@ -204,74 +226,32 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
         <Appbar.Content titleStyle={editAccountHeaderContainer.appBarContent} title="Edit Account" titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
         <Appbar.Action icon="cards-heart" />
       </Appbar.Header>
-        <Card style={userInformationContainer.title}>
-          <Text style={userInformationContainer.titleContent}>YOUR INFORMATION</Text>
-        </Card>
-        <View style={userInformationContainer.newValueElement}>
-          <View style={userInformationContainer.inputElement}>
-            <TextInput
-              disabled={nameValue.status === false ? true : false}
-              mode="flatline"
-              label="Edit personal name."
-              placeholder={currentUserData.name}
-              value={nameValue.data}
-              onChangeText={(result) => setNameValue({ data: result })}
-              right={<TextInput.Affix text="/100" />}
-              style={{ backgroundColor: styling.colors.VistaWhite }}
-              theme={{colors: {primary: styling.colors.Asphalt}}}
-              selectionColor={styling.colors.Asphalt}
-            />
-          </View>
-          <SelectedOption accountValue={nameValue} setAccountValue={setNameValue} />
-        </View>
-        <View style={userInformationContainer.newValueElement}>
-          <View style={userInformationContainer.inputElement}>
-            <TextInput
-              disabled={emailValue.status === false ? true : false}
-              mode="flatline"
-              label="Edit personal email."
-              placeholder={currentUserData.email}
-              value={emailValue.data}
-              onChangeText={(result) => setEmailValue({ data: result })}
-              right={<TextInput.Affix text="/100" />}
-              style={{ backgroundColor: styling.colors.VistaWhite }}
-              theme={{colors: {primary: styling.colors.Asphalt}}}
-              selectionColor={styling.colors.Asphalt}
-            />
-          </View>
-          <SelectedOption accountValue={emailValue} setAccountValue={setEmailValue} />
-        </View>
-        <View style={userInformationContainer.buttonElement}>
-          <Button style={{  }} color={styling.colors.Asphalt} mode="contained" onPress={() => console.log('test')}>
-            <Text style={{ fontFamily: styling.fonts.buttonContent }}>Confirm</Text>
-          </Button>
-          <Button style={{  }} color={styling.colors.Asphalt} mode="contained" onPress={resetAccountValues}>
-            <Text style={{ fontFamily: styling.fonts.buttonContent }}>Cancel</Text>
-          </Button>
-        </View>
-        <Card style={userInformationContainer.title}>
-          <Text style={userInformationContainer.titleContent}>YOUR ACCOUNT</Text>
-        </Card>
-        <Card.Title
-          style={cardTitleContainer.container}
-          title="Delete account"
-          subtitle="Delete your account from the app."
-          left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="account-box" />}
-          right={(props) => !loadingDeleteUser
-            ? <IconButton {...props} size={25} color={styling.colors.Asphalt} icon="delete-outline" onPress={confirmUserDelete} />
-            : <ActivityIndicator animating={true} size={25} color={styling.colors.Asphalt} />}
-          rightStyle={{ flex: 0.2 }}  
-        />
-        <Card.Title
-          style={cardTitleContainer.container}
-          title="Delete products"
-          subtitle="Delete your products from the app."
-          left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="basket-outline" />}
-          right={(props) => !loadingDeleteProducts
-            ? <IconButton {...props} size={25} color={styling.colors.Asphalt} icon="delete-outline" onPress={confirmProductDelete}/>
-            : <ActivityIndicator animating={true} size={25} color={styling.colors.Asphalt} />}
-          rightStyle={{ flex: 0.2 }}
-        />
+      <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={editAccountFormValidationSchema}>
+        {({ handleSubmit }) => <EditAccountForm nameValue={nameValue} setNameValue={setNameValue} emailValue={emailValue} setEmailValue={setEmailValue} currentUserData={currentUserData} onSubmit={handleSubmit} resetAccountValues={resetAccountValues} />}
+      </Formik>
+      <Card style={userInformationContainer.title}>
+        <Text style={userInformationContainer.titleContent}>YOUR ACCOUNT</Text>
+      </Card>
+      <Card.Title
+        style={cardTitleContainer.container}
+        title="Delete account"
+        subtitle="Delete your account from the app."
+        left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="account-box" />}
+        right={(props) => !loadingDeleteUser
+          ? <IconButton {...props} size={25} color={styling.colors.Asphalt} icon="delete-outline" onPress={confirmUserDelete} />
+          : <ActivityIndicator animating={true} size={25} color={styling.colors.Asphalt} />}
+        rightStyle={{ flex: 0.2 }}
+      />
+      <Card.Title
+        style={cardTitleContainer.container}
+        title="Delete products"
+        subtitle="Delete your products from the app."
+        left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="basket-outline" />}
+        right={(props) => !loadingDeleteProducts
+          ? <IconButton {...props} size={25} color={styling.colors.Asphalt} icon="delete-outline" onPress={confirmProductDelete}/>
+          : <ActivityIndicator animating={true} size={25} color={styling.colors.Asphalt} />}
+        rightStyle={{ flex: 0.2 }}
+      />
     </ScrollView>
   );
 };
