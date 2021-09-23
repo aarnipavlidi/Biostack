@@ -11,7 +11,7 @@ const useDeleteUser = () => {
   // Define "DELETE_CURRENT_USER" mutation and get access to "deleteCurrentUser" and "result"
   // variables. When user wants to delete his account from server, we will execute function =>
   // "deleteCurrentUser(...)" and pass variable "getCurrentUserID" to finish mutation.
-  const [deleteCurrentUser, result] = useMutation(DELETE_CURRENT_USER);
+  const [deleteCurrentUser, { loading }] = useMutation(DELETE_CURRENT_USER);
 
   // Define "deleteUserFromDatabase" function, which will execute everything inside of {...}
   // and we pass parameter "getCurrentUserID" variable, which we will pass for "deleteCurrentUser"
@@ -34,7 +34,7 @@ const useDeleteUser = () => {
   };
 
   // Return variables inside of [...] to be used with this hook.
-  return [deleteUserFromDatabase, result];
+  return [deleteUserFromDatabase, { loadingDeleteUser: loading }];
 };
 
 // Export "useDeleteUser" hook, so other components like "App.js" are able to use this hooks's content.

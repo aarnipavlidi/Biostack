@@ -7,7 +7,7 @@ import { DELETE_ALL_PRODUCTS } from '../graphql/mutations'; // Import following 
 
 const useDeleteManyProduct = () => {
 
-  const [deleteAllProducts, result] = useMutation(DELETE_ALL_PRODUCTS, {
+  const [deleteAllProducts, { loading }] = useMutation(DELETE_ALL_PRODUCTS, {
     refetchQueries: [{
       query: SHOW_ALL_PRODUCTS,
       variables: {
@@ -28,7 +28,7 @@ const useDeleteManyProduct = () => {
     }
   };
 
-  return [deleteProductsFromDatabase, result];
+  return [deleteProductsFromDatabase, { loadingDeleteProducts: loading }];
 };
 
 // Export "useDeleteManyProduct" hook, so other components like "App.js" are able to use this hook's content.

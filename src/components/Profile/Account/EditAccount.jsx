@@ -3,8 +3,8 @@
 
 import React, { useState } from 'react'; // Import "react" library's content for this component usage.
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
-import { Alert, ActivityIndicator, ScrollView, View, StyleSheet, Text, Pressable } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Appbar, TextInput, Card, Avatar, IconButton, Button } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { Alert, ScrollView, View, StyleSheet, Text, Pressable } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { ActivityIndicator, Appbar, TextInput, Card, Avatar, IconButton, Button } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { FontAwesome5 } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import { useApolloClient } from '@apollo/client'; // Import following functions from "@apollo/client" libary for this component usage.
@@ -79,14 +79,14 @@ const cardTitleContainer = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     elevation: 3,
-    flex: 1
+    flex: 1,
   },
 });
 
 const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }) => {
 
-  const [deleteUserFromDatabase] = useDeleteUser(); // Define "deleteUserFromDatabase" variable from => "useDeleteUser(...)" hook.
-  const [deleteProductsFromDatabase] = useDeleteManyProduct(); // Define "deleteProductsFromDatabase" variable from => "useDeleteManyProduct(...)" hook.
+  const [deleteUserFromDatabase, { loadingDeleteUser }] = useDeleteUser(); // Define "deleteUserFromDatabase" variable from => "useDeleteUser(...)" hook.
+  const [deleteProductsFromDatabase, { loadingDeleteProducts }] = useDeleteManyProduct(); // Define "deleteProductsFromDatabase" variable from => "useDeleteManyProduct(...)" hook.
   const client = useApolloClient(); // Define "client" variable, which is equal to "useApolloClient(...)" function.
   const authStorage = useAuthStorage(); // Define "authStorage" variable, which is equal to "useAuthStorage(...)" function.
 
@@ -97,7 +97,7 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
   // with deletion then "error.message" variable will be returned back to the user.
   const removeUserToken = async () => {
     try { // First we will execute "try" section, if there will be a problem => "catch" section.
-      await deleteUserFromDatabase(currentUserData._id);
+      const response = await deleteUserFromDatabase(currentUserData._id);
       await authStorage.removeAccessToken(); // Remove token value from "authStorage" after account deletion.
       //client.resetStore(); // Clear mutation from "active" and refetch all other active queries again.
       // App was getting errors after account deletion and changing "resetStore()" into
@@ -105,6 +105,7 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
       // the original problem when deleting account and going back to login screen.
       client.clearStore(); // Does same thing as upper function "client.resetStore()", but won't refetch all other active queries again.
       setCurrentToken(null); // Change "currentToken" variable state into original value => "null".
+      showSnackBar(response.deleteUser.response);
     } catch (error) {
       console.log(error.message); // Console.log "error.message" variable data back to the user.
     }
@@ -256,14 +257,20 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
           title="Delete account"
           subtitle="Delete your account from the app."
           left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="account-box" />}
-          right={(props) => <IconButton {...props} icon="delete-outline" onPress={confirmUserDelete} />}
+          right={(props) => !loadingDeleteUser
+            ? <IconButton {...props} size={25} color={styling.colors.Asphalt} icon="delete-outline" onPress={confirmUserDelete} />
+            : <ActivityIndicator animating={true} size={25} color={styling.colors.Asphalt} />}
+          rightStyle={{ flex: 0.2 }}  
         />
         <Card.Title
           style={cardTitleContainer.container}
           title="Delete products"
           subtitle="Delete your products from the app."
           left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="basket-outline" />}
-          right={(props) => <IconButton {...props} icon="delete-outline" onPress={confirmProductDelete}/>}
+          right={(props) => !loadingDeleteProducts
+            ? <IconButton {...props} size={25} color={styling.colors.Asphalt} icon="delete-outline" onPress={confirmProductDelete}/>
+            : <ActivityIndicator animating={true} size={25} color={styling.colors.Asphalt} />}
+          rightStyle={{ flex: 0.2 }}
         />
     </ScrollView>
   );

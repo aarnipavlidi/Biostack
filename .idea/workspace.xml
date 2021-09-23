@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b35440f-34ac-4307-b49a-3bd3ce76d8ac" name="Default Changelist" comment="" />
+    <list default="true" id="1b35440f-34ac-4307-b49a-3bd3ce76d8ac" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Alert/SnackBarAlert.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Alert/SnackBarAlert.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ItemSizeCheck.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ItemTypeCheck.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NewProduct.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ProductByID/Checkout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProductByID/Checkout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ProductByID/CurrentProduct.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProductByID/CurrentProduct.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ProductRenderAll.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProductRenderAll.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Profile/Clothes/UserListedClothes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Clothes/UserListedClothes.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Profile/Transactions/UserOrders.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Transactions/UserOrders.jsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,9 +47,9 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="186" y="174" width="1119" height="771" key="AVDManager" timestamp="1632409466979">
+    <state x="443" y="167" width="1119" height="771" key="AVDManager" timestamp="1632418790858">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="186" y="174" width="1119" height="771" key="AVDManager/0.0.1920.1040/-3840.-208.2560.1400@0.0.1920.1040" timestamp="1632409466979" />
+    <state x="443" y="167" width="1119" height="771" key="AVDManager/0.0.1920.1040/-3840.-208.2560.1400@0.0.1920.1040" timestamp="1632418790858" />
   </component>
 </project>

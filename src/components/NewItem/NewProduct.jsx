@@ -23,8 +23,9 @@ const newItemContainer = StyleSheet.create({
     backgroundColor: styling.colors.Asphalt,
   },
   appBarContent: {
-    color: styling.colors.VistaWhite
-  }
+    color: styling.colors.VistaWhite,
+    fontFamily: 'PermanentMarker_400Regular',
+  },
 });
 
 // Define "dropdownContainer" variable, which will be used for styling
@@ -205,14 +206,12 @@ const NewProduct = ({ currentUserData }) => {
     };
   };
 
-  const handleMore = () => console.log("Show more settings from this component!");
-
   // Component will render everything inside of (...) back to the user.
   return (
     <View style={newItemContainer.mainContainer}>
       <Appbar.Header statusBarHeight={0} style={newItemContainer.appBarContainer}>
-        <Appbar.Content titleStyle={newItemContainer.appBarContent} title="Add new item to the app" subtitle="Please fill all the required fields." subtitleStyle={newItemContainer.appBarContent} />
-        <Appbar.Action icon="dots-vertical" onPress={handleMore} />
+        <Appbar.Content titleStyle={newItemContainer.appBarContent} title="Sell your clothes here" />
+        <Appbar.Action icon="cards-heart" />
       </Appbar.Header>
       <View style={dropdownContainer.container}>
         <DropDownPicker

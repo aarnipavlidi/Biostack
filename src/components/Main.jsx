@@ -87,7 +87,6 @@ const Main = () => {
           </Route>
           <Route exact path="/dashboard/profile/edit-account">
             {currentToken ? <EditAccount setCurrentToken={setCurrentToken} currentUserData={currentUserData} loading={loading} showSnackBar={showSnackBar}  /> : <Redirect to="/" />}
-            <SnackBarAlert snackBarStatus={snackBarStatus} snackBarMessage={snackBarMessage} removeSnackBar={removeSnackBar} />
           </Route>
           <Route exact path="/dashboard/profile/transactions">
             {currentToken ? <OrderHistory currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
@@ -110,6 +109,7 @@ const Main = () => {
             <BackgroundAnimation />
           </Route>
         </Switch>
+        <SnackBarAlert snackBarStatus={snackBarStatus} snackBarMessage={snackBarMessage} removeSnackBar={removeSnackBar} />
       </View>
       {currentToken ? <NavigationBottom /> : null}
     </SafeAreaView>
