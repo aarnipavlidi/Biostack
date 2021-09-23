@@ -8,35 +8,35 @@ const ItemTypeCheck = ({ currentItemType }) => {
 
   if (currentItemType === 't-shirt') {
     return (
-      <Image source={require('../../assets/icons/clothes/t-24x24-455076.png')} />
+      <Image source={require('../../../assets/icons/clothes/t-24x24-455076.png')} />
     );
   };
 
   if (currentItemType === 'hoodie') {
     return (
-      <Image source={require('../../assets/icons/clothes/hoodie-24x24-455064.png')} />
+      <Image source={require('../../../assets/icons/clothes/hoodie-24x24-455064.png')} />
     );
   };
 
   if (currentItemType === 'jacket') {
     return (
-      <Image source={require('../../assets/icons/clothes/jacket-24x24-455063.png')} />
+      <Image source={require('../../../assets/icons/clothes/jacket-24x24-455063.png')} />
     );
   };
 
   if (currentItemType === 'hat') {
     return (
-      <Image source={require('../../assets/icons/clothes/hat-24x24-455060.png')} />
+      <Image source={require('../../../assets/icons/clothes/hat-24x24-455060.png')} />
     );
   };
 
   if (currentItemType === 'sweater') {
     return (
-      <Image source={require('../../assets/icons/clothes/sweater-24x24-455072.png')} />
+      <Image source={require('../../../assets/icons/clothes/sweater-24x24-455072.png')} />
     );
   } else {
     return (
-      <Image source={require('../../assets/icons/clothes/t-24x24-455076.png')} />
+      <Image source={require('../../../assets/icons/clothes/t-24x24-455076.png')} />
     );
   };
 };

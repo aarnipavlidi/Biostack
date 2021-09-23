@@ -22,6 +22,7 @@ const SnackBarAlert = ({ snackBarStatus, snackBarMessage, removeSnackBar }) => {
   return (
     <Snackbar
       visible={snackBarStatus}
+      duration={5000}
       theme={{ colors: { accent: '#C2C2C0' }}}
       onDismiss={removeSnackBar}
       style={snackBarContainer.container}

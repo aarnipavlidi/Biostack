@@ -11,8 +11,8 @@ import Constants from 'expo-constants'; // Import "Constants" component from "ex
 import emailjs from 'emailjs-com'; // Import "emailjs" library content from "emailjs-com" for this component usage.
 
 import { Fontisto, Feather, MaterialIcons, Entypo } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
-import ItemSizeCheck from '../ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
-import ItemTypeCheck from '../ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
+import ItemSizeCheck from '../ProductChecking/ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
+import ItemTypeCheck from '../ProductChecking/ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
 
 import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 

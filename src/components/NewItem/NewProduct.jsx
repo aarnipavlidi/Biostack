@@ -7,12 +7,12 @@ import { Alert, Pressable, Text, StyleSheet, View, Image } from 'react-native'; 
 import { Appbar, Button, RadioButton } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import useCreateNewProduct from '../hooks/useCreateNewProduct'; // Import "useCreateNewProduct" hook from "useCreateNewProduct.js" file for this component usage.
-import FormikTextInput from './FormikTextInput'; // Import "FormikTextInput" component from "FormikTextInput.jsx" for this component usage.
+import useCreateNewProduct from '../../hooks/useCreateNewProduct'; // Import "useCreateNewProduct" hook from "useCreateNewProduct.js" file for this component usage.
+import FormikTextInput from '../FormikTextInput'; // Import "FormikTextInput" component from "FormikTextInput.jsx" for this component usage.
 import { Field, Formik } from 'formik'; // Import "Formik" component from "formik" libary's content for this component usage.
 import * as yup from 'yup'; // Import everything as "yup" from "yup" libary's content for this component usage.
 
-import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
+import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 const newItemContainer = StyleSheet.create({
   mainContainer: {
@@ -163,11 +163,11 @@ const NewProduct = ({ currentUserData }) => {
   // of values. These values are being used on a dropdown, where user can choose
   // which "type" matches the best of the item user wants to sell on the app.
   const [items, setItems] = useState([
-    {label: 'T-shirt', value: 't-shirt', icon: () => <Image source={require('../../assets/icons/clothes/t-24x24-455076.png')} />},
-    {label: 'Sweater', value: 'sweater', icon: () => <Image source={require('../../assets/icons/clothes/sweater-24x24-455072.png')} />},
-    {label: 'Hoodie', value: 'hoodie', icon: () => <Image source={require('../../assets/icons/clothes/hoodie-24x24-455064.png')} />},
-    {label: 'Jacket', value: 'jacket', icon: () => <Image source={require('../../assets/icons/clothes/jacket-24x24-455063.png')} />},
-    {label: 'Hat', value: 'hat', icon: () => <Image source={require('../../assets/icons/clothes/hat-24x24-455060.png')} />},
+    {label: 'T-shirt', value: 't-shirt', icon: () => <Image source={require('../../../assets/icons/clothes/t-24x24-455076.png')} />},
+    {label: 'Sweater', value: 'sweater', icon: () => <Image source={require('../../../assets/icons/clothes/sweater-24x24-455072.png')} />},
+    {label: 'Hoodie', value: 'hoodie', icon: () => <Image source={require('../../../assets/icons/clothes/hoodie-24x24-455064.png')} />},
+    {label: 'Jacket', value: 'jacket', icon: () => <Image source={require('../../../assets/icons/clothes/jacket-24x24-455063.png')} />},
+    {label: 'Hat', value: 'hat', icon: () => <Image source={require('../../../assets/icons/clothes/hat-24x24-455060.png')} />},
   ]);
 
   const [currentSize, setCurrentSize] = useState(null); // Define variable "currentSize" into state, which gets value "null" as default.

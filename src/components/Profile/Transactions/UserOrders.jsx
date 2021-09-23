@@ -5,8 +5,8 @@ import React from 'react'; // Import "react" library's content for this componen
 import { View, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { DataTable } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
-import ItemSizeCheck from '../../ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
-import ItemTypeCheck from '../../ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
+import ItemSizeCheck from '../../ProductChecking/ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
+import ItemTypeCheck from '../../ProductChecking/ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
 import { Entypo } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.

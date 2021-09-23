@@ -9,8 +9,8 @@ import { Appbar, Caption, Card, Divider, Title, Paragraph, List, Provider } from
 import Checkout from './Checkout'; // Import "Checkout" component from "Checkout.jsx" file for this component usage.
 import ButtonOptions from './ButtonOptions'; // Import "ButtonOptions" component from "ButtonOptions.jsx" file for this component usage.
 import UserRating from '../UserRating'; // Import "UserRating" component from "UserRating.jsx" file for this component usage.
-import ItemTypeCheck from '../ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
-import ItemSizeCheck from '../ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
+import ItemTypeCheck from '../ProductChecking/ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
+import ItemSizeCheck from '../ProductChecking/ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
 import useCurrentProduct from '../../hooks/useCurrentProduct'; // Import "useCurrentProduct" hook from "useCurrentProduct.js" file for this component usage.
 
 import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.

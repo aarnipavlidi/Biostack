@@ -3,7 +3,7 @@
 
 import React from 'react'; // Import "react" library's content for this component usage.
 import { MaterialCommunityIcons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
-import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
+import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 const ItemSizeCheck = ({ currentItemSize }) => {
 

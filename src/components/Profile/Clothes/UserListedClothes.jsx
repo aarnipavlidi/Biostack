@@ -6,7 +6,7 @@ import { Alert, Image, View, StyleSheet, Pressable, Text } from 'react-native'; 
 import { Badge, Card, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
 import useDeleteProduct from '../../../hooks/useDeleteProduct'; // Import "useDeleteProduct" hook from "useDeleteProduct.js" file for this component usage.
-import ItemTypeCheck from '../../ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
+import ItemTypeCheck from '../../ProductChecking/ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
 import { AntDesign } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.

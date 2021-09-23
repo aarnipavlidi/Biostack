@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b35440f-34ac-4307-b49a-3bd3ce76d8ac" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/Account/EditAccount.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Account/EditAccount.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/mutations.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/mutations.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useDeleteManyProduct.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useDeleteManyProduct.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useProducts.js" afterDir="false" />
-    </list>
+    <list default="true" id="1b35440f-34ac-4307-b49a-3bd3ce76d8ac" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,9 +35,9 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="130" y="173" width="1119" height="771" key="AVDManager" timestamp="1632310507420">
+    <state x="186" y="174" width="1119" height="771" key="AVDManager" timestamp="1632409466979">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="130" y="173" width="1119" height="771" key="AVDManager/0.0.1920.1040/-3840.-208.2560.1400@0.0.1920.1040" timestamp="1632310507420" />
+    <state x="186" y="174" width="1119" height="771" key="AVDManager/0.0.1920.1040/-3840.-208.2560.1400@0.0.1920.1040" timestamp="1632409466979" />
   </component>
 </project>
