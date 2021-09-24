@@ -45,7 +45,25 @@ const userInformationContainer = StyleSheet.create({
   }
 });
 
-const EditAccountForm = ({ nameValue, setNameValue, emailValue, setEmailValue, currentUserData, onSubmit, resetAccountValues }) => {
+const FormButtons = ({ currentFormValues, onSubmit, resetAccountValues }) => {
+
+  if (currentFormValues.userName.length !== 0 || currentFormValues.userEmail.length !== 0) {
+    return (
+      <View style={userInformationContainer.buttonElement}>
+        <Button color={styling.colors.Asphalt} mode="contained" onPress={onSubmit}>
+          <Text style={{ fontFamily: styling.fonts.buttonContent }}>Confirm</Text>
+        </Button>
+        <Button color={styling.colors.Asphalt} mode="contained" onPress={resetAccountValues}>
+          <Text style={{ fontFamily: styling.fonts.buttonContent }}>Cancel</Text>
+        </Button>
+      </View>
+    )
+  } else {
+    return null
+  };
+};
+
+const EditAccountForm = ({ currentFormValues, nameValue, setNameValue, emailValue, setEmailValue, currentUserData, onSubmit, resetAccountValues }) => {
 
   return (
     <View>
@@ -56,14 +74,9 @@ const EditAccountForm = ({ nameValue, setNameValue, emailValue, setEmailValue, c
         <View style={userInformationContainer.inputElement}>
           <FormikTextInput
             disabled={nameValue.status === false ? true : false}
-            mode="flatline"
             label="Edit personal name."
             name="userName"
             placeholder={currentUserData.name}
-            right={<TextInput.Affix text="/100" />}
-            style={{ backgroundColor: styling.colors.VistaWhite }}
-            theme={{colors: {primary: styling.colors.Asphalt}}}
-            selectionColor={styling.colors.Asphalt}
           />
         </View>
         <SelectedOption accountValue={nameValue} setAccountValue={setNameValue} />
@@ -72,26 +85,14 @@ const EditAccountForm = ({ nameValue, setNameValue, emailValue, setEmailValue, c
         <View style={userInformationContainer.inputElement}>
           <FormikTextInput
             disabled={emailValue.status === false ? true : false}
-            mode="flatline"
             label="Edit personal email."
             name="userEmail"
             placeholder={currentUserData.email}
-            right={<TextInput.Affix text="/100" />}
-            style={{ backgroundColor: styling.colors.VistaWhite }}
-            theme={{colors: {primary: styling.colors.Asphalt}}}
-            selectionColor={styling.colors.Asphalt}
           />
         </View>
         <SelectedOption accountValue={emailValue} setAccountValue={setEmailValue} />
       </View>
-      <View style={userInformationContainer.buttonElement}>
-        <Button color={styling.colors.Asphalt} mode="contained" onPress={onSubmit}>
-          <Text style={{ fontFamily: styling.fonts.buttonContent }}>Confirm</Text>
-        </Button>
-        <Button color={styling.colors.Asphalt} mode="contained" onPress={resetAccountValues}>
-          <Text style={{ fontFamily: styling.fonts.buttonContent }}>Cancel</Text>
-        </Button>
-      </View>
+      <FormButtons currentFormValues={currentFormValues} onSubmit={onSubmit} resetAccountValues={resetAccountValues} />
     </View>
   );
 };

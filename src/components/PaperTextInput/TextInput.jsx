@@ -8,27 +8,8 @@ import { TextInput as PaperTextInput } from 'react-native-paper'; // Import foll
 import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 const loginValidationStyling = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    width: '100%',
-    alignItems: 'center'
-  },
-  contentNormal: {
-    width: '91%',
-    marginTop: 15,
-    height: 40,
-    borderBottomColor: styling.colors.Asphalt,
-    borderBottomWidth: 2,
-  },
-  contentError: {
-    width: '91%',
-    marginTop: 15,
-    height: 40,
-    borderBottomColor: styling.colors.Asphalt,
-    borderBottomWidth: 2,
-  },
   contentErrorMessage: {
-    width: '91%',
+    marginLeft: 5,
     marginTop: 5,
     fontFamily: styling.fonts.android,
     fontStyle: styling.fontStyles.italic,
@@ -43,16 +24,28 @@ const TextInput = ({ style, error, ...props }) => {
 
   if (error) {
     return (
-      <View style={loginValidationStyling.container}>
-        <PaperTextInput style={loginValidationStyling.contentError} {...props} />
+      <View>
+        <PaperTextInput
+          mode="flatline"
+          style={{ backgroundColor: styling.colors.VistaWhite }}
+          theme={{ colors: { primary: styling.colors.Asphalt }}}
+          selectionColor={styling.colors.Asphalt}
+          {...props}
+        />
         <Text style={loginValidationStyling.contentErrorMessage}>{error}</Text>
       </View>
     );
   };
 
   return (
-    <View style={loginValidationStyling.container}>
-      <PaperTextInput style={loginValidationStyling.contentNormal} {...props} />
+    <View>
+      <PaperTextInput
+        mode="flatline"
+        style={{ backgroundColor: styling.colors.VistaWhite }}
+        theme={{ colors: { primary: styling.colors.Asphalt }}}
+        selectionColor={styling.colors.Asphalt}
+        {...props}
+      />
     </View>
   );
 };

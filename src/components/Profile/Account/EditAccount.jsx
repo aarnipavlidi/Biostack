@@ -93,12 +93,10 @@ const initialValues = {
 
 const editAccountFormValidationSchema = yup.object().shape({
   userName: yup
-    .string()
-    .required('Name is required.'),
+    .string(),
   userEmail: yup
     .string()
     .email('Invalid email format.')
-    .required('Email is required.')
 });
 
 const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }) => {
@@ -179,18 +177,11 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
     )
   };
 
-  const [nameValue, setNameValue] = useState({
-    status: false,
-    data: '',
-  });
-
-  const [emailValue, setEmailValue] = useState({
-    status: false,
-    data: '',
-  });
+  const [nameValue, setNameValue] = useState({ status: false });
+  const [emailValue, setEmailValue] = useState({ status: false });
 
   const onSubmit = (values) => {
-    console.log(values);
+    console.log(values)
   };
 
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
@@ -203,9 +194,10 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
     history.goBack();
   };
 
-  const resetAccountValues = () => {
-    setNameValue({ status: false, data: '' });
-    setEmailValue({ status: false, data: '' });
+  const resetAccountValues = ({ handleReset }) => {
+    setNameValue({ status: false });
+    setEmailValue({ status: false });
+    handleReset();
   };
 
   // If "me" querys data => "currentUserData" is still loading from the dabase, component
@@ -227,7 +219,7 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
         <Appbar.Action icon="cards-heart" />
       </Appbar.Header>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={editAccountFormValidationSchema}>
-        {({ handleSubmit }) => <EditAccountForm nameValue={nameValue} setNameValue={setNameValue} emailValue={emailValue} setEmailValue={setEmailValue} currentUserData={currentUserData} onSubmit={handleSubmit} resetAccountValues={resetAccountValues} />}
+        {({ handleSubmit, handleReset, values }) => <EditAccountForm currentFormValues={values} nameValue={nameValue} setNameValue={setNameValue} emailValue={emailValue} setEmailValue={setEmailValue} currentUserData={currentUserData} onSubmit={handleSubmit} resetAccountValues={() => resetAccountValues({ handleReset })} />}
       </Formik>
       <Card style={userInformationContainer.title}>
         <Text style={userInformationContainer.titleContent}>YOUR ACCOUNT</Text>
