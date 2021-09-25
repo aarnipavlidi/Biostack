@@ -18,7 +18,7 @@ const useLogin = () => {
   // variables. When user wants to login to the app, we will execute "getUserCredentials(...)"
   // function with the variables which user gave into input fields. If logging is successful
   // aka mutation then user will be redirected to dashboard.
-  const [getUserCredentials, result] = useMutation(USER_LOGIN);
+  const [getUserCredentials, { loading }] = useMutation(USER_LOGIN);
 
   // Define "userLogin" function, which will execute everything inside of {...},
   // so basically user gives values to input fields (LoginScreen component) and
@@ -52,7 +52,7 @@ const useLogin = () => {
   };
 
   // Return variables inside of [...] to be used with this hook.
-  return [userLogin, result]
+  return [userLogin, { loading }]
 };
 
 // Export "useLogin" hook, so other components like "App.js" are able to use this hooks's content.

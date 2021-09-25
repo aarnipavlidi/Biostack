@@ -11,7 +11,7 @@ const useCreateNewUser = () => {
   // Define "CREATE_NEW_USER" mutation and [createNewUser, result] variables.
   // With "createNewUser" function we will be able to execute mutation with
   // variables from input fields user gave, while creating new user to db.
-  const [createNewUser, result] = useMutation(CREATE_NEW_USER);
+  const [createNewUser, { loading }] = useMutation(CREATE_NEW_USER);
 
   // Define "userRegistration" function, which will execute everything inside of
   // {...} and also it get's parameters values inside of ({...}), which comes from
@@ -34,13 +34,13 @@ const useCreateNewUser = () => {
     // If mutation is successful, then "response.data" is true and we will return back "response" variable data.
     if (response.data) {
       return response;
-    } else { // Else if mutation is unsuccessful, then we will return error with following message. 
+    } else { // Else if mutation is unsuccessful, then we will return error with following message.
       throw new Error('Creating new user was unsuccessful, please try again!');
     };
   };
 
   // Return variables inside of [...] to be used with this hook.
-  return [userRegistration, result];
+  return [userRegistration, { loading }];
 };
 
 // Export "useCreateNewUser" hook, so other components like "App.js" are able to use this hooks's content.

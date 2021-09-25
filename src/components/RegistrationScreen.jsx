@@ -3,7 +3,7 @@
 
 import React from 'react'; // Import "react" library's content for this component usage.
 import { Alert, View, ScrollView, Pressable, Text, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
-
+import { Button } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
 
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
@@ -47,8 +47,6 @@ const titleContainer = StyleSheet.create({
   }
 });
 
-// Define "buttonContainer" variable, which will be used for styling
-// buttons "container" after input fields.
 const buttonContainer = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -60,14 +58,10 @@ const buttonContainer = StyleSheet.create({
     marginTop: 15,
     marginLeft: 15,
     marginRight: 15,
-    height: 40,
     backgroundColor: styling.colors.Asphalt,
-    borderWidth: 3,
-    borderColor: styling.colors.Asphalt,
   },
   buttonContentText: {
-    marginTop: 5,
-    textAlign: 'center',
+    fontFamily: styling.fonts.buttonContent,
     color: styling.colors.VistaWhite
   },
 });
@@ -117,7 +111,7 @@ const registrationFormValidationSchema = yup.object().shape({
 // at => "RegistrationScreen" component. If user chooses to "cancel" account creation
 // process, then user can press "Cancel" button, which will redirect user back to
 // the login screen (LoginScreen component).
-const RegistrationForm = ({ history, onSubmit }) => {
+const RegistrationForm = ({ history, onSubmit, loading }) => {
 
   // Define "cancelRegistration" function, which will redirect user to
   // the login screen, when function is being referenced.
@@ -134,12 +128,12 @@ const RegistrationForm = ({ history, onSubmit }) => {
       <FormikTextInput name="passwordConfirm" placeholder="Please confirm your password." secureTextEntry={true} />
       <FormikTextInput name="email" placeholder="Please enter your email." />
       <View style={buttonContainer.container}>
-        <Pressable style={buttonContainer.buttonContent} onPress={cancelRegistration}>
+        <Button style={buttonContainer.buttonContent} mode="contained" onPress={cancelRegistration}>
           <Text style={buttonContainer.buttonContentText}>Cancel</Text>
-        </Pressable>
-        <Pressable style={buttonContainer.buttonContent} onPress={onSubmit}>
+        </Button>
+        <Button style={buttonContainer.buttonContent} mode="contained" onPress={onSubmit} loading={loading}>
           <Text style={buttonContainer.buttonContentText}>Register</Text>
-        </Pressable>
+        </Button>
       </View>
     </View>
   );
@@ -150,9 +144,9 @@ const RegistrationForm = ({ history, onSubmit }) => {
 // and "onSubmit" button, which get "values" from input fields at "RegistrationForm" where
 // user types different values on different input fields. If account creation failed, "Alert"
 // component will be rendered back and reason "error.message" why account creation failed.
-const RegistrationScreen = () => {
+const RegistrationScreen = ({ showSnackBar }) => {
 
-  const [userRegistration] = useCreateNewUser(); // Define "userRegistration" variable from => "useCreateNewUser(...)" hook.
+  const [userRegistration, { loading }] = useCreateNewUser(); // Define "userRegistration" variable from => "useCreateNewUser(...)" hook.
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
   // Define "onSubmit" function, which will execute everything inside of {...}, so
@@ -170,6 +164,7 @@ const RegistrationScreen = () => {
       // Define "data" variable from "userRegistration(...)" hook and execute that function
       // with parameter values, which comes from input fields ("values" variable).
       const { data } = await userRegistration({ name, username, password, email });
+      showSnackBar(`You have successfully registered to the app. Welcome ${data.createUser.name} to the Biostack! <3`)
       history.push("/"); // Redirect user to "/" path aka login screen.
     } catch (error) { // If there is a problem at "try" section, then "Alert" component will be rendered.
       Alert.alert(
@@ -193,7 +188,7 @@ const RegistrationScreen = () => {
         <Text style={titleContainer.containerText}>Register an account for app.</Text>
       </View>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={registrationFormValidationSchema}>
-        {({ handleSubmit }) => <RegistrationForm history={history} onSubmit={handleSubmit} />}
+        {({ handleSubmit }) => <RegistrationForm history={history} onSubmit={handleSubmit} loading={loading} />}
       </Formik>
     </View>
   );

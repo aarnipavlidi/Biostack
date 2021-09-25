@@ -3,6 +3,7 @@
 
 import React from 'react'; // Import "react" library's content for this component usage.
 import { Alert, ScrollView, View, Pressable, Text, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Button } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
 
 import useAuthStorage from '../hooks/useAuthStorage'; // Import "useAuthStorage" hook from "useAuthStorage.js" file for this component usage.
@@ -56,14 +57,10 @@ const buttonContainer = StyleSheet.create({
     marginTop: 15,
     marginLeft: 15,
     marginRight: 15,
-    height: 40,
     backgroundColor: styling.colors.Asphalt,
-    borderWidth: 3,
-    borderColor: styling.colors.Asphalt,
   },
   buttonContentText: {
-    marginTop: 5,
-    textAlign: 'center',
+    fontFamily: styling.fonts.buttonContent,
     color: styling.colors.VistaWhite
   },
 });
@@ -96,7 +93,7 @@ const loginFormValidationSchema = yup.object().shape({
 // to the app. If user does not have currently registered account, then user can create
 // one with via "Sign Up" button, which then user will be pushed to the "/register" path
 // and app will render "RegistrationScreen" component back to the user.
-const LoginForm = ({ history, onSubmit }) => {
+const LoginForm = ({ history, onSubmit, loading }) => {
 
   // Define "goRegistration" variable, which will push the user to the
   // "/register" path everytime function is being referenced.
@@ -110,12 +107,12 @@ const LoginForm = ({ history, onSubmit }) => {
       <FormikTextInput name="username" placeholder="Please enter your username." />
       <FormikTextInput name="password" placeholder="Please enter your password." secureTextEntry={true} />
       <View style={buttonContainer.container}>
-        <Pressable style={buttonContainer.buttonContent} onPress={onSubmit}>
+        <Button style={buttonContainer.buttonContent} mode="contained" onPress={onSubmit} loading={loading}>
           <Text style={buttonContainer.buttonContentText}>Sign In</Text>
-        </Pressable>
-        <Pressable style={buttonContainer.buttonContent} onPress={goRegistration}>
+        </Button>
+        <Button style={buttonContainer.buttonContent} mode="contained" onPress={goRegistration}>
           <Text style={buttonContainer.buttonContentText}>Sign Up</Text>
-        </Pressable>
+        </Button>
       </View>
     </View>
   );
@@ -132,7 +129,7 @@ const LoginForm = ({ history, onSubmit }) => {
 // user is logged or not to the app.
 const LoginScreen = ({ setCurrentToken }) => {
 
-  const [userLogin] = useLogin(); // Define "userLogin" variable from => "useLogin(...)" hook.
+  const [userLogin, { loading }] = useLogin(); // Define "userLogin" variable from => "useLogin(...)" hook.
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
   const authStorage = useAuthStorage(); // Define "authStorage" variable, which is equal to "useAuthStorage(...)" function.
@@ -179,7 +176,7 @@ const LoginScreen = ({ setCurrentToken }) => {
         <Text style={titleContainer.containerText}>Place where you can sell or buy second hand clothes with other people.</Text>
       </View>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={loginFormValidationSchema}>
-        {({ handleSubmit }) => <LoginForm history={history} onSubmit={handleSubmit} />}
+        {({ handleSubmit }) => <LoginForm history={history} onSubmit={handleSubmit} loading={loading} />}
       </Formik>
     </View>
   );

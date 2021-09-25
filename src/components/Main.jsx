@@ -101,14 +101,13 @@ const Main = () => {
             {currentToken ? <CurrentProduct currentUserData={currentUserData} loadingUserData={loading} /> : <Redirect to="/" />}
           </Route>
           <Route exact path='/register'>
-            <RegistrationScreen />
-            <BackgroundAnimation />
+            <RegistrationScreen showSnackBar={showSnackBar} />
           </Route>
           <Route exact path="/">
             <LoginScreen setCurrentToken={setCurrentToken} />
-            <BackgroundAnimation />
           </Route>
         </Switch>
+        {currentToken ? null : <BackgroundAnimation />}
         <SnackBarAlert snackBarStatus={snackBarStatus} snackBarMessage={snackBarMessage} removeSnackBar={removeSnackBar} />
       </View>
       {currentToken ? <NavigationBottom /> : null}
