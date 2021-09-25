@@ -16,6 +16,14 @@ export const CREATE_NEW_USER = gql`
   }
 `
 
+export const UPDATE_USER = gql`
+  mutation updateUserValue($getNameValue: String, $getEmailValue: String) {
+    updateUser(newUserNameValue: $getNameValue, newUserEmailValue: $getEmailValue) {
+      response
+    }
+  }
+`
+
 // Define "USER_LOGIN" mutation, so user is able to log in to the app with the credentials user previously made.
 export const USER_LOGIN = gql`
   mutation getUserCredentials($usernameData: String!, $passwordData: String!) {

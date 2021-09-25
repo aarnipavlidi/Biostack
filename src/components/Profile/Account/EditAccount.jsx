@@ -10,6 +10,7 @@ import { FontAwesome5 } from '@expo/vector-icons'; // Import following component
 import { useApolloClient } from '@apollo/client'; // Import following functions from "@apollo/client" libary for this component usage.
 import useDeleteUser from '../../../hooks/useDeleteUser'; // Import "useDeleteUser" hook from "useDeleteUser.js" file for this component usage.
 import useDeleteManyProduct from '../../../hooks/useDeleteManyProduct'; // Import "useDeleteManyProduct" hook from "useDeleteManyProduct.js" file for this component usage.
+import useUpdateUser from '../../../hooks/useUpdateUser'; // Import "useUpdateUser" hook from "useUpdateUser.js" file for this component usage.
 import useAuthStorage from '../../../hooks/useAuthStorage'; // Import "useAuthStorage" hook from "useAuthStorage.js" file for this component usage.
 
 import EditAccountForm from './EditAccountForm'; // Import "EditAccountForm" component from "EditAccountForm.jsx" file for this component usage.
@@ -103,6 +104,7 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
 
   const [deleteUserFromDatabase, { loadingDeleteUser }] = useDeleteUser(); // Define "deleteUserFromDatabase" variable from => "useDeleteUser(...)" hook.
   const [deleteProductsFromDatabase, { loadingDeleteProducts }] = useDeleteManyProduct(); // Define "deleteProductsFromDatabase" variable from => "useDeleteManyProduct(...)" hook.
+  const [updateCurrentUser, { loadingUpdateUser }] = useUpdateUser(); // Define "updateCurrentUser" variable from => "useUpdateUser(...)" hook.
   const client = useApolloClient(); // Define "client" variable, which is equal to "useApolloClient(...)" function.
   const authStorage = useAuthStorage(); // Define "authStorage" variable, which is equal to "useAuthStorage(...)" function.
 
@@ -125,6 +127,29 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
     } catch (error) {
       console.log(error.message); // Console.log "error.message" variable data back to the user.
     }
+  };
+
+  // Define "confirmUserDelete" function, which will execute everything inside of
+  // {...}, so if user presses button to delete his/her account => "Alert" component
+  // will be rendered back to the user and user has to confirm that he/she wants to
+  // delete account from database. If user chooses to confirm, then "removeUserToken()"
+  // function will be executed and app will try delete account from the database.
+  const confirmUserDelete = () => {
+    Alert.alert(
+      "Biostack",
+      "Are you sure you want to delete your account from the app?",
+      [
+        {
+          text: "CANCEL",
+          onPress: () => console.log('User has cancelled account deletion process!'),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => removeUserToken(),
+        }
+      ]
+    )
   };
 
   const removeUserProducts = async () => {
@@ -154,36 +179,6 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
     )
   };
 
-  // Define "confirmUserDelete" function, which will execute everything inside of
-  // {...}, so if user presses button to delete his/her account => "Alert" component
-  // will be rendered back to the user and user has to confirm that he/she wants to
-  // delete account from database. If user chooses to confirm, then "removeUserToken()"
-  // function will be executed and app will try delete account from the database.
-  const confirmUserDelete = () => {
-    Alert.alert(
-      "Biostack",
-      "Are you sure you want to delete your account from the app?",
-      [
-        {
-          text: "CANCEL",
-          onPress: () => console.log('User has cancelled account deletion process!'),
-          style: "cancel"
-        },
-        {
-          text: "OK",
-          onPress: () => removeUserToken(),
-        }
-      ]
-    )
-  };
-
-  const [nameValue, setNameValue] = useState({ status: false });
-  const [emailValue, setEmailValue] = useState({ status: false });
-
-  const onSubmit = (values) => {
-    console.log(values)
-  };
-
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
   // Define "goBackPreviousRoute" variable, which will execute everything inside
@@ -194,10 +189,41 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
     history.goBack();
   };
 
+  const [nameValue, setNameValue] = useState({ status: false });
+  const [emailValue, setEmailValue] = useState({ status: false });
+
   const resetAccountValues = ({ handleReset }) => {
     setNameValue({ status: false });
     setEmailValue({ status: false });
     handleReset();
+  };
+
+  const submitUserUpdate = async (values) => {
+    try {
+      const { userName, userEmail } = values;
+      const response = await updateCurrentUser({ userName, userEmail });
+      showSnackBar(response.updateUser.response);
+    } catch (error) {
+      console.log(error.message)
+    }
+  };
+
+  const confirmUserUpdate = (values) => {
+    Alert.alert(
+      "Biostack",
+      "Are you sure you want to update your account with given values?",
+      [
+        {
+          text: "CANCEL",
+          onPress: () => console.log('User has cancelled account updating!'),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => submitUserUpdate(values),
+        }
+      ]
+    )
   };
 
   // If "me" querys data => "currentUserData" is still loading from the dabase, component
@@ -218,7 +244,7 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
         <Appbar.Content titleStyle={editAccountHeaderContainer.appBarContent} title="Edit Account" titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
         <Appbar.Action icon="cards-heart" />
       </Appbar.Header>
-      <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={editAccountFormValidationSchema}>
+      <Formik initialValues={initialValues} onSubmit={confirmUserUpdate} validationSchema={editAccountFormValidationSchema}>
         {({ handleSubmit, handleReset, values }) => <EditAccountForm currentFormValues={values} nameValue={nameValue} setNameValue={setNameValue} emailValue={emailValue} setEmailValue={setEmailValue} currentUserData={currentUserData} onSubmit={handleSubmit} resetAccountValues={() => resetAccountValues({ handleReset })} />}
       </Formik>
       <Card style={userInformationContainer.title}>
