@@ -198,17 +198,20 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
     handleReset();
   };
 
-  const submitUserUpdate = async (values) => {
+  const submitUserUpdate = async (values, { resetForm }) => {
     try {
       const { userName, userEmail } = values;
       const response = await updateCurrentUser({ userName, userEmail });
+      setNameValue({ status: false });
+      setEmailValue({ status: false });
+      resetForm();
       showSnackBar(response.updateUser.response);
     } catch (error) {
       console.log(error.message)
     }
   };
 
-  const confirmUserUpdate = (values) => {
+  const confirmUserUpdate = (values, { resetForm }) => {
     Alert.alert(
       "Biostack",
       "Are you sure you want to update your account with given values?",
@@ -220,7 +223,7 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
         },
         {
           text: "OK",
-          onPress: () => submitUserUpdate(values),
+          onPress: () => submitUserUpdate(values, { resetForm }),
         }
       ]
     )
@@ -244,8 +247,8 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
         <Appbar.Content titleStyle={editAccountHeaderContainer.appBarContent} title="Edit Account" titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
         <Appbar.Action icon="cards-heart" />
       </Appbar.Header>
-      <Formik initialValues={initialValues} onSubmit={confirmUserUpdate} validationSchema={editAccountFormValidationSchema}>
-        {({ handleSubmit, handleReset, values }) => <EditAccountForm currentFormValues={values} nameValue={nameValue} setNameValue={setNameValue} emailValue={emailValue} setEmailValue={setEmailValue} currentUserData={currentUserData} onSubmit={handleSubmit} resetAccountValues={() => resetAccountValues({ handleReset })} />}
+      <Formik initialValues={initialValues} onSubmit={(values, { resetForm }) => confirmUserUpdate(values, { resetForm })} validationSchema={editAccountFormValidationSchema}>
+        {({ handleSubmit, handleReset, values }) => <EditAccountForm currentFormValues={values} nameValue={nameValue} setNameValue={setNameValue} emailValue={emailValue} setEmailValue={setEmailValue} currentUserData={currentUserData} onSubmit={handleSubmit} loading={loadingUpdateUser} resetAccountValues={() => resetAccountValues({ handleReset })} />}
       </Formik>
       <Card style={userInformationContainer.title}>
         <Text style={userInformationContainer.titleContent}>YOUR ACCOUNT</Text>

@@ -6,6 +6,7 @@ import { ScrollView, View, StyleSheet, Text } from 'react-native'; // Import fol
 import { TextInput, Card, Button } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
 import SelectedOption from './SelectedOption'; // Import "SelectedOption" component from "SelectedOption.jsx" file for this component usage.
+import FormButtons from './FormButtons'; // Import "FormButtons" component from "FormButtons.jsx" file for this component usage.
 import FormikTextInput from '../../PaperTextInput/FormikTextInput'; // Import "FormikTextInput" component from "FormikTextInput.jsx" for this component usage.
 
 import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.
@@ -35,35 +36,9 @@ const userInformationContainer = StyleSheet.create({
   inputElement: {
     flex: 0.8
   },
-  buttonElement: {
-    width: '90%',
-    alignSelf: 'center',
-    marginTop: 10,
-    marginBottom: 5,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  }
 });
 
-const FormButtons = ({ currentFormValues, onSubmit, resetAccountValues }) => {
-
-  if (currentFormValues.userName.length !== 0 || currentFormValues.userEmail.length !== 0) {
-    return (
-      <View style={userInformationContainer.buttonElement}>
-        <Button color={styling.colors.Asphalt} mode="contained" onPress={onSubmit}>
-          <Text style={{ fontFamily: styling.fonts.buttonContent }}>Confirm</Text>
-        </Button>
-        <Button color={styling.colors.Asphalt} mode="contained" onPress={resetAccountValues}>
-          <Text style={{ fontFamily: styling.fonts.buttonContent }}>Cancel</Text>
-        </Button>
-      </View>
-    )
-  } else {
-    return null
-  };
-};
-
-const EditAccountForm = ({ currentFormValues, nameValue, setNameValue, emailValue, setEmailValue, currentUserData, onSubmit, resetAccountValues }) => {
+const EditAccountForm = ({ currentFormValues, nameValue, setNameValue, emailValue, setEmailValue, currentUserData, onSubmit, loading, resetAccountValues }) => {
 
   return (
     <View>
@@ -92,7 +67,7 @@ const EditAccountForm = ({ currentFormValues, nameValue, setNameValue, emailValu
         </View>
         <SelectedOption accountValue={emailValue} setAccountValue={setEmailValue} />
       </View>
-      <FormButtons currentFormValues={currentFormValues} onSubmit={onSubmit} resetAccountValues={resetAccountValues} />
+      <FormButtons currentFormValues={currentFormValues} onSubmit={onSubmit} loading={loading} resetAccountValues={resetAccountValues} />
     </View>
   );
 };
