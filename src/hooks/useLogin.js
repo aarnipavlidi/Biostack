@@ -52,7 +52,7 @@ const useLogin = () => {
   };
 
   // Return variables inside of [...] to be used with this hook.
-  return [userLogin, { loading }]
+  return [userLogin, { userLoading: loading }]
 };
 
 // Export "useLogin" hook, so other components like "App.js" are able to use this hooks's content.

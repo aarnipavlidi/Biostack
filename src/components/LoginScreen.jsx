@@ -3,7 +3,7 @@
 
 import React from 'react'; // Import "react" library's content for this component usage.
 import { Alert, ScrollView, View, Pressable, Text, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Button } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { Button, Divider } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
 
 import useAuthStorage from '../hooks/useAuthStorage'; // Import "useAuthStorage" hook from "useAuthStorage.js" file for this component usage.
@@ -65,6 +65,33 @@ const buttonContainer = StyleSheet.create({
   buttonContentText: {
     fontFamily: styling.fonts.buttonContent,
     color: styling.colors.VistaWhite
+  },
+});
+
+const facebookContainer = StyleSheet.create({
+  divider: {
+    flexDirection: 'row',
+    flexGrow: 1,
+    marginTop: 25
+  },
+  dividerItem: {
+    height: 2,
+    backgroundColor: styling.colors.Asphalt,
+    flex: 1/2,
+    marginLeft: 15,
+    marginRight: 15,
+    alignSelf: 'center',
+  },
+  dividerText: {
+    textAlign: 'center',
+    fontFamily: styling.fonts.loginScreenSubtitle,
+    fontSize: 19,
+  },
+  button: {
+    backgroundColor: styling.colors.Asphalt,
+    marginTop: 25,
+    marginLeft: 25,
+    marginRight: 25
   },
 });
 
@@ -132,7 +159,7 @@ const LoginForm = ({ history, onSubmit, loading }) => {
 // user is logged or not to the app.
 const LoginScreen = ({ setCurrentToken }) => {
 
-  const [userLogin, { loading }] = useLogin(); // Define "userLogin" variable from => "useLogin(...)" hook.
+  const [userLogin, { userLoading }] = useLogin(); // Define "userLogin" variable from => "useLogin(...)" hook.
   const [userLoginFacebook, { facebookLoading }] = useLoginFacebook(); // Define "userLoginFacebook" variable from => "useLoginFacebook(...)" hook.
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
@@ -210,14 +237,19 @@ const LoginScreen = ({ setCurrentToken }) => {
         <Text style={titleContainer.containerText}>Place where you can sell or buy second hand clothes with other people.</Text>
       </View>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={loginFormValidationSchema}>
-        {({ handleSubmit }) => <LoginForm history={history} onSubmit={handleSubmit} loading={loading} />}
+        {({ handleSubmit }) => <LoginForm history={history} onSubmit={handleSubmit} loading={userLoading} />}
       </Formik>
+      <View>
+        <View style={facebookContainer.divider}>
+          <Text style={facebookContainer.dividerItem}> </Text>
+          <Text style={facebookContainer.dividerText}>OR</Text>
+          <Text style={facebookContainer.dividerItem}> </Text>
+        </View>
 
-
-      <Pressable onPress={facebookLogin} style={{ backgroundColor: 'red', alignItems: 'center', marginTop: 50, padding: 10 }}>
-        <Text>FACEBOOK LOGIN</Text>
-      </Pressable>
-
+        <Button style={facebookContainer.button} icon="facebook" mode="contained" onPress={facebookLogin} loading={facebookLoading}>
+          <Text style={buttonContainer.buttonContentText}>Continue with Facebook</Text>
+        </Button>
+      </View>
     </View>
   );
 };
