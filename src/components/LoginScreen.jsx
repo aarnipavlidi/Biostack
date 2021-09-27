@@ -17,6 +17,7 @@ import { Formik } from 'formik'; // Import "Formik" component from "formik" liba
 import * as yup from 'yup'; // Import everything as "yup" from "yup" libary's content for this component usage.
 
 import useLogin from '../hooks/useLogin'; // Import "useLogin" hook from "useLogin.js" file for this component usage.
+import useLoginFacebook from '../hooks/useLoginFacebook'; // Import "useLoginFacebook" hook from "useLoginFacebook.js" file for this component usage.
 
 const container = StyleSheet.create({
   container: {
@@ -131,33 +132,8 @@ const LoginForm = ({ history, onSubmit, loading }) => {
 // user is logged or not to the app.
 const LoginScreen = ({ setCurrentToken }) => {
 
-  const aarni = async () => {
-      try {
-        await Facebook.initializeAsync({
-          appId: Constants.manifest.facebookAppId,
-        });
-        const { type, token, expirationDate, permissions, declinedPermissions } = await Facebook.logInWithReadPermissionsAsync({
-          permissions: ['public_profile, email'],
-        });
-
-        if (type === 'success') {
-          // Get the user's name using Facebook's Graph API
-          const response = await fetch(`https://graph.facebook.com/me?fields=id,name,email,picture.width(500).height(500)&access_token=${token}`);
-
-            const testi = await response.json();
-            console.log(testi);
-
-            //Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
-          } else {
-            // type === 'cancel'
-          }
-        } catch ({ message }) {
-          alert(`Facebook Login Error: ${message}`);
-        }
-      };
-
-
   const [userLogin, { loading }] = useLogin(); // Define "userLogin" variable from => "useLogin(...)" hook.
+  const [userLoginFacebook, { facebookLoading }] = useLoginFacebook(); // Define "userLoginFacebook" variable from => "useLoginFacebook(...)" hook.
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
   const authStorage = useAuthStorage(); // Define "authStorage" variable, which is equal to "useAuthStorage(...)" function.
@@ -196,6 +172,36 @@ const LoginScreen = ({ setCurrentToken }) => {
     };
   };
 
+  const facebookLogin = async () => {
+
+    try {
+      await Facebook.initializeAsync({
+        appId: Constants.manifest.facebookAppId,
+      });
+
+      const { type, token, expirationDate, permissions, declinedPermissions } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['public_profile, email'],
+      });
+
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(`https://graph.facebook.com/me?fields=id,name,email,picture.width(500).height(500)&access_token=${token}`);
+        const getResponse = await response.json();
+
+        const createUsername = getResponse.name.replace(/\s/g, "").toLowerCase();
+
+        const { data } = await userLoginFacebook(getResponse.id, getResponse.email, getResponse.name, createUsername);
+        const tokenResponse = await authStorage.getAccessToken();
+        setCurrentToken(tokenResponse);
+        history.push("/dashboard");
+      } else {
+            // type === 'cancel'
+          }
+        } catch ({ message }) {
+          alert(`Facebook Login Error: ${message}`);
+        }
+      };
+
   // Component will render everything inside of (...) back to the user.
   return (
     <View style={container.container}>
@@ -208,7 +214,7 @@ const LoginScreen = ({ setCurrentToken }) => {
       </Formik>
 
 
-      <Pressable onPress={aarni} style={{ backgroundColor: 'red', alignItems: 'center', marginTop: 50, padding: 10 }}>
+      <Pressable onPress={facebookLogin} style={{ backgroundColor: 'red', alignItems: 'center', marginTop: 50, padding: 10 }}>
         <Text>FACEBOOK LOGIN</Text>
       </Pressable>
 

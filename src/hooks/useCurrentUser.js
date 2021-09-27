@@ -20,6 +20,8 @@ const useCurrentUser = () => {
   // to render for example "loading spinner" back to the user untill data has loaded.
   const { loading, error, data } = useQuery(CURRENT_LOGGED_USER);
 
+  console.log(data);
+
   // Define "useEffect(...)" function, which will be executed everytime there is change
   // in "data" variable. So when user has logged in to the app successfully, we will wait
   // until query has returned data and then will change state of "currentUserData"

@@ -33,6 +33,14 @@ export const USER_LOGIN = gql`
   }
 `
 
+export const USER_LOGIN_FACEBOOK = gql`
+  mutation aarni($facebookID: String!, $facebookEmail: String!, $facebookName: String!, $facebookUsername: String!) {
+    facebookLogin(getFacebookID: $facebookID,getFacebookEmail: $facebookEmail, getFacebookName: $facebookName, getFacebookUsername: $facebookUsername) {
+      value
+    }
+  }
+`
+
 // Define "CREATE_NEW_PRODUCT" mutation, so user is able to add new item to the database.
 export const CREATE_NEW_PRODUCT = gql`
   mutation createNewProduct($productTitle: String!, $productDescription: String!, $productSize: String!, $productPrice: String!, $productGroupName: String!, $owner: String!) {
