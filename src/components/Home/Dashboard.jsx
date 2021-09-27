@@ -29,7 +29,7 @@ const loadingContainer = StyleSheet.create({
   },
   loadingSpinner: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   }
 });
 

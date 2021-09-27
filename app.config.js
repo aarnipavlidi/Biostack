@@ -1,8 +1,13 @@
 import 'dotenv/config';
 
 export default {
-  name: 'rate-repository-app',
-  slug: 'rate-repository-app',
+  name: 'Biostack',
+  slug: 'Biostack',
+  facebookScheme: `fb${process.env.FACEBOOK_APP_ID}`,
+  facebookAppId: process.env.FACEBOOK_APP_ID,
+  facebookDisplayName: 'Biostack',
+  facebookAutoLogAppEventsEnabled: false,
+  facebookAdvertiserIDCollectionEnabled: false,
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/icon.png',
@@ -21,6 +26,7 @@ export default {
     supportsTablet: true
   },
   android: {
+    package: "com.aarnipavlidi.Biostack",
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
       backgroundColor: '#FFFFFF'

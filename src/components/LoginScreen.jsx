@@ -7,6 +7,8 @@ import { Button } from 'react-native-paper'; // Import following components from
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
 
 import useAuthStorage from '../hooks/useAuthStorage'; // Import "useAuthStorage" hook from "useAuthStorage.js" file for this component usage.
+import * as Facebook from 'expo-facebook';
+import Constants from 'expo-constants'; // Import "Constants" component from "expo-constants" for this component usage.
 
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
 import FormikTextInput from './FormikTextInput'; // Import "FormikTextInput" component from "FormikTextInput.jsx" for this component usage.
@@ -129,6 +131,32 @@ const LoginForm = ({ history, onSubmit, loading }) => {
 // user is logged or not to the app.
 const LoginScreen = ({ setCurrentToken }) => {
 
+  const aarni = async () => {
+      try {
+        await Facebook.initializeAsync({
+          appId: Constants.manifest.facebookAppId,
+        });
+        const { type, token, expirationDate, permissions, declinedPermissions } = await Facebook.logInWithReadPermissionsAsync({
+          permissions: ['public_profile, email'],
+        });
+
+        if (type === 'success') {
+          // Get the user's name using Facebook's Graph API
+          const response = await fetch(`https://graph.facebook.com/me?fields=id,name,email,picture.width(500).height(500)&access_token=${token}`);
+
+            const testi = await response.json();
+            console.log(testi);
+
+            //Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
+          } else {
+            // type === 'cancel'
+          }
+        } catch ({ message }) {
+          alert(`Facebook Login Error: ${message}`);
+        }
+      };
+
+
   const [userLogin, { loading }] = useLogin(); // Define "userLogin" variable from => "useLogin(...)" hook.
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
@@ -178,6 +206,12 @@ const LoginScreen = ({ setCurrentToken }) => {
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={loginFormValidationSchema}>
         {({ handleSubmit }) => <LoginForm history={history} onSubmit={handleSubmit} loading={loading} />}
       </Formik>
+
+
+      <Pressable onPress={aarni} style={{ backgroundColor: 'red', alignItems: 'center', marginTop: 50, padding: 10 }}>
+        <Text>FACEBOOK LOGIN</Text>
+      </Pressable>
+
     </View>
   );
 };

@@ -12,13 +12,14 @@ const emptyProductsContainer = StyleSheet.create({
   container: {
     marginLeft: 10,
     marginRight: 10,
-    marginTop: '25%',
+    marginTop: '40%',
     marginBottom: 5,
     backgroundColor: styling.colors.VistaWhite,
     alignItems: 'center',
     elevation: 5,
   },
   containerImage: {
+    alignSelf: 'center',
     backgroundColor: styling.colors.VistaWhite
   },
   content: {
@@ -43,8 +44,8 @@ const DashboardEmpty = () => {
   // Component will render everything inside of (...) back to the user.
   return (
     <Card style={emptyProductsContainer.container}>
-      <Card.Cover style={emptyProductsContainer.containerImage} resizeMode='contain' source={require('../../../assets/images/content/fold-icon-19.jpg')} />
       <Card.Content style={emptyProductsContainer.content}>
+        <Image style={emptyProductsContainer.containerImage} resizeMode='contain' source={require('../../../assets/images/content/Biostack-logo.png')} />
         <Title style={emptyProductsContainer.title}>Biostack</Title>
         <Text style={emptyProductsContainer.text}>No matching results with your current keyword from search. Try different keyword to search your product from our app! <Octicons name="heart" size={22} color={styling.colors.Asphalt} /></Text>
       </Card.Content>
