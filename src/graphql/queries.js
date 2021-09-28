@@ -13,6 +13,7 @@ export const CURRENT_LOGGED_USER = gql`
       username
       email
       rating
+      facebookAvatar
       products {
         _id
         productTitle
@@ -87,6 +88,7 @@ export const SHOW_CURRENT_PRODUCT = gql`
         username
         email
         rating
+        facebookAvatar
       }
     }
   }

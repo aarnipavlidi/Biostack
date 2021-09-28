@@ -212,12 +212,12 @@ const LoginScreen = ({ setCurrentToken }) => {
 
       if (type === 'success') {
         // Get the user's name using Facebook's Graph API
-        const response = await fetch(`https://graph.facebook.com/me?fields=id,name,email,picture.width(500).height(500)&access_token=${token}`);
+        const response = await fetch(`https://graph.facebook.com/me?fields=id,name,email,picture.width(240).height(240)&access_token=${token}`);
         const getResponse = await response.json();
 
         const createUsername = getResponse.name.replace(/\s/g, "").toLowerCase();
 
-        const { data } = await userLoginFacebook(getResponse.id, getResponse.email, getResponse.name, createUsername);
+        const { data } = await userLoginFacebook(getResponse.id, getResponse.picture.data.url, getResponse.email, getResponse.name, createUsername);
         const tokenResponse = await authStorage.getAccessToken();
         setCurrentToken(tokenResponse);
         history.push("/dashboard");

@@ -12,14 +12,15 @@ const useLoginFacebook = () => {
   const client = useApolloClient(); // Define "client" variable, which is equal to "useApolloClient(...)" function.
   const authStorage = useAuthStorage(); // Define "authStorage" variable, which is equal to "useAuthStorage(...)" function.
 
-  const [aarni, { loading }] = useMutation(USER_LOGIN_FACEBOOK);
+  const [getUserCredentials, { loading }] = useMutation(USER_LOGIN_FACEBOOK);
 
-  const userLoginFacebook = async (userID, userEmail, userName, userUsername) => {
+  const userLoginFacebook = async (userID, userAvatar, userEmail, userName, userUsername) => {
 
     // Define "response" variable, which will do following function.
-    const response = await aarni({
+    const response = await getUserCredentials({
       variables: {
         facebookID: userID,
+        facebookAvatar: userAvatar,
         facebookEmail: userEmail,
         facebookName: userName,
         facebookUsername: userUsername

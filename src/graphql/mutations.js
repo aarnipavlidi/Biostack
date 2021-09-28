@@ -34,8 +34,8 @@ export const USER_LOGIN = gql`
 `
 
 export const USER_LOGIN_FACEBOOK = gql`
-  mutation aarni($facebookID: String!, $facebookEmail: String!, $facebookName: String!, $facebookUsername: String!) {
-    facebookLogin(getFacebookID: $facebookID,getFacebookEmail: $facebookEmail, getFacebookName: $facebookName, getFacebookUsername: $facebookUsername) {
+  mutation aarni($facebookID: String!, $facebookAvatar: String!, $facebookEmail: String!, $facebookName: String!, $facebookUsername: String!) {
+    facebookLogin(getFacebookID: $facebookID, getFacebookAvatar: $facebookAvatar, getFacebookEmail: $facebookEmail, getFacebookName: $facebookName, getFacebookUsername: $facebookUsername) {
       value
     }
   }

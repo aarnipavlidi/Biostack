@@ -28,6 +28,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
     "react-native-dropdown-picker": "^5.1.23",
     "react-native-paper": "^4.9.2",
+    "react-native-text-avatar": "^1.0.7",
     "react-native-web": "^0.17.1",
     "react-router-native": "^5.2.0",
     "styled-components": "^5.3.1",

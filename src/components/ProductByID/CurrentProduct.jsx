@@ -5,6 +5,7 @@ import React, { useState } from 'react'; // Import "react" library's content for
 import { useHistory } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
 import { ActivityIndicator, Image, StyleSheet, Pressable, ScrollView, View, Text, FlatList } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Appbar, Caption, Card, Divider, Title, Paragraph, List, Provider } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import TextAvatar from 'react-native-text-avatar'; // Import following components from 'react-native-text-avatar' library for this component usage.
 
 import Checkout from './Checkout'; // Import "Checkout" component from "Checkout.jsx" file for this component usage.
 import ButtonOptions from './ButtonOptions'; // Import "ButtonOptions" component from "ButtonOptions.jsx" file for this component usage.
@@ -83,6 +84,21 @@ const sellerContainer = StyleSheet.create({
     justifyContent: 'space-around'
   },
 });
+
+const CurrentUserAvatar = ({ checkUserAvatar, currentUserName }) => {
+
+  if (checkUserAvatar) {
+    return (
+      <Image style={{ width: 75, height: 75, borderRadius: 75 / 2 }} source={{ uri: checkUserAvatar }} />
+    )
+  } else {
+    return (
+      <TextAvatar backgroundColor={styling.colors.Asphalt} textColor={styling.colors.VistaWhite} size={75} type={'circle'}>
+        {currentUserName}
+      </TextAvatar>
+    );
+  };
+};
 
 const CurrentProduct = ({ currentUserData, loadingUserData }) => {
 
@@ -166,7 +182,7 @@ const CurrentProduct = ({ currentUserData, loadingUserData }) => {
                 </View>
               </View>
               <View>
-                <Image style={{ width: 75, height: 75, borderRadius: 75 / 2 }} source={{ uri: 'https://picsum.photos/75/75?grayscale'}} />
+                <CurrentUserAvatar checkUserAvatar={getCurrentProduct.owner.facebookAvatar} currentUserName={getCurrentProduct.owner.name} />
               </View>
             </View>
           </Card.Content>

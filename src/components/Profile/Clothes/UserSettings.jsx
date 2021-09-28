@@ -5,6 +5,7 @@ import React from 'react'; // Import "react" library's content for this componen
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
 import { Alert, ActivityIndicator, Image, ScrollView, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Avatar, Appbar, Card, IconButton, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import TextAvatar from 'react-native-text-avatar'; // Import following components from 'react-native-text-avatar' library for this component usage.
 
 import UserRating from '../../UserRating'; // Import "UserRating" component from "UserRating.jsx" file for this component usage.
 
@@ -108,6 +109,22 @@ const buttonContainer = StyleSheet.create({
   },
 });
 
+const CurrentUserAvatar = ({ checkUserAvatar, currentUserName }) => {
+
+  if (checkUserAvatar) {
+    return (
+      <Image style={{ width: 50, height: 50, borderRadius: 50 / 2 }} source={{ uri: checkUserAvatar }} />
+    )
+  } else {
+    return (
+      <TextAvatar backgroundColor={styling.colors.Asphalt} textColor={styling.colors.VistaWhite} size={50} type={'circle'}>
+        {currentUserName}
+      </TextAvatar>
+    );
+  };
+};
+
+
 // Define "UserSettings" component, which will execute everything inside of {...}
 // and render back either "loading spinner" or current logged user data.
 const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
@@ -167,7 +184,7 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
           <View style={profileOverviewContainer.headerContainer}>
             <Title>Profile Overview</Title>
             <View style={profileOverviewContainer.avatarContainer}>
-              <Image style={{ width: 50, height: 50, borderRadius: 50 / 2 }} source={{ uri: 'https://picsum.photos/50/50?grayscale'}} />
+              <CurrentUserAvatar checkUserAvatar={currentUserData.facebookAvatar} currentUserName={currentUserData.name} />
             </View>
           </View>
           <View style={profileOverviewContainer.contentContainer}>
