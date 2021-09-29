@@ -9,6 +9,7 @@ import TextAvatar from 'react-native-text-avatar'; // Import following component
 
 import Checkout from './Checkout'; // Import "Checkout" component from "Checkout.jsx" file for this component usage.
 import ButtonOptions from './ButtonOptions'; // Import "ButtonOptions" component from "ButtonOptions.jsx" file for this component usage.
+import ProductImage from './ProductImage'; // Import "ProductImage" component from "ProductImage.jsx" file for this component usage.
 import UserRating from '../UserRating'; // Import "UserRating" component from "UserRating.jsx" file for this component usage.
 import ItemTypeCheck from '../ProductChecking/ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
 import ItemSizeCheck from '../ProductChecking/ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
@@ -137,7 +138,7 @@ const CurrentProduct = ({ currentUserData, loadingUserData }) => {
           <Appbar.Content style={headerContainer.appBarContent} title={getCurrentProduct.productTitle} titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
         </Appbar.Header>
         <Card style={productContainer.container}>
-          <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5 }} source={require('../../../assets/images/clothes/Vanilla_Front_900x.jpg')} />
+          <ProductImage getImageName={getCurrentProduct.productImage.name} getImageValue={getCurrentProduct.productImage.value} />
           <Card.Content>
             <Paragraph>{getCurrentProduct.productDescription}</Paragraph>
             <Divider style={{ marginTop: 10, marginBottom: 10 }} />

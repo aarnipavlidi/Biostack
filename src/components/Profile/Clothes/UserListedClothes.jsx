@@ -6,6 +6,7 @@ import { Alert, Image, View, StyleSheet, Pressable, Text } from 'react-native'; 
 import { Badge, Card, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
 import useDeleteProduct from '../../../hooks/useDeleteProduct'; // Import "useDeleteProduct" hook from "useDeleteProduct.js" file for this component usage.
+import ProductImage from './ProductImage'; // Import "ProductImage" component from "ProductImage.jsx" file for this component usage.
 import ItemTypeCheck from '../../ProductChecking/ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
 import { AntDesign } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
@@ -18,7 +19,7 @@ const listedProductsContainer = StyleSheet.create({
     marginTop: 7,
     marginBottom: 7,
     alignSelf: 'center',
-    backgroundColor: styling.colors.VistaWhite
+    backgroundColor: 'white'
   },
   primaryContainer: {
     flexDirection: 'row',
@@ -125,7 +126,7 @@ const UserListedClothes = ({ item }) => {
             <View style={listedProductsContainer.productDescriptionContainer}>
               <Paragraph>{item.productDescription}</Paragraph>
             </View>
-            <Image style={listedProductsContainer.productImageContainer} source={{ uri: 'https://picsum.photos/60/60?grayscale'}} />
+            <ProductImage getImageName={item.productImage.name} getImageValue={item.productImage.value} />
           </View>
 
           <View style={listedProductsContainer.contentContainer}>

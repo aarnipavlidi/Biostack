@@ -6,8 +6,9 @@ import { useHistory } from 'react-router-native'; // Import following components
 import { Pressable, Image, Text, View, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Card, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
-import ItemTypeCheck from './ProductChecking/ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
-import ItemSizeCheck from './ProductChecking/ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
+import ProductImage from './ProductImage'; // Import "ProductImage" component from "ProductImage.jsx" file for this component usage.
+import ItemTypeCheck from '../ProductChecking/ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
+import ItemSizeCheck from '../ProductChecking/ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
 
 const productContainer = StyleSheet.create({
   cardContainer: {
@@ -36,7 +37,7 @@ const ProductRenderAll = ({ item }) => {
     <Card style={productContainer.cardContainer}>
       <Pressable onPress={() => history.push(`/dashboard/${item._id}`)}>
         <Card.Content>
-          <Card.Cover source={require('../../assets/images/clothes/Vanilla_Front_900x.jpg')} />
+          <ProductImage getImageName={item.productImage.name} getImageValue={item.productImage.value} />
           <View style={productContainer.productTitle}>
             <Text>{item.productTitle}</Text>
           </View>

@@ -31,7 +31,7 @@ const useCreateNewProduct = () => {
   // Define "submitNewProduct" function, which will execute everything inside of {...}, so basically
   // everytime user wants to add new item to the app, this function will be executed by the parameter
   // values, which comes from input fields where user types new item information.
-  const submitNewProduct = async ({ productTitle, productDescription, productSize, productPrice, productGroupName, owner }) => {
+  const submitNewProduct = async ({ productTitle, productDescription, productSize, productPrice, productGroupName, productImageValue, owner }) => {
 
     // Define "response" variable, which will execute "createNewProduct" function
     // with parameter values from "submitNewProduct".
@@ -42,6 +42,7 @@ const useCreateNewProduct = () => {
         productSize: productSize,
         productPrice: productPrice,
         productGroupName: productGroupName,
+        productImageValue: productImageValue,
         owner: owner
       }
     });

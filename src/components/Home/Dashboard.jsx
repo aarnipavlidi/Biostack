@@ -6,7 +6,7 @@ import { ActivityIndicator, FlatList, Text, StyleSheet, View, LogBox } from 'rea
 import { Appbar, Searchbar } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { MaterialIcons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
-import ProductRenderAll from '../ProductRenderAll'; // Import "ProductRenderAll" component from "ProductRenderAll.jsx" file for this component usage.
+import ProductRenderAll from './ProductRenderAll'; // Import "ProductRenderAll" component from "ProductRenderAll.jsx" file for this component usage.
 import DashboardHeader from './DashboardHeader'; // Import "DashboardHeader" component from "DashboardHeader.jsx" file for this component usage.
 import DashboardEmpty from './DashboardEmpty'; // Import "DashboardEmpty" component from "DashboardEmpty.jsx" file for this component usage.
 

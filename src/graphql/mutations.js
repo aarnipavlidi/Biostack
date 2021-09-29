@@ -34,7 +34,7 @@ export const USER_LOGIN = gql`
 `
 
 export const USER_LOGIN_FACEBOOK = gql`
-  mutation aarni($facebookID: String!, $facebookAvatar: String!, $facebookEmail: String!, $facebookName: String!, $facebookUsername: String!) {
+  mutation getUserCredentials($facebookID: String!, $facebookAvatar: String!, $facebookEmail: String!, $facebookName: String!, $facebookUsername: String!) {
     facebookLogin(getFacebookID: $facebookID, getFacebookAvatar: $facebookAvatar, getFacebookEmail: $facebookEmail, getFacebookName: $facebookName, getFacebookUsername: $facebookUsername) {
       value
     }
@@ -43,13 +43,14 @@ export const USER_LOGIN_FACEBOOK = gql`
 
 // Define "CREATE_NEW_PRODUCT" mutation, so user is able to add new item to the database.
 export const CREATE_NEW_PRODUCT = gql`
-  mutation createNewProduct($productTitle: String!, $productDescription: String!, $productSize: String!, $productPrice: String!, $productGroupName: String!, $owner: String!) {
+  mutation createNewProduct($productTitle: String!, $productDescription: String!, $productSize: String!, $productPrice: String!, $productGroupName: String!, $productImageValue: Int!, $owner: String!) {
     createProduct(
       productTitle: $productTitle,
       productDescription: $productDescription,
       productSize: $productSize,
       productPrice: $productPrice,
       productGroupName: $productGroupName,
+      productImageValue: $productImageValue,
       owner: $owner
     ) {
       _id
@@ -58,6 +59,10 @@ export const CREATE_NEW_PRODUCT = gql`
       productSize
       productPrice
       productGroupName
+      productImage {
+        name
+        value
+      }
     }
   }
 `

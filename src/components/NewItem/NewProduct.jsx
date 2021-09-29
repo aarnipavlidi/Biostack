@@ -187,10 +187,11 @@ const NewProduct = ({ currentUserData }) => {
 
     const owner = currentUserData._id; // Define variable "owner", which is equal to "currentUserData._id" variable.
     const productGroupName = value; // Define variable "productGroupName", which is equal to "value" variable.
+    const productImageValue = Math.floor((Math.random() * 6) + 1);
     const productSize = currentSize; // Define variable "productSize", which is equal to "currentSize" variable.
 
     try {
-      const { data } = await submitNewProduct({ productTitle, productDescription, productSize, productPrice, productGroupName, owner })
+      const { data } = await submitNewProduct({ productTitle, productDescription, productSize, productPrice, productGroupName, productImageValue, owner })
       history.push("/dashboard"); // Redirect user to "/dashboard" after adding new product successfully.
     } catch (error) { // If there is a problem at "try" section, then "Alert" component will be rendered.
       Alert.alert(

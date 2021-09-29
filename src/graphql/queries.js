@@ -21,6 +21,10 @@ export const CURRENT_LOGGED_USER = gql`
         productSize
         productPrice
         productGroupName
+        productImage {
+          name
+          value
+        }
       }
       transactions {
         _id
@@ -59,6 +63,10 @@ export const SHOW_ALL_PRODUCTS = gql`
            productSize
            productPrice
            productGroupName
+           productImage {
+             name
+             value
+           }
            owner {
              name
              rating
@@ -82,6 +90,10 @@ export const SHOW_CURRENT_PRODUCT = gql`
       productPrice
       productSize
       productGroupName
+      productImage {
+        name
+        value
+      }
       owner {
         _id
         name
