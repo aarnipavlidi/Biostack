@@ -132,7 +132,7 @@ const UserListedClothes = ({ item }) => {
           <View style={listedProductsContainer.contentContainer}>
             <View>
               <Text style={listedProductsContainer.productGroupNameTitle}>Item Type</Text>
-              <ItemTypeCheck currentItemType={item.productGroupName} />
+              <ItemTypeCheck currentItemType={item.productImage.name} />
             </View>
             <View>
               <Text style={listedProductsContainer.productSizeTitle}>Item Size</Text>

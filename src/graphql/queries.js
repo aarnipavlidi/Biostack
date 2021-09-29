@@ -20,7 +20,6 @@ export const CURRENT_LOGGED_USER = gql`
         productDescription
         productSize
         productPrice
-        productGroupName
         productImage {
           name
           value
@@ -34,7 +33,7 @@ export const CURRENT_LOGGED_USER = gql`
         productTitle
         productSize
         productPrice
-        productGroupName
+        productType
         sellerID
         sellerName
         sellerEmail
@@ -62,7 +61,6 @@ export const SHOW_ALL_PRODUCTS = gql`
            productDescription
            productSize
            productPrice
-           productGroupName
            productImage {
              name
              value
@@ -89,7 +87,6 @@ export const SHOW_CURRENT_PRODUCT = gql`
       productDescription
       productPrice
       productSize
-      productGroupName
       productImage {
         name
         value

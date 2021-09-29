@@ -17,7 +17,7 @@ const UserOrders = ({ item }) => {
     <DataTable.Row>
       <DataTable.Cell>{item.date}</DataTable.Cell>
       <DataTable.Cell numeric={true}>
-        <ItemTypeCheck currentItemType={item.productGroupName} />
+        <ItemTypeCheck currentItemType={item.productType} />
         <ItemSizeCheck currentItemSize={item.productSize} />
       </DataTable.Cell>
       <DataTable.Cell style={{ justifyContent: 'center' }}>{item.type}</DataTable.Cell>

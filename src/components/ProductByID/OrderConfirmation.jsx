@@ -155,7 +155,7 @@ const OrderConfirmation = () => {
                   </View>
                 </View>
                 <View style={orderContainer.productValueBox}>
-                  <Text style={orderContainer.productValueContent}>{getOrderData.productGroupName}</Text>
+                  <Text style={orderContainer.productValueContent}>{getOrderData.productType}</Text>
                 </View>
               </View>
               <Divider />

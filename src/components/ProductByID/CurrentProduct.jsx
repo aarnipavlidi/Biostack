@@ -146,7 +146,7 @@ const CurrentProduct = ({ currentUserData, loadingUserData }) => {
               <View>
                 <Text style={productContainer.productTitle}>Type</Text>
                 <View style={productContainer.productContent}>
-                  <ItemTypeCheck currentItemType={getCurrentProduct.productGroupName} />
+                  <ItemTypeCheck currentItemType={getCurrentProduct.productImage.name} />
                 </View>
               </View>
               <View>

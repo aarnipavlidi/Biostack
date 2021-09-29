@@ -171,7 +171,7 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
       productTitle: getCurrentProduct.productTitle,
       productSize: getCurrentProduct.productSize,
       productPrice: getCurrentProduct.productPrice,
-      productGroupName: getCurrentProduct.productGroupName,
+      productType: getCurrentProduct.productImage.name,
       sellerID: getCurrentProduct.owner._id,
       sellerName: getCurrentProduct.owner.name,
       sellerEmail: getCurrentProduct.owner.email,
@@ -196,7 +196,7 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
         orderID: confirmationData._id, // oston id
         orderName: confirmationData.productTitle,
         orderSize: confirmationData.productSize,
-        orderType: confirmationData.productGroupName,
+        orderType: confirmationData.productType,
         orderShipping: confirmationData.shippingMethod,
         orderPayment: confirmationData.paymentMethod,
         orderTotal: confirmationData.paymentTotal,
@@ -246,7 +246,7 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
         <View style={modal.summaryContent}>
           <Text style={modal.summaryTitle}>TYPE</Text>
           <View style={modal.summaryValue}>
-            <ItemTypeCheck currentItemType={getCurrentProduct.productGroupName} />
+            <ItemTypeCheck currentItemType={getCurrentProduct.productImage.name} />
           </View>
         </View>
         <Divider />

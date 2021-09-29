@@ -43,13 +43,13 @@ export const USER_LOGIN_FACEBOOK = gql`
 
 // Define "CREATE_NEW_PRODUCT" mutation, so user is able to add new item to the database.
 export const CREATE_NEW_PRODUCT = gql`
-  mutation createNewProduct($productTitle: String!, $productDescription: String!, $productSize: String!, $productPrice: String!, $productGroupName: String!, $productImageValue: Int!, $owner: String!) {
+  mutation createNewProduct($productTitle: String!, $productDescription: String!, $productSize: String!, $productPrice: String!, $productType: String!, $productImageValue: Int!, $owner: String!) {
     createProduct(
       productTitle: $productTitle,
       productDescription: $productDescription,
       productSize: $productSize,
       productPrice: $productPrice,
-      productGroupName: $productGroupName,
+      productType: $productType,
       productImageValue: $productImageValue,
       owner: $owner
     ) {
@@ -58,7 +58,6 @@ export const CREATE_NEW_PRODUCT = gql`
       productDescription
       productSize
       productPrice
-      productGroupName
       productImage {
         name
         value
@@ -77,7 +76,7 @@ export const CREATE_NEW_TRANSACTION = gql`
     $productTitle: String!,
     $productSize: String!,
     $productPrice: String!,
-    $productGroupName: String!,
+    $productType: String!,
     $sellerID: String!,
     $sellerName: String!,
     $sellerEmail: String!,
@@ -91,7 +90,7 @@ export const CREATE_NEW_TRANSACTION = gql`
       productTitle: $productTitle,
       productSize: $productSize,
       productPrice: $productPrice,
-      productGroupName: $productGroupName,
+      productType: $productType,
       sellerID: $sellerID,
       sellerName: $sellerName,
       sellerEmail: $sellerEmail,
@@ -106,7 +105,7 @@ export const CREATE_NEW_TRANSACTION = gql`
       productTitle
       productSize
       productPrice
-      productGroupName
+      productType
       sellerID
       sellerName
       sellerEmail

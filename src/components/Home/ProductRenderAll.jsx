@@ -42,7 +42,7 @@ const ProductRenderAll = ({ item }) => {
             <Text>{item.productTitle}</Text>
           </View>
           <View style={productContainer.productFeatures}>
-            <ItemTypeCheck currentItemType={item.productGroupName} />
+            <ItemTypeCheck currentItemType={item.productImage.name} />
             <ItemSizeCheck currentItemSize={item.productSize} />
             <Text>{item.productPrice} €</Text>
           </View>
