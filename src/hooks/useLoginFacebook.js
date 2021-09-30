@@ -14,7 +14,7 @@ const useLoginFacebook = () => {
 
   const [getUserCredentials, { loading }] = useMutation(USER_LOGIN_FACEBOOK);
 
-  const userLoginFacebook = async (userID, userAvatar, userEmail, userName, userUsername) => {
+  const userLoginFacebook = async (userID, userAvatar, userEmail, userName, userUsername, userCity, userRegionID, userLatitude, userLongitude) => {
 
     // Define "response" variable, which will do following function.
     const response = await getUserCredentials({
@@ -23,8 +23,12 @@ const useLoginFacebook = () => {
         facebookAvatar: userAvatar,
         facebookEmail: userEmail,
         facebookName: userName,
-        facebookUsername: userUsername
-      }
+        facebookUsername: userUsername,
+        facebookCity: userCity,
+        facebookRegionID: userRegionID,
+        facebookLatitude: userLatitude,
+        facebookLongitude: userLongitude,
+      },
     });
 
     if (response.data) {

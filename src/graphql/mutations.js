@@ -34,8 +34,28 @@ export const USER_LOGIN = gql`
 `
 
 export const USER_LOGIN_FACEBOOK = gql`
-  mutation getUserCredentials($facebookID: String!, $facebookAvatar: String!, $facebookEmail: String!, $facebookName: String!, $facebookUsername: String!) {
-    facebookLogin(getFacebookID: $facebookID, getFacebookAvatar: $facebookAvatar, getFacebookEmail: $facebookEmail, getFacebookName: $facebookName, getFacebookUsername: $facebookUsername) {
+  mutation getUserCredentials(
+    $facebookID: String!,
+    $facebookAvatar: String!,
+    $facebookEmail: String!,
+    $facebookName: String!,
+    $facebookUsername: String!,
+    $facebookCity: String!,
+    $facebookRegionID: Int!,
+    $facebookLatitude: Float!,
+    $facebookLongitude: Float!
+  ) {
+    facebookLogin(
+      getFacebookID: $facebookID,
+      getFacebookAvatar: $facebookAvatar,
+      getFacebookEmail: $facebookEmail,
+      getFacebookName: $facebookName,
+      getFacebookUsername: $facebookUsername,
+      getFacebookCity: $facebookCity,
+      getFacebookRegionID: $facebookRegionID,
+      getFacebookLatitude: $facebookLatitude,
+      getFacebookLongitude: $facebookLongitude
+    ) {
       value
     }
   }

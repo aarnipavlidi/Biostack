@@ -207,17 +207,27 @@ const LoginScreen = ({ setCurrentToken }) => {
       });
 
       const { type, token, expirationDate, permissions, declinedPermissions } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile, email'],
+        permissions: ['public_profile, email, user_location'],
       });
 
       if (type === 'success') {
         // Get the user's name using Facebook's Graph API
-        const response = await fetch(`https://graph.facebook.com/me?fields=id,name,email,picture.width(240).height(240)&access_token=${token}`);
+        const response = await fetch(`https://graph.facebook.com/me?fields=id,name,email,picture.width(240).height(240),location{location{city,region_id,latitude,longitude}}&access_token=${token}`);
         const getResponse = await response.json();
 
         const createUsername = getResponse.name.replace(/\s/g, "").toLowerCase();
+        const { data } = await userLoginFacebook(
+          getResponse.id,
+          getResponse.picture.data.url,
+          getResponse.email,
+          getResponse.name,
+          createUsername,
+          getResponse.location.location.city,
+          getResponse.location.location.region_id,
+          getResponse.location.location.latitude,
+          getResponse.location.location.longitude,
+        );
 
-        const { data } = await userLoginFacebook(getResponse.id, getResponse.picture.data.url, getResponse.email, getResponse.name, createUsername);
         const tokenResponse = await authStorage.getAccessToken();
         setCurrentToken(tokenResponse);
         history.push("/dashboard");
