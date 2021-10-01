@@ -16,41 +16,41 @@ const ProductImage = ({ getImageName, getImageValue }) => {
 
   if (getImageName === 'sweater' && getImageValue === 1) {
     return (
-      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Blue_Front_900x.jpg')} />
+      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Blue_Front_900x.png')} />
     );
   };
 
   if (getImageName === 'sweater' && getImageValue === 2) {
     return (
-      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Green_front_900x.jpg')} />
+      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Green_front_900x.png')} />
     );
   };
 
   if (getImageName === 'sweater' && getImageValue === 3) {
     return (
-      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Lemon_Front_900x.jpg')} />
+      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Lemon_Front_900x.png')} />
     );
   };
 
   if (getImageName === 'sweater' && getImageValue === 4) {
     return (
-      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/NA_Back_900x.jpg')} />
+      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/NA_Back_900x.png')} />
     );
   };
 
   if (getImageName === 'sweater' && getImageValue === 5) {
     return (
-      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/NA_Front_900x.jpg')} />
+      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/NA_Front_900x.png')} />
     );
   };
 
   if (getImageName === 'sweater' && getImageValue === 6) {
     return (
-      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Vanilla_Front_900x.jpg')} />
+      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Vanilla_Front_900x.png')} />
     )
   } else {
     return (
-      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Vanilla_Front_900x.jpg')} />
+      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Vanilla_Front_900x.png')} />
     );
   };
 };

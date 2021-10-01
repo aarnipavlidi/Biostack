@@ -19,7 +19,7 @@ const listedProductsContainer = StyleSheet.create({
     marginTop: 7,
     marginBottom: 7,
     alignSelf: 'center',
-    backgroundColor: 'white'
+    backgroundColor: styling.colors.VistaWhite
   },
   primaryContainer: {
     flexDirection: 'row',

@@ -10,9 +10,12 @@ import ProductImage from './ProductImage'; // Import "ProductImage" component fr
 import ItemTypeCheck from '../ProductChecking/ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
 import ItemSizeCheck from '../ProductChecking/ItemSizeCheck'; // Import "ItemSizeCheck" component from "ItemSizeCheck.jsx" file for this component usage.
 
+import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
+
 const productContainer = StyleSheet.create({
   cardContainer: {
     flex: 1/2,
+    backgroundColor: styling.colors.VistaWhite,
     marginLeft: 5,
     marginRight: 5,
     elevation: 3

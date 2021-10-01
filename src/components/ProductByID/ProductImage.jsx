@@ -5,45 +5,47 @@ import React from 'react'; // Import "react" library's content for this componen
 import { Pressable, Image, Text, View, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Card } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 
+import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
+
 const ProductImage = ({ getImageName, getImageValue }) => {
 
   if (getImageName === 'sweater' && getImageValue === 1) {
     return (
-      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5 }} source={require('../../../assets/images/clothes/Blue_Front_900x.jpg')} />
+      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/Blue_Front_900x.png')} />
     );
   };
 
   if (getImageName === 'sweater' && getImageValue === 2) {
     return (
-      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5 }} source={require('../../../assets/images/clothes/Green_front_900x.jpg')} />
+      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/Green_front_900x.png')} />
     );
   };
 
   if (getImageName === 'sweater' && getImageValue === 3) {
     return (
-      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5 }} source={require('../../../assets/images/clothes/Lemon_Front_900x.jpg')} />
+      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/Lemon_Front_900x.png')} />
     );
   };
 
   if (getImageName === 'sweater' && getImageValue === 4) {
     return (
-      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5 }} source={require('../../../assets/images/clothes/NA_Back_900x.jpg')} />
+      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/NA_Back_900x.png')} />
     );
   };
 
   if (getImageName === 'sweater' && getImageValue === 5) {
     return (
-      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5 }} source={require('../../../assets/images/clothes/NA_Front_900x.jpg')} />
+      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/NA_Front_900x.png')} />
     );
   };
 
   if (getImageName === 'sweater' && getImageValue === 6) {
     return (
-      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5 }} source={require('../../../assets/images/clothes/Vanilla_Front_900x.jpg')} />
+      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/Vanilla_Front_900x.png')} />
     )
   } else {
     return (
-      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5 }} source={require('../../../assets/images/clothes/Vanilla_Front_900x.jpg')} />
+      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/Vanilla_Front_900x.png')} />
     );
   };
 };

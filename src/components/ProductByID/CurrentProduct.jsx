@@ -39,6 +39,7 @@ const headerContainer = StyleSheet.create({
 const productContainer = StyleSheet.create({
   container: {
     alignItems: 'center',
+    backgroundColor: styling.colors.VistaWhite,
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
