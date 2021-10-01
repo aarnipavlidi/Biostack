@@ -7,6 +7,7 @@ import { ScrollView, View, StyleSheet, Text, Image, Pressable } from 'react-nati
 import { Appbar, Card, Title, Divider } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { AntDesign } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
+import ProductImage from '../Profile/Transactions/ProductImage'; // Import "ProductImage" component from "ProductImage.jsx" file for this component usage.
 import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 const headerContainer = StyleSheet.create({
@@ -32,11 +33,6 @@ const orderContainer = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
-  },
-  productImage: {
-    width: 125,
-    height: 125,
-    borderRadius: 25 / 2,
   },
   productSummary: {
     flex: 1,
@@ -117,6 +113,7 @@ const OrderConfirmation = () => {
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
   const getOrderData = location.state.detail;
+  console.log(getOrderData)
 
   const orderNumber = `#${getOrderData._id}`;
 
@@ -134,7 +131,7 @@ const OrderConfirmation = () => {
           </View>
           <View style={orderContainer.confirmationFlexBox}>
             <View>
-              <Image style={orderContainer.productImage} source={{ uri: 'https://picsum.photos/125/125?grayscale'}} />
+              <ProductImage getImageName={getOrderData.productType} getImageValue={getOrderData.productImage} />
             </View>
             <View style={orderContainer.productSummary}>
               <View style={orderContainer.productValueContainer}>

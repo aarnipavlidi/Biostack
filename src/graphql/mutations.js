@@ -97,6 +97,7 @@ export const CREATE_NEW_TRANSACTION = gql`
     $productSize: String!,
     $productPrice: String!,
     $productType: String!,
+    $productImage: Int!,
     $sellerID: String!,
     $sellerName: String!,
     $sellerEmail: String!,
@@ -111,6 +112,7 @@ export const CREATE_NEW_TRANSACTION = gql`
       productSize: $productSize,
       productPrice: $productPrice,
       productType: $productType,
+      productImage: $productImage,
       sellerID: $sellerID,
       sellerName: $sellerName,
       sellerEmail: $sellerEmail,
@@ -126,6 +128,7 @@ export const CREATE_NEW_TRANSACTION = gql`
       productSize
       productPrice
       productType
+      productImage
       sellerID
       sellerName
       sellerEmail

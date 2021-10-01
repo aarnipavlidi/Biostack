@@ -114,6 +114,7 @@ export const SHOW_CURRENT_TRANSACTION = gql`
       productSize
       productPrice
       productType
+      productImage
       sellerID
       sellerName
       sellerEmail

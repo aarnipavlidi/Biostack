@@ -172,6 +172,7 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
       productSize: getCurrentProduct.productSize,
       productPrice: getCurrentProduct.productPrice,
       productType: getCurrentProduct.productImage.name,
+      productImage: getCurrentProduct.productImage.value,
       sellerID: getCurrentProduct.owner._id,
       sellerName: getCurrentProduct.owner.name,
       sellerEmail: getCurrentProduct.owner.email,
@@ -189,6 +190,7 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
     try {
       const response = await submitNewTransaction({ getOrderData }); // Define "response" variable, which will execute following function.
       const confirmationData = response.data.createTransaction;
+
       const emailOrderConfirmation = {
         to_name: currentUserData.name, // tuotteen ostaja
         to_email: currentUserData.email, // ostajan email
@@ -197,6 +199,7 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
         orderName: confirmationData.productTitle,
         orderSize: confirmationData.productSize,
         orderType: confirmationData.productType,
+        orderImage: confirmationData.productImage,
         orderShipping: confirmationData.shippingMethod,
         orderPayment: confirmationData.paymentMethod,
         orderTotal: confirmationData.paymentTotal,

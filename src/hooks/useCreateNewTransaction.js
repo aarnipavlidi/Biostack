@@ -29,6 +29,7 @@ const useCreateNewTransaction = () => {
         productSize: getOrderData.productSize,
         productPrice: getOrderData.productPrice,
         productType: getOrderData.productType,
+        productImage: getOrderData.productImage,
         sellerID: getOrderData.sellerID,
         sellerName: getOrderData.sellerName,
         sellerEmail: getOrderData.sellerEmail,

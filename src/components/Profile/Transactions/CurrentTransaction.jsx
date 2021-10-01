@@ -131,7 +131,7 @@ const CurrentTransaction = ({ currentUserData, loading }) => {
 
           <View style={orderContainer.confirmationFlexBox}>
             <View>
-              <ProductImage getImageName={getCurrentTransaction.productType} getImageValue={10} />
+              <ProductImage getImageName={getCurrentTransaction.productType} getImageValue={getCurrentTransaction.productImage} />
             </View>
             <View style={orderContainer.productSummary}>
               <View style={orderContainer.productValueContainer}>
