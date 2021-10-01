@@ -30,15 +30,13 @@ const OrderHistoryHeader = () => {
     history.goBack();
   };
 
-  const handleMore = () => console.log("Show more settings from this component!");
-
   // Component will render everything inside of (...) back to the user.
   return (
     <View>
       <Appbar.Header statusBarHeight={0} style={ordersHeaderContainer.appBarContainer}>
         <Appbar.BackAction onPress={goBackPreviousRoute} />
         <Appbar.Content titleStyle={ordersHeaderContainer.appBarContent} title="Transactions" titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
-        <Appbar.Action icon="dots-vertical" onPress={handleMore} />
+        <Appbar.Action icon="basket-outline" />
       </Appbar.Header>
       <DataTable.Header>
         <DataTable.Title>Date</DataTable.Title>

@@ -3,10 +3,12 @@
 
 import React, { useState } from 'react'; // Import "react" library's content for this component usage.
 import { useHistory } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
-import { ActivityIndicator, StyleSheet, ScrollView, View, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Appbar, Card } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { ActivityIndicator, ScrollView, View, StyleSheet, Text, Image, Pressable } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Appbar, Card, Title, Divider } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { AntDesign } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import useCurrentTransaction from '../../../hooks/useCurrentTransaction'; // Import "useCurrentTransaction" hook from "useCurrentTransaction.js" file for this component usage.
+import ProductImage from './ProductImage'; // Import "ProductImage" component from "ProductImage.jsx" file for this component usage.
 
 import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
@@ -29,6 +31,63 @@ const headerContainer = StyleSheet.create({
   },
 });
 
+const orderContainer = StyleSheet.create({
+  mainContainer: {
+    margin: 10,
+    elevation: 6,
+    justifyContent: 'center',
+    flex: 1,
+    backgroundColor: styling.colors.VistaWhite,
+  },
+  title: {
+    marginBottom: 5,
+    backgroundColor: styling.colors.VistaWhite,
+    alignSelf: 'center',
+    elevation: 6,
+  },
+  titleContent: {
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 15,
+    padding: 10,
+    textAlign: 'center',
+    color: styling.colors.Asphalt
+    },
+  confirmationFlexBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  productSummary: {
+    flex: 1,
+    marginLeft: 3
+  },
+  productValueContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  productBox: {
+    marginLeft: 5,
+    marginRight: 5
+  },
+  productBoxStyle: {
+    backgroundColor: styling.colors.Asphalt,
+    borderRadius: 10 / 2,
+    elevation: 5,
+  },
+  productBoxContent: {
+    color: styling.colors.VistaWhite,
+    padding: 5,
+  },
+  productValueBox: {
+    flex: 1,
+    marginRight: 5
+  },
+  productValueContent: {
+    textAlign: 'right',
+  },
+});
 
 const CurrentTransaction = ({ currentUserData, loading }) => {
 
@@ -60,9 +119,91 @@ const CurrentTransaction = ({ currentUserData, loading }) => {
     <ScrollView>
       <Appbar.Header style={headerContainer.appBarContainer} statusBarHeight={0}>
         <Appbar.BackAction onPress={goBackPreviousRoute} />
-        <Appbar.Content style={headerContainer.appBarContent} title={getCurrentTransaction.productTitle} titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
+        <Appbar.Content style={headerContainer.appBarContent} title={getCurrentTransaction.productTitle} titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} subtitle={getCurrentTransaction._id} subtitleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
+        <Appbar.Action icon="checkbox-marked-circle-outline" />
       </Appbar.Header>
-      <Text>{getCurrentTransaction.productID}</Text>
+      <Card style={orderContainer.mainContainer}>
+        <Card.Content>
+
+          <View style={orderContainer.title}>
+            <Title style={orderContainer.titleContent}>Transaction ({getCurrentTransaction.type.toLowerCase()})</Title>
+          </View>
+
+          <View style={orderContainer.confirmationFlexBox}>
+            <View>
+              <ProductImage getImageName={getCurrentTransaction.productType} getImageValue={10} />
+            </View>
+            <View style={orderContainer.productSummary}>
+              <View style={orderContainer.productValueContainer}>
+                <View style={orderContainer.productBox}>
+                  <View style={orderContainer.productBoxStyle}>
+                    <Text style={orderContainer.productBoxContent}>Product</Text>
+                  </View>
+                </View>
+                <View style={orderContainer.productValueBox}>
+                  <Text style={orderContainer.productValueContent}>{getCurrentTransaction.productTitle}</Text>
+                </View>
+              </View>
+              <Divider />
+              <View style={orderContainer.productValueContainer}>
+                <View style={orderContainer.productBox}>
+                  <View style={orderContainer.productBoxStyle}>
+                    <Text style={orderContainer.productBoxContent}>Type</Text>
+                  </View>
+                </View>
+                <View style={orderContainer.productValueBox}>
+                  <Text style={orderContainer.productValueContent}>{getCurrentTransaction.productType}</Text>
+                </View>
+              </View>
+              <Divider />
+              <View style={orderContainer.productValueContainer}>
+                <View style={orderContainer.productBox}>
+                  <View style={orderContainer.productBoxStyle}>
+                    <Text style={orderContainer.productBoxContent}>Size</Text>
+                  </View>
+                </View>
+                <View style={orderContainer.productValueBox}>
+                  <Text style={orderContainer.productValueContent}>{getCurrentTransaction.productSize}</Text>
+                </View>
+              </View>
+              <Divider />
+              <View style={orderContainer.productValueContainer}>
+                <View style={orderContainer.productBox}>
+                  <View style={orderContainer.productBoxStyle}>
+                    <Text style={orderContainer.productBoxContent}>Delivery</Text>
+                  </View>
+                </View>
+                <View style={orderContainer.productValueBox}>
+                  <Text style={orderContainer.productValueContent}>{getCurrentTransaction.shippingMethod}</Text>
+                </View>
+              </View>
+              <Divider />
+              <View style={orderContainer.productValueContainer}>
+                <View style={orderContainer.productBox}>
+                  <View style={orderContainer.productBoxStyle}>
+                    <Text style={orderContainer.productBoxContent}>Payment</Text>
+                  </View>
+                </View>
+                <View style={orderContainer.productValueBox}>
+                  <Text style={orderContainer.productValueContent}>{getCurrentTransaction.paymentMethod}</Text>
+                </View>
+              </View>
+              <Divider />
+              <View style={orderContainer.productValueContainer}>
+                <View style={orderContainer.productBox}>
+                  <View style={orderContainer.productBoxStyle}>
+                    <Text style={orderContainer.productBoxContent}>Total</Text>
+                  </View>
+                </View>
+                <View style={orderContainer.productValueBox}>
+                  <Text style={orderContainer.productValueContent}>{getCurrentTransaction.paymentTotal} €</Text>
+                </View>
+              </View>
+              <Divider />
+            </View>
+          </View>
+        </Card.Content>
+      </Card>
     </ScrollView>
   );
 };

@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1b35440f-34ac-4307-b49a-3bd3ce76d8ac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Home/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home/Dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Home/DashboardEmpty.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home/DashboardEmpty.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LoginScreen.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LoginScreen.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
