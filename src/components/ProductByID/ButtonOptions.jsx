@@ -3,7 +3,7 @@
 
 import React from 'react'; // Import "react" library's content for this component usage.
 import { StyleSheet, Pressable, View, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { FontAwesome5, Ionicons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
+import { Fontisto, Ionicons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import styling from '../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
@@ -52,7 +52,7 @@ const ButtonOptions = ({ getCurrentProduct, currentUserData, showModal }) => {
       <View style={buttonContainer.productButtonContainer}>
         <Pressable style={buttonContainer.productButton} onPress={showModal}>
           <Text style={buttonContainer.productButtonText}>Checkout</Text>
-          <FontAwesome5 name="hand-holding-heart" size={18} color={styling.colors.VistaWhite} />
+          <Fontisto name="shopping-basket-add" size={18} color={styling.colors.VistaWhite} />
         </Pressable>
         <Pressable style={buttonContainer.productButton} onPress={() => console.log('Bookmark has been pressed.')}>
           <Text style={buttonContainer.productButtonText}>Bookmark</Text>

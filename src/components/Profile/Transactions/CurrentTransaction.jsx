@@ -4,11 +4,12 @@
 import React, { useState } from 'react'; // Import "react" library's content for this component usage.
 import { useHistory } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
 import { ActivityIndicator, ScrollView, View, StyleSheet, Text, Image, Pressable } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Appbar, Card, Title, Divider } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
-import { AntDesign } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
+import { Avatar, Appbar, Card, IconButton, Title, Paragraph, Divider, Provider } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { FontAwesome5, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import useCurrentTransaction from '../../../hooks/useCurrentTransaction'; // Import "useCurrentTransaction" hook from "useCurrentTransaction.js" file for this component usage.
 import ProductImage from './ProductImage'; // Import "ProductImage" component from "ProductImage.jsx" file for this component usage.
+import ContactPerson from './ContactPerson'; // Import "ContactPerson" component from "ContactPerson.jsx" file for this component usage.
 
 import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
@@ -34,16 +35,17 @@ const headerContainer = StyleSheet.create({
 const orderContainer = StyleSheet.create({
   mainContainer: {
     margin: 10,
-    elevation: 6,
+    width: '90%',
+    alignSelf: 'center',
     justifyContent: 'center',
-    flex: 1,
     backgroundColor: styling.colors.VistaWhite,
+    elevation: 5,
   },
   title: {
     marginBottom: 5,
     backgroundColor: styling.colors.VistaWhite,
     alignSelf: 'center',
-    elevation: 6,
+    elevation: 5,
   },
   titleContent: {
     fontFamily: styling.fonts.buttonContent,
@@ -91,6 +93,9 @@ const orderContainer = StyleSheet.create({
 
 const CurrentTransaction = ({ currentUserData, loading }) => {
 
+  const [visible, setVisible] = useState(false);
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
 
   const { getCurrentTransaction, loadingTransaction } = useCurrentTransaction();
 
@@ -117,93 +122,155 @@ const CurrentTransaction = ({ currentUserData, loading }) => {
   // Otherwise component will render everything inside of (...) back to the user.
   return (
     <ScrollView>
-      <Appbar.Header style={headerContainer.appBarContainer} statusBarHeight={0}>
-        <Appbar.BackAction onPress={goBackPreviousRoute} />
-        <Appbar.Content style={headerContainer.appBarContent} title={getCurrentTransaction.productTitle} titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} subtitle={getCurrentTransaction._id} subtitleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
-        <Appbar.Action icon="checkbox-marked-circle-outline" />
-      </Appbar.Header>
-      <Card style={orderContainer.mainContainer}>
+      <Provider>
+        <ContactPerson visible={visible} hideModal={hideModal} />
+        <Appbar.Header style={headerContainer.appBarContainer} statusBarHeight={0}>
+          <Appbar.BackAction onPress={goBackPreviousRoute} />
+          <Appbar.Content style={headerContainer.appBarContent} title={getCurrentTransaction.productTitle} titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} subtitle={getCurrentTransaction._id} subtitleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
+          <Appbar.Action icon="checkbox-marked-circle-outline" />
+        </Appbar.Header>
+        <Card style={orderContainer.mainContainer}>
+          <Card.Content>
+            <View style={orderContainer.title}>
+              <Title style={orderContainer.titleContent}>Transaction ({getCurrentTransaction.type.toLowerCase()})</Title>
+            </View>
+            <View style={orderContainer.confirmationFlexBox}>
+              <View>
+                <ProductImage getImageName={getCurrentTransaction.productType} getImageValue={getCurrentTransaction.productImage} />
+              </View>
+              <View style={orderContainer.productSummary}>
+                <View style={orderContainer.productValueContainer}>
+                  <View style={orderContainer.productBox}>
+                    <View style={orderContainer.productBoxStyle}>
+                      <Text style={orderContainer.productBoxContent}>Product</Text>
+                    </View>
+                  </View>
+                  <View style={orderContainer.productValueBox}>
+                    <Text style={orderContainer.productValueContent}>{getCurrentTransaction.productTitle}</Text>
+                  </View>
+                </View>
+                <Divider />
+                <View style={orderContainer.productValueContainer}>
+                  <View style={orderContainer.productBox}>
+                    <View style={orderContainer.productBoxStyle}>
+                      <Text style={orderContainer.productBoxContent}>Type</Text>
+                    </View>
+                  </View>
+                  <View style={orderContainer.productValueBox}>
+                    <Text style={orderContainer.productValueContent}>{getCurrentTransaction.productType}</Text>
+                  </View>
+                </View>
+                <Divider />
+                <View style={orderContainer.productValueContainer}>
+                  <View style={orderContainer.productBox}>
+                    <View style={orderContainer.productBoxStyle}>
+                      <Text style={orderContainer.productBoxContent}>Size</Text>
+                    </View>
+                  </View>
+                  <View style={orderContainer.productValueBox}>
+                    <Text style={orderContainer.productValueContent}>{getCurrentTransaction.productSize}</Text>
+                  </View>
+                </View>
+                <Divider />
+                <View style={orderContainer.productValueContainer}>
+                  <View style={orderContainer.productBox}>
+                    <View style={orderContainer.productBoxStyle}>
+                      <Text style={orderContainer.productBoxContent}>Delivery</Text>
+                    </View>
+                  </View>
+                  <View style={orderContainer.productValueBox}>
+                    <Text style={orderContainer.productValueContent}>{getCurrentTransaction.shippingMethod}</Text>
+                  </View>
+                </View>
+                <Divider />
+                <View style={orderContainer.productValueContainer}>
+                  <View style={orderContainer.productBox}>
+                    <View style={orderContainer.productBoxStyle}>
+                      <Text style={orderContainer.productBoxContent}>Payment</Text>
+                    </View>
+                  </View>
+                  <View style={orderContainer.productValueBox}>
+                    <Text style={orderContainer.productValueContent}>{getCurrentTransaction.paymentMethod}</Text>
+                  </View>
+                </View>
+                <Divider />
+                <View style={orderContainer.productValueContainer}>
+                  <View style={orderContainer.productBox}>
+                    <View style={orderContainer.productBoxStyle}>
+                      <Text style={orderContainer.productBoxContent}>Total</Text>
+                    </View>
+                  </View>
+                  <View style={orderContainer.productValueBox}>
+                    <Text style={orderContainer.productValueContent}>{getCurrentTransaction.paymentTotal} €</Text>
+                  </View>
+                </View>
+                <Divider />
+              </View>
+            </View>
+          </Card.Content>
+        </Card>
+        <Card.Title
+          style={{ marginTop: 5, marginBottom: 5, backgroundColor: styling.colors.VistaWhite, width: '90%', alignSelf: 'center', elevation: 5 }}
+          title={getCurrentTransaction.type === "Purchased" ? "Contact seller" : "Contact buyer"}
+          subtitle={getCurrentTransaction.type === "Purchased" ? "Product seller contact information." : "Product buyer contact information."}
+          left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="email-multiple-outline" />}
+          right={(props) => <IconButton {...props} icon="chevron-right" onPress={showModal} />}
+        />
+
+        <Card style={{ backgroundColor: styling.colors.VistaWhite, width: '90%', alignSelf: 'center', elevation: 5 }}>
+
         <Card.Content>
 
-          <View style={orderContainer.title}>
-            <Title style={orderContainer.titleContent}>Transaction ({getCurrentTransaction.type.toLowerCase()})</Title>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flex: 1 }}>
+            <View style={{ flex: 2.5/3 }}>
+              <Title>{getCurrentTransaction.type === "Purchased" ? "Rate seller" : "Rate buyer"}</Title>
+              <Paragraph>{getCurrentTransaction.type === "Purchased"
+                ? "Give a rating to the seller based on how the communication etc. went overall."
+                : "Give a rating to the buyer based on how the communication etc. went overall."}
+              </Paragraph>
+            </View>
+            <View style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 40 / 2 }}>
+              <FontAwesome5 style={{ padding: 10 }} name="hand-holding-heart" size={20} color={styling.colors.VistaWhite} />
+            </View>
           </View>
 
-          <View style={orderContainer.confirmationFlexBox}>
-            <View>
-              <ProductImage getImageName={getCurrentTransaction.productType} getImageValue={getCurrentTransaction.productImage} />
+
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flex: 1 }}>
+
+
+
+            <View style={{ flexDirection: 'row', flex: 2.5/3 }}>
+              <Pressable style={{ padding: 7  }} onPress={() => console.log("painoin ekaa")}>
+                <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />
+              </Pressable>
+
+              <Pressable style={{padding: 7 }} onPress={() => console.log("painoin tokaa")}>
+                <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />
+              </Pressable>
+
+              <Pressable style={{ padding: 7 }} onPress={() => console.log("painoin kolmatta")}>
+                <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />
+              </Pressable>
             </View>
-            <View style={orderContainer.productSummary}>
-              <View style={orderContainer.productValueContainer}>
-                <View style={orderContainer.productBox}>
-                  <View style={orderContainer.productBoxStyle}>
-                    <Text style={orderContainer.productBoxContent}>Product</Text>
-                  </View>
-                </View>
-                <View style={orderContainer.productValueBox}>
-                  <Text style={orderContainer.productValueContent}>{getCurrentTransaction.productTitle}</Text>
-                </View>
-              </View>
-              <Divider />
-              <View style={orderContainer.productValueContainer}>
-                <View style={orderContainer.productBox}>
-                  <View style={orderContainer.productBoxStyle}>
-                    <Text style={orderContainer.productBoxContent}>Type</Text>
-                  </View>
-                </View>
-                <View style={orderContainer.productValueBox}>
-                  <Text style={orderContainer.productValueContent}>{getCurrentTransaction.productType}</Text>
-                </View>
-              </View>
-              <Divider />
-              <View style={orderContainer.productValueContainer}>
-                <View style={orderContainer.productBox}>
-                  <View style={orderContainer.productBoxStyle}>
-                    <Text style={orderContainer.productBoxContent}>Size</Text>
-                  </View>
-                </View>
-                <View style={orderContainer.productValueBox}>
-                  <Text style={orderContainer.productValueContent}>{getCurrentTransaction.productSize}</Text>
-                </View>
-              </View>
-              <Divider />
-              <View style={orderContainer.productValueContainer}>
-                <View style={orderContainer.productBox}>
-                  <View style={orderContainer.productBoxStyle}>
-                    <Text style={orderContainer.productBoxContent}>Delivery</Text>
-                  </View>
-                </View>
-                <View style={orderContainer.productValueBox}>
-                  <Text style={orderContainer.productValueContent}>{getCurrentTransaction.shippingMethod}</Text>
-                </View>
-              </View>
-              <Divider />
-              <View style={orderContainer.productValueContainer}>
-                <View style={orderContainer.productBox}>
-                  <View style={orderContainer.productBoxStyle}>
-                    <Text style={orderContainer.productBoxContent}>Payment</Text>
-                  </View>
-                </View>
-                <View style={orderContainer.productValueBox}>
-                  <Text style={orderContainer.productValueContent}>{getCurrentTransaction.paymentMethod}</Text>
-                </View>
-              </View>
-              <Divider />
-              <View style={orderContainer.productValueContainer}>
-                <View style={orderContainer.productBox}>
-                  <View style={orderContainer.productBoxStyle}>
-                    <Text style={orderContainer.productBoxContent}>Total</Text>
-                  </View>
-                </View>
-                <View style={orderContainer.productValueBox}>
-                  <Text style={orderContainer.productValueContent}>{getCurrentTransaction.paymentTotal} €</Text>
-                </View>
-              </View>
-              <Divider />
+
+            <View style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 40 / 2 }}>
+              <MaterialCommunityIcons style={{ padding: 10 }} name="send-circle-outline" size={22} color={styling.colors.VistaWhite} />
             </View>
+
+
+
+
           </View>
+
+
+
+
         </Card.Content>
-      </Card>
+
+        </Card>
+
+      </Provider>
     </ScrollView>
   );
 };
