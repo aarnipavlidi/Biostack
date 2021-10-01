@@ -43,6 +43,30 @@ const ProductImage = ({ getImageName, getImageValue }) => {
     return (
       <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/Vanilla_Front_900x.png')} />
     )
+  };
+
+  if (getImageName === 't-shirt' && getImageValue === 1) {
+    return (
+      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/Black_Classic_Nologo_Front_900x.png')} />
+    );
+  };
+
+  if (getImageName === 't-shirt' && getImageValue === 2) {
+    return (
+      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/Black_Logo_Front_900x.png')} />
+    );
+  };
+
+  if (getImageName === 't-shirt' && getImageValue === 3) {
+    return (
+      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/WC_Front_900x.png')} />
+    );
+  };
+
+  if (getImageName === 't-shirt' && getImageValue === 4) {
+    return (
+      <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/WC_LOGO_Front_900x.png')} />
+    );
   } else {
     return (
       <Card.Cover style={{ width: 330, height: 332, alignSelf: 'center', marginTop: 5, backgroundColor: styling.colors.VistaWhite }} source={require('../../../assets/images/clothes/Vanilla_Front_900x.png')} />

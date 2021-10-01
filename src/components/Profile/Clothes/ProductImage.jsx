@@ -48,6 +48,30 @@ const ProductImage = ({ getImageName, getImageValue }) => {
     return (
       <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Vanilla_Front_900x.png')} />
     )
+  };
+
+  if (getImageName === 't-shirt' && getImageValue === 1) {
+    return (
+      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Black_Classic_Nologo_Front_900x.png')} />
+    );
+  };
+
+  if (getImageName === 't-shirt' && getImageValue === 2) {
+    return (
+      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Black_Logo_Front_900x.png')} />
+    );
+  };
+
+  if (getImageName === 't-shirt' && getImageValue === 3) {
+    return (
+      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/WC_Front_900x.png')} />
+    );
+  };
+
+  if (getImageName === 't-shirt' && getImageValue === 4) {
+    return (
+      <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/WC_LOGO_Front_900x.png')} />
+    );
   } else {
     return (
       <Image style={listedProductsContainer.productImageContainer} source={require('../../../../assets/images/clothes/Vanilla_Front_900x.png')} />

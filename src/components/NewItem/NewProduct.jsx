@@ -166,9 +166,9 @@ const NewProduct = ({ currentUserData }) => {
   const [items, setItems] = useState([
     {label: 'T-shirt', value: 't-shirt', icon: () => <Image source={require('../../../assets/icons/clothes/t-24x24-455076.png')} />},
     {label: 'Sweater', value: 'sweater', icon: () => <Image source={require('../../../assets/icons/clothes/sweater-24x24-455072.png')} />},
-    {label: 'Hoodie', value: 'hoodie', icon: () => <Image source={require('../../../assets/icons/clothes/hoodie-24x24-455064.png')} />},
-    {label: 'Jacket', value: 'jacket', icon: () => <Image source={require('../../../assets/icons/clothes/jacket-24x24-455063.png')} />},
-    {label: 'Hat', value: 'hat', icon: () => <Image source={require('../../../assets/icons/clothes/hat-24x24-455060.png')} />},
+    //{label: 'Hoodie', value: 'hoodie', icon: () => <Image source={require('../../../assets/icons/clothes/hoodie-24x24-455064.png')} />},
+    //{label: 'Jacket', value: 'jacket', icon: () => <Image source={require('../../../assets/icons/clothes/jacket-24x24-455063.png')} />},
+    //{label: 'Hat', value: 'hat', icon: () => <Image source={require('../../../assets/icons/clothes/hat-24x24-455060.png')} />},
   ]);
 
   const [currentSize, setCurrentSize] = useState(null); // Define variable "currentSize" into state, which gets value "null" as default.
@@ -187,7 +187,10 @@ const NewProduct = ({ currentUserData }) => {
 
     const owner = currentUserData._id; // Define variable "owner", which is equal to "currentUserData._id" variable.
     const productType = value; // Define variable "productType", which is equal to "value" variable.
-    const productImageValue = Math.floor((Math.random() * 6) + 1);
+    const productImageValue = value === 'sweater'
+      ? Math.floor((Math.random() * 6) + 1)
+      : Math.floor((Math.random() * 4) + 1);
+
     const productSize = currentSize; // Define variable "productSize", which is equal to "currentSize" variable.
 
     try {
