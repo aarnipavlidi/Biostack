@@ -102,3 +102,27 @@ export const SHOW_CURRENT_PRODUCT = gql`
     }
   }
 `
+
+export const SHOW_CURRENT_TRANSACTION = gql`
+  query showCurrentTransaction($getTransactionID: String) {
+    showCurrentTransaction(getTransactionID: $getTransactionID) {
+      _id
+      date
+      type
+      productID
+      productTitle
+      productSize
+      productPrice
+      productType
+      sellerID
+      sellerName
+      sellerEmail
+      buyerID
+      buyerName
+      buyerEmail
+      shippingMethod
+      paymentMethod
+      paymentTotal
+    }
+  }
+`

@@ -12,6 +12,7 @@ import CurrentProduct from './ProductByID/CurrentProduct'; // Import "CurrentPro
 import OrderConfirmation from './ProductByID/OrderConfirmation'; // Import "OrderConfirmation" component from "OrderConfirmation.jsx" file for this component usage.
 import NewProduct from './NewItem/NewProduct'; // Import "NewProduct" component from "NewProduct.jsx" file for this component usage.
 import OrderHistory from './Profile/Transactions/OrderHistory'; // Import "OrderHistory" component from "OrderHistory.jsx" file for this component usage.
+import CurrentTransaction from './Profile/Transactions/CurrentTransaction'; // Import "CurrentTransaction" component from "CurrentTransaction.jsx" file for this component usage.
 import EditAccount from './Profile/Account/EditAccount'; // Import "EditAccount" component from "EditAccount.jsx" file for this component usage.
 import UserSettings from './Profile/Clothes/UserSettings'; // Import "UserSettings" component from "UserSettings.jsx" file for this component usage.
 import UserClothes from './Profile/Clothes/UserClothes'; // Import "UserClothes" component from "UserClothes.jsx" file for this component usage.
@@ -90,6 +91,9 @@ const Main = () => {
           </Route>
           <Route exact path="/dashboard/profile/transactions">
             {currentToken ? <OrderHistory currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
+          </Route>
+          <Route exact path="/dashboard/profile/transactions/:transactionID">
+            {currentToken ? <CurrentTransaction currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/profile/clothes">
             {currentToken ? <UserClothes currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
