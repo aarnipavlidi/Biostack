@@ -5,7 +5,7 @@ import React from 'react'; // Import "react" library's content for this componen
 import { Link } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
 import { Text, StyleSheet, View, Pressable, TouchableOpacity } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
-import { Feather, Ionicons, AntDesign } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
+import { MaterialCommunityIcons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 import styling from '../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
 // Define "navigationContainer" variable, which will be used for styling
@@ -50,19 +50,19 @@ const NavigationBottom = () => {
     <View style={navigationContainer.container}>
       <Pressable style={navigationContainer.pressableContainer}>
         <Link to="/dashboard" component={TouchableOpacity}>
-          <Feather style={navigationContainer.iconContainer} name="home" size={20} color={styling.colors.Asphalt} />
+          <MaterialCommunityIcons style={navigationContainer.iconContainer} name="home-circle-outline" size={22} color={styling.colors.Asphalt} />
           <Text style={navigationContainer.textContainer}>Home</Text>
         </Link>
       </Pressable>
       <Pressable style={navigationContainer.pressableContainer}>
         <Link to="/dashboard/new-item" component={TouchableOpacity}>
-          <AntDesign style={navigationContainer.iconContainer} name="pluscircleo" size={20} color={styling.colors.Asphalt} />
+          <MaterialCommunityIcons style={navigationContainer.iconContainer} name="plus-circle-outline" size={22} color={styling.colors.Asphalt} />
           <Text style={navigationContainer.textContainer}>New item</Text>
         </Link>
       </Pressable>
       <Pressable style={navigationContainer.pressableContainer}>
         <Link to="/dashboard/profile" component={TouchableOpacity}>
-          <AntDesign style={navigationContainer.iconContainer} name="profile" size={20} color={styling.colors.Asphalt} />
+          <MaterialCommunityIcons style={navigationContainer.iconContainer} name="account-settings-outline" size={22} color={styling.colors.Asphalt} />
           <Text style={navigationContainer.textContainer}>Profile</Text>
         </Link>
       </Pressable>
