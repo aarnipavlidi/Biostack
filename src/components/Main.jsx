@@ -93,7 +93,7 @@ const Main = () => {
             {currentToken ? <OrderHistory currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/profile/transactions/:transactionID">
-            {currentToken ? <CurrentTransaction currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
+            {currentToken ? <CurrentTransaction currentUserData={currentUserData} loading={loading} showSnackBar={showSnackBar} /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/profile/clothes">
             {currentToken ? <UserClothes currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}

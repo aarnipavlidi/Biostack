@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react'; // Import "react" library's content for this component usage.
 import { useHistory } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
-import { ActivityIndicator, ScrollView, View, StyleSheet, Text, Image, Pressable } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Alert, ActivityIndicator, ScrollView, View, StyleSheet, Text, Image, Pressable } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Avatar, Appbar, Card, IconButton, Title, Paragraph, Divider, Provider } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { FontAwesome5, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
@@ -92,9 +92,9 @@ const orderContainer = StyleSheet.create({
   },
 });
 
-const CurrentTransaction = ({ currentUserData, loading }) => {
+const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
 
-  const [currentRating, setCurrentRating] = useState({ value: 0 });
+  const [currentRating, setCurrentRating] = useState({ status: false, value: null });
 
   const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
@@ -104,13 +104,29 @@ const CurrentTransaction = ({ currentUserData, loading }) => {
   const [submitNewRating, { loadingRating }] = useCreateNewRating(); // Define "submitNewRating" variable from => "useCreateNewRating(...)" hook.
 
   const submitRating = async () => {
-
     try {
       const { data } = await submitNewRating(getCurrentTransaction._id, currentRating.value, getCurrentTransaction.type);
-      console.log(data)
+      showSnackBar(data.giveRatingUser.response);
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
     };
+  };
+
+  const confirmSubmitRating = () => {
+    Alert.alert(
+      "Biostack",
+      `You are giving rating value of ${currentRating.value} to the user. Are you sure and want to proceed?`,
+      [
+        {
+          text: "CANCEL",
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => submitRating(),
+        }
+      ]
+    )
   };
 
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
@@ -232,67 +248,52 @@ const CurrentTransaction = ({ currentUserData, loading }) => {
         />
 
         <Card style={{ backgroundColor: styling.colors.VistaWhite, width: '90%', alignSelf: 'center', elevation: 5 }}>
-
-        <Card.Content>
-
-          <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flex: 1 }}>
-            <View style={{ flex: 2.5/3 }}>
-              <Title>{getCurrentTransaction.type === "Purchased" ? "Rate seller" : "Rate buyer"}</Title>
-              <Paragraph>{getCurrentTransaction.type === "Purchased"
-                ? "Give a rating to the seller based on how the communication etc. went overall."
-                : "Give a rating to the buyer based on how the communication etc. went overall."}
-              </Paragraph>
-            </View>
-            <View style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 40 / 2 }}>
-              <FontAwesome5 style={{ padding: 10 }} name="hand-holding-heart" size={20} color={styling.colors.VistaWhite} />
-            </View>
-          </View>
-
-
-          <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flex: 1 }}>
-
-            <View style={{ flex: 2.5/3 }}>
-              <View style={{ flexDirection: 'row' }}>
-                <Pressable style={{ padding: 7  }} onPress={() => setCurrentRating({ value: 1 })}>
-                {currentRating.value >= 1 && currentRating.value <= 3
-                  ? <MaterialCommunityIcons name="heart-remove" size={30} color={styling.colors.Asphalt} />
-                  : <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />}
-                </Pressable>
-
-                <Pressable style={{padding: 7 }} onPress={() => setCurrentRating({ value: 2 })}>
-                {currentRating.value >= 2 && currentRating.value <= 3
-                  ? <MaterialCommunityIcons name="heart-remove" size={30} color={styling.colors.Asphalt} />
-                  : <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />}
-                </Pressable>
-
-                <Pressable style={{ padding: 7 }} onPress={() => setCurrentRating({ value: 3 })}>
-                {currentRating.value === 3
-                  ? <MaterialCommunityIcons name="heart-remove" size={30} color={styling.colors.Asphalt} />
-                  : <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />}
-                </Pressable>
+          <Card.Content>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flex: 1 }}>
+              <View style={{ flex: 2.5/3 }}>
+                <Title>{getCurrentTransaction.type === "Purchased" ? "Rate seller" : "Rate buyer"}</Title>
+                <Paragraph>{getCurrentTransaction.type === "Purchased"
+                  ? "Give a rating to the seller based on how the communication etc. went overall."
+                  : "Give a rating to the buyer based on how the communication etc. went overall."}
+                </Paragraph>
               </View>
-              <Paragraph>Current rating chosen: {currentRating.value}</Paragraph>
+              <View style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 40 / 2 }}>
+                <FontAwesome5 style={{ padding: 10 }} name="hand-holding-heart" size={20} color={styling.colors.VistaWhite} />
+              </View>
             </View>
-
-
-
-
-            <Pressable onPress={submitRating} style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 40 / 2 }}>
-              <MaterialCommunityIcons style={{ padding: 10 }} name="account-arrow-right-outline" size={22} color={styling.colors.VistaWhite} />
-            </Pressable>
-
-
-
-
-          </View>
-
-
-
-
-        </Card.Content>
-
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flex: 1 }}>
+              <View style={{ flex: 2.5/3 }}>
+                <View style={{ flexDirection: 'row' }}>
+                  <Pressable style={{ padding: 7  }} onPress={() => setCurrentRating({ status: true, value: 1 })}>
+                  {currentRating.value >= 1 && currentRating.value <= 3
+                    ? <MaterialCommunityIcons name="heart-remove" size={30} color={styling.colors.Asphalt} />
+                    : <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />}
+                  </Pressable>
+                  <Pressable style={{padding: 7 }} onPress={() => setCurrentRating({ status: true, value: 2 })}>
+                  {currentRating.value >= 2 && currentRating.value <= 3
+                    ? <MaterialCommunityIcons name="heart-remove" size={30} color={styling.colors.Asphalt} />
+                    : <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />}
+                  </Pressable>
+                  <Pressable style={{ padding: 7 }} onPress={() => setCurrentRating({ status: true, value: 3 })}>
+                  {currentRating.value === 3
+                    ? <MaterialCommunityIcons name="heart-remove" size={30} color={styling.colors.Asphalt} />
+                    : <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />}
+                  </Pressable>
+                </View>
+                {!currentRating.value && getCurrentTransaction.ratingValue === 0
+                  ? <Paragraph>Please give a rating first.</Paragraph>
+                  : currentRating.value && getCurrentTransaction.ratingValue === 0
+                  ? <Paragraph>Current rating chosen: {currentRating.value}</Paragraph>
+                  : <Paragraph>You gave rating value of {getCurrentTransaction.ratingValue}.</Paragraph>}
+              </View>
+              <Pressable disabled={currentRating.status === false || getCurrentTransaction.ratingValue ? true : false} onPress={confirmSubmitRating} style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 40 / 2 }}>
+                {getCurrentTransaction.ratingStatus === false
+                  ? <MaterialCommunityIcons style={{ padding: 10 }} name="account-arrow-right-outline" size={22} color={styling.colors.VistaWhite} />
+                  : <Ionicons style={{ padding: 10 }} name="checkmark-sharp" size={22} color={styling.colors.VistaWhite} />}
+              </Pressable>
+            </View>
+          </Card.Content>
         </Card>
-
       </Provider>
     </ScrollView>
   );
