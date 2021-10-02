@@ -28,6 +28,8 @@ export const CURRENT_LOGGED_USER = gql`
       transactions {
         _id
         date
+        ratingStatus
+        ratingValue
         type
         productID
         productTitle
@@ -108,6 +110,8 @@ export const SHOW_CURRENT_TRANSACTION = gql`
     showCurrentTransaction(getTransactionID: $getTransactionID) {
       _id
       date
+      ratingStatus
+      ratingValue
       type
       productID
       productTitle

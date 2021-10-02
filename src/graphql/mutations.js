@@ -139,6 +139,14 @@ export const CREATE_NEW_TRANSACTION = gql`
   }
 `
 
+export const GIVE_RATING_USER = gql`
+  mutation giveRatingCurrentUser($getCurrentTransactionID: String!, $getRatingValue: Int!, $getTransactionType: String!) {
+    giveRatingUser(currentTransactionID: $getCurrentTransactionID, getRatingValue: $getRatingValue, getTransactionType: $getTransactionType) {
+      response
+    }
+  }
+`
+
 // Define "DELETE_CURRENT_PRODUCT" mutation, so user is able to delete his listed items
 // from the database, so they won't be visible to other users after deletion.
 export const DELETE_CURRENT_PRODUCT = gql`

@@ -8,6 +8,7 @@ import { Avatar, Appbar, Card, IconButton, Title, Paragraph, Divider, Provider }
 import { FontAwesome5, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import useCurrentTransaction from '../../../hooks/useCurrentTransaction'; // Import "useCurrentTransaction" hook from "useCurrentTransaction.js" file for this component usage.
+import useCreateNewRating from '../../../hooks/useCreateNewRating'; // Import "useCreateNewRating" hook "useCreateNewRating.js" file for this component usage.
 import ProductImage from './ProductImage'; // Import "ProductImage" component from "ProductImage.jsx" file for this component usage.
 import ContactPerson from './ContactPerson'; // Import "ContactPerson" component from "ContactPerson.jsx" file for this component usage.
 
@@ -93,11 +94,24 @@ const orderContainer = StyleSheet.create({
 
 const CurrentTransaction = ({ currentUserData, loading }) => {
 
+  const [currentRating, setCurrentRating] = useState({ value: 0 });
+
   const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
   const { getCurrentTransaction, loadingTransaction } = useCurrentTransaction();
+  const [submitNewRating, { loadingRating }] = useCreateNewRating(); // Define "submitNewRating" variable from => "useCreateNewRating(...)" hook.
+
+  const submitRating = async () => {
+
+    try {
+      const { data } = await submitNewRating(getCurrentTransaction._id, currentRating.value, getCurrentTransaction.type);
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    };
+  };
 
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
@@ -235,28 +249,37 @@ const CurrentTransaction = ({ currentUserData, loading }) => {
           </View>
 
 
-
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flex: 1 }}>
 
+            <View style={{ flex: 2.5/3 }}>
+              <View style={{ flexDirection: 'row' }}>
+                <Pressable style={{ padding: 7  }} onPress={() => setCurrentRating({ value: 1 })}>
+                {currentRating.value >= 1 && currentRating.value <= 3
+                  ? <MaterialCommunityIcons name="heart-remove" size={30} color={styling.colors.Asphalt} />
+                  : <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />}
+                </Pressable>
 
+                <Pressable style={{padding: 7 }} onPress={() => setCurrentRating({ value: 2 })}>
+                {currentRating.value >= 2 && currentRating.value <= 3
+                  ? <MaterialCommunityIcons name="heart-remove" size={30} color={styling.colors.Asphalt} />
+                  : <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />}
+                </Pressable>
 
-            <View style={{ flexDirection: 'row', flex: 2.5/3 }}>
-              <Pressable style={{ padding: 7  }} onPress={() => console.log("painoin ekaa")}>
-                <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />
-              </Pressable>
-
-              <Pressable style={{padding: 7 }} onPress={() => console.log("painoin tokaa")}>
-                <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />
-              </Pressable>
-
-              <Pressable style={{ padding: 7 }} onPress={() => console.log("painoin kolmatta")}>
-                <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />
-              </Pressable>
+                <Pressable style={{ padding: 7 }} onPress={() => setCurrentRating({ value: 3 })}>
+                {currentRating.value === 3
+                  ? <MaterialCommunityIcons name="heart-remove" size={30} color={styling.colors.Asphalt} />
+                  : <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />}
+                </Pressable>
+              </View>
+              <Paragraph>Current rating chosen: {currentRating.value}</Paragraph>
             </View>
 
-            <View style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 40 / 2 }}>
-              <MaterialCommunityIcons style={{ padding: 10 }} name="send-circle-outline" size={22} color={styling.colors.VistaWhite} />
-            </View>
+
+
+
+            <Pressable onPress={submitRating} style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 40 / 2 }}>
+              <MaterialCommunityIcons style={{ padding: 10 }} name="account-arrow-right-outline" size={22} color={styling.colors.VistaWhite} />
+            </Pressable>
 
 
 

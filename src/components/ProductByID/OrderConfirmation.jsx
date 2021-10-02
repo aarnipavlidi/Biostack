@@ -113,7 +113,6 @@ const OrderConfirmation = () => {
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
   const getOrderData = location.state.detail;
-  console.log(getOrderData)
 
   const orderNumber = `#${getOrderData._id}`;
 
