@@ -154,7 +154,7 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
   return (
     <ScrollView>
       <Provider>
-        <ContactPerson visible={visible} hideModal={hideModal} />
+        <ContactPerson visible={visible} hideModal={hideModal} getCurrentTransaction={getCurrentTransaction} />
         <Appbar.Header style={headerContainer.appBarContainer} statusBarHeight={0}>
           <Appbar.BackAction onPress={goBackPreviousRoute} />
           <Appbar.Content style={headerContainer.appBarContent} title={getCurrentTransaction.productTitle} titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} subtitle={`#${getCurrentTransaction._id}`} subtitleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />

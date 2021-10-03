@@ -131,6 +131,12 @@ export const SHOW_CURRENT_TRANSACTION = gql`
       buyerID
       buyerName
       buyerEmail
+      location {
+        city
+        region_id
+        latitude
+        longitude
+      }
       shippingMethod
       paymentMethod
       paymentTotal
