@@ -33,6 +33,10 @@ const useCreateNewTransaction = () => {
         sellerID: getOrderData.sellerID,
         sellerName: getOrderData.sellerName,
         sellerEmail: getOrderData.sellerEmail,
+        sellerCity: getOrderData.location.city,
+        sellerRegionID: getOrderData.location.region_id,
+        sellerLatitude: getOrderData.location.latitude,
+        sellerLongitude: getOrderData.location.longitude,
         shippingMethod: getOrderData.shippingMethod,
         paymentMethod: getOrderData.paymentMethod,
         paymentTotal: getOrderData.paymentTotal

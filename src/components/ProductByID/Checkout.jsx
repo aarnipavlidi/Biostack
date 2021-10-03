@@ -176,6 +176,12 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
       sellerID: getCurrentProduct.owner._id,
       sellerName: getCurrentProduct.owner.name,
       sellerEmail: getCurrentProduct.owner.email,
+      location: {
+        city: getCurrentProduct.owner.location.city,
+        region_id: getCurrentProduct.owner.location.region_id,
+        latitude: getCurrentProduct.owner.location.latitude,
+        longitude: getCurrentProduct.owner.location.longitude,
+      },
       shippingMethod: chosenDelivery.name,
       paymentMethod: chosenPayment.name,
       paymentTotal: String(orderTotalPrice)

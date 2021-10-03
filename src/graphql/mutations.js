@@ -101,6 +101,10 @@ export const CREATE_NEW_TRANSACTION = gql`
     $sellerID: String!,
     $sellerName: String!,
     $sellerEmail: String!,
+    $sellerCity: String!
+    $sellerRegionID: Int!,
+    $sellerLatitude: String!,
+    $sellerLongitude: String!,
     $shippingMethod: String!,
     $paymentMethod: String!,
     $paymentTotal: String!
@@ -116,6 +120,10 @@ export const CREATE_NEW_TRANSACTION = gql`
       sellerID: $sellerID,
       sellerName: $sellerName,
       sellerEmail: $sellerEmail,
+      sellerCity: $sellerCity,
+      sellerRegionID: $sellerRegionID,
+      sellerLatitude: $sellerLatitude,
+      sellerLongitude: $sellerLongitude,
       shippingMethod: $shippingMethod,
       paymentMethod: $paymentMethod,
       paymentTotal: $paymentTotal
