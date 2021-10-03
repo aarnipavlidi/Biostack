@@ -11,6 +11,7 @@ import useCurrentTransaction from '../../../hooks/useCurrentTransaction'; // Imp
 import useCreateNewRating from '../../../hooks/useCreateNewRating'; // Import "useCreateNewRating" hook "useCreateNewRating.js" file for this component usage.
 import ProductImage from './ProductImage'; // Import "ProductImage" component from "ProductImage.jsx" file for this component usage.
 import ContactPerson from './ContactPerson'; // Import "ContactPerson" component from "ContactPerson.jsx" file for this component usage.
+import RatingValue from './RatingValue'; // Import "RatingValue" component from "RatingValue.jsx" file for this component usage.
 
 import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
@@ -156,7 +157,7 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
         <ContactPerson visible={visible} hideModal={hideModal} />
         <Appbar.Header style={headerContainer.appBarContainer} statusBarHeight={0}>
           <Appbar.BackAction onPress={goBackPreviousRoute} />
-          <Appbar.Content style={headerContainer.appBarContent} title={getCurrentTransaction.productTitle} titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} subtitle={getCurrentTransaction._id} subtitleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
+          <Appbar.Content style={headerContainer.appBarContent} title={getCurrentTransaction.productTitle} titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} subtitle={`#${getCurrentTransaction._id}`} subtitleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
           <Appbar.Action icon="checkbox-marked-circle-outline" />
         </Appbar.Header>
         <Card style={orderContainer.mainContainer}>
@@ -246,7 +247,6 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
           left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="email-multiple-outline" />}
           right={(props) => <IconButton {...props} icon="chevron-right" onPress={showModal} />}
         />
-
         <Card style={{ backgroundColor: styling.colors.VistaWhite, width: '90%', alignSelf: 'center', elevation: 5 }}>
           <Card.Content>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flex: 1 }}>
@@ -263,28 +263,12 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flex: 1 }}>
               <View style={{ flex: 2.5/3 }}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Pressable style={{ padding: 7  }} onPress={() => setCurrentRating({ status: true, value: 1 })}>
-                  {currentRating.value >= 1 && currentRating.value <= 3
-                    ? <MaterialCommunityIcons name="heart-remove" size={30} color={styling.colors.Asphalt} />
-                    : <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />}
-                  </Pressable>
-                  <Pressable style={{padding: 7 }} onPress={() => setCurrentRating({ status: true, value: 2 })}>
-                  {currentRating.value >= 2 && currentRating.value <= 3
-                    ? <MaterialCommunityIcons name="heart-remove" size={30} color={styling.colors.Asphalt} />
-                    : <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />}
-                  </Pressable>
-                  <Pressable style={{ padding: 7 }} onPress={() => setCurrentRating({ status: true, value: 3 })}>
-                  {currentRating.value === 3
-                    ? <MaterialCommunityIcons name="heart-remove" size={30} color={styling.colors.Asphalt} />
-                    : <MaterialCommunityIcons name="heart-plus-outline" size={30} color={styling.colors.Asphalt} />}
-                  </Pressable>
-                </View>
+                <RatingValue getTransactionStatus={getCurrentTransaction.ratingStatus} getTransactionValue={getCurrentTransaction.ratingValue} currentRating={currentRating} setCurrentRating={setCurrentRating} />
                 {!currentRating.value && getCurrentTransaction.ratingValue === 0
                   ? <Paragraph>Please give a rating first.</Paragraph>
                   : currentRating.value && getCurrentTransaction.ratingValue === 0
                   ? <Paragraph>Current rating chosen: {currentRating.value}</Paragraph>
-                  : <Paragraph>You gave rating value of {getCurrentTransaction.ratingValue}.</Paragraph>}
+                  : <Paragraph>You gave rating value of {getCurrentTransaction.ratingValue} to the current product {getCurrentTransaction.type === "Purchased" ? "seller" : "buyer"}.</Paragraph>}
               </View>
               <Pressable disabled={currentRating.status === false || getCurrentTransaction.ratingValue ? true : false} onPress={confirmSubmitRating} style={{ backgroundColor: styling.colors.Asphalt, borderRadius: 40 / 2 }}>
                 {getCurrentTransaction.ratingStatus === false

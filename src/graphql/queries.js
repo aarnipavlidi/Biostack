@@ -99,6 +99,12 @@ export const SHOW_CURRENT_PRODUCT = gql`
         username
         email
         rating
+        location {
+          city
+          region_id
+          latitude
+          longitude
+        }
         facebookAvatar
       }
     }
