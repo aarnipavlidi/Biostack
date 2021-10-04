@@ -8,7 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@apollo/client": "^3.4.7",
+    "@apollo/client": "^3.4.15",
     "@expo-google-fonts/annie-use-your-telescope": "^0.2.0",
     "@expo-google-fonts/indie-flower": "^0.2.0",
     "@expo-google-fonts/merienda": "^0.2.0",
@@ -27,14 +27,15 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
     "react-native-dropdown-picker": "^5.1.23",
+    "react-native-maps": "0.27.1",
     "react-native-paper": "^4.9.2",
     "react-native-text-avatar": "^1.0.7",
     "react-native-web": "^0.17.1",
     "react-router-native": "^5.2.0",
     "styled-components": "^5.3.1",
+    "subscriptions-transport-ws": "^0.9.19",
     "use-debounce": "^7.0.0",
-    "yup": "^0.32.9",
-    "react-native-maps": "0.27.1"
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

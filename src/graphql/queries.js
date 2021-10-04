@@ -49,6 +49,23 @@ export const CURRENT_LOGGED_USER = gql`
     }
   }
 `
+
+export const PRODUCT_ADDED = gql`
+  subscription {
+    productAdded {
+      _id
+      productTitle
+      productDescription
+      productSize
+      productPrice
+      productImage {
+        name
+        value
+      }
+    }
+  }
+`
+
 // Define "SHOW_ALL_PRODUCTS" query, which is being used in the "Dashboard" component.
 // So everytime user has logged successfully to the app, user will be redirected to
 // "Dashboard" (home) and app will show every product which has been added by the

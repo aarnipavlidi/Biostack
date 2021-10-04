@@ -33,10 +33,54 @@ const loadingContainer = StyleSheet.create({
   }
 });
 
+import { useQuery, useApolloClient, useSubscription } from '@apollo/client'; // Import following functions from "@apollo/client" library for this hook usage.
+import { SHOW_ALL_PRODUCTS, PRODUCT_ADDED } from '../../graphql/queries'; // Import following queries from "queries.js" file for this hook usage.
+
 // Define component "Dashboard", which will execute everything inside of {...}, component
 // will be rendered everytime user has successfully logged to the app. Component will
 // render every product which has been added to the app by various different users.
 const Dashboard = ({ searchStatus, resetSearchBar, activateSearchBar, currentSearchValue, setCurrentSearchValue, debouncedSearchValue }) => {
+
+  const client = useApolloClient();
+
+  const updateCache = (getNewBook) => {
+
+    const checkMatches = (set, object) => {
+      set.map(results => results.node._id).includes(object._id)
+    }
+
+    const bookDataInStore = client.readQuery({
+      query: SHOW_ALL_PRODUCTS,
+      variables: {
+        productSearchValue: ''
+      }
+    })
+
+    console.log(bookDataInStore.showAllProducts)
+
+
+    if (!checkMatches(bookDataInStore.showAllProducts.edges, getNewBook)) {
+
+      bookDataInStore.showAllProducts.edges.concat({ node: getNewBook })
+
+      client.writeQuery({
+        query: SHOW_ALL_PRODUCTS,
+        variables: {
+          productSearchValue: ''
+        },
+        data: {
+          showAllProducts: bookDataInStore.showAllProducts
+        }
+      })
+    }
+  }
+
+  useSubscription(PRODUCT_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const getNewAddedValue = subscriptionData.data.productAdded
+      updateCache(getNewAddedValue)
+    }
+  });
 
   const { getAllProducts, fetchMore, loading } = useProducts({ productSearchValue: debouncedSearchValue }); // Define following variables from "useProducts(...)" hook.
 
