@@ -1,7 +1,7 @@
 // This project has been commented by Aarni Pavlidi, if you have any questions or suggestions with the code,
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
-import React, { useState } from 'react'; // Import "react" library's content for this component usage.
+import React from 'react'; // Import "react" library's content for this component usage.
 import { ImageBackground, View, Text, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Modal, Portal, Title } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { AntDesign  } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
@@ -11,7 +11,6 @@ import styling from '../../../styling'; // Import "styling" variable from "styli
 const modal = StyleSheet.create({
   mainContainer: {
     backgroundColor: '#fbfbfb',
-    marginTop: -75,
     marginLeft: 10,
     marginRight: 10,
   },
@@ -71,6 +70,15 @@ const ContactPerson = ({ visible, hideModal, getCurrentTransaction }) => {
 
           <View style={{ flexDirection: 'row', marginTop: 10 }} >
             <View style={{ flex: 1/2, alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ backgroundColor: styling.colors.Asphalt, color: styling.colors.VistaWhite, textAlign: 'center', fontFamily: styling.fonts.buttonContent, padding: 5, width: '70%' }}>Number</Text>
+            </View>
+            <View style={{ flex: 1/2 }}>
+              <Text style={{ color: styling.colors.Asphalt, textAlign: 'center', padding: 5, }}>123 123 123</Text>
+            </View>
+          </View>
+
+          <View style={{ flexDirection: 'row', marginTop: 10 }} >
+            <View style={{ flex: 1/2, alignItems: 'center', justifyContent: 'center' }}>
               <Text style={{ backgroundColor: styling.colors.Asphalt, color: styling.colors.VistaWhite, textAlign: 'center', fontFamily: styling.fonts.buttonContent, padding: 5, width: '70%' }}>City</Text>
             </View>
             <View style={{ flex: 1/2 }}>
@@ -78,9 +86,6 @@ const ContactPerson = ({ visible, hideModal, getCurrentTransaction }) => {
             </View>
           </View>
         </View>
-
-
-
 
       </Modal>
     </Portal>

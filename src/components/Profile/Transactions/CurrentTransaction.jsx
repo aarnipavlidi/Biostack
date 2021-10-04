@@ -5,6 +5,8 @@ import React, { useState } from 'react'; // Import "react" library's content for
 import { useHistory } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
 import { Alert, ActivityIndicator, ScrollView, View, StyleSheet, Text, Image, Pressable } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Avatar, Appbar, Card, IconButton, Title, Paragraph, Divider, Provider } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+//import { Marker } from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps'; // Import following components from "react-native-maps" library for this component usage.
 import { FontAwesome5, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import useCurrentTransaction from '../../../hooks/useCurrentTransaction'; // Import "useCurrentTransaction" hook from "useCurrentTransaction.js" file for this component usage.
@@ -95,14 +97,14 @@ const orderContainer = StyleSheet.create({
 
 const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
 
+  const { getCurrentTransaction, loadingTransaction } = useCurrentTransaction();
+  const [submitNewRating, { loadingRating }] = useCreateNewRating(); // Define "submitNewRating" variable from => "useCreateNewRating(...)" hook.
+
   const [currentRating, setCurrentRating] = useState({ status: false, value: null });
 
   const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-
-  const { getCurrentTransaction, loadingTransaction } = useCurrentTransaction();
-  const [submitNewRating, { loadingRating }] = useCreateNewRating(); // Define "submitNewRating" variable from => "useCreateNewRating(...)" hook.
 
   const submitRating = async () => {
     try {
@@ -240,6 +242,7 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
             </View>
           </Card.Content>
         </Card>
+
         <Card.Title
           style={{ marginTop: 5, marginBottom: 5, backgroundColor: styling.colors.VistaWhite, width: '90%', alignSelf: 'center', elevation: 5 }}
           title={getCurrentTransaction.type === "Purchased" ? "Contact seller" : "Contact buyer"}
@@ -247,7 +250,16 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
           left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="email-multiple-outline" />}
           right={(props) => <IconButton {...props} icon="chevron-right" onPress={showModal} />}
         />
-        <Card style={{ backgroundColor: styling.colors.VistaWhite, width: '90%', alignSelf: 'center', elevation: 5 }}>
+
+
+        <View style={{ height: 150, width: '90%', alignSelf: 'center', marginTop: 5, marginBottom: 5 }}>
+          <MapView style={{ alignSelf: 'stretch', height: '100%' }} region={{ latitude: parseFloat(getCurrentTransaction.location.latitude), longitude: parseFloat(getCurrentTransaction.location.longitude), latitudeDelta: 0.09, longitudeDelta: 0.09}}>
+            <Marker coordinate={{ latitude: parseFloat(getCurrentTransaction.location.latitude), longitude: parseFloat(getCurrentTransaction.location.longitude), latitudeDelta: 0.09, longitudeDelta: 0.09}} title={getCurrentTransaction.buyerName ? getCurrentTransaction.buyerName : getCurrentTransaction.sellerName} />
+          </MapView>
+        </View>
+
+
+        <Card style={{ marginTop: 5, marginBottom: 5, backgroundColor: styling.colors.VistaWhite, width: '90%', alignSelf: 'center', elevation: 5 }}>
           <Card.Content>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flex: 1 }}>
               <View style={{ flex: 2.5/3 }}>
@@ -278,6 +290,8 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
             </View>
           </Card.Content>
         </Card>
+
+
       </Provider>
     </ScrollView>
   );
