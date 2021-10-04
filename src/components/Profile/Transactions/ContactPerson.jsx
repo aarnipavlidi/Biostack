@@ -2,8 +2,8 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
-import { ImageBackground, View, Text, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
-import { Modal, Portal, Title } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
+import { ImageBackground, View, Text, StyleSheet, Linking } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Modal, Portal, Title, Button } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { AntDesign  } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.
@@ -34,6 +34,15 @@ const modal = StyleSheet.create({
 
 const ContactPerson = ({ visible, hideModal, getCurrentTransaction }) => {
 
+  const getTransactionID = getCurrentTransaction._id;
+  const getPersonName = getCurrentTransaction.buyerName ? getCurrentTransaction.buyerName : getCurrentTransaction.sellerName;
+  const getPersonEmail = getCurrentTransaction.buyerEmail ? getCurrentTransaction.buyerEmail : getCurrentTransaction.sellerEmail;
+  const getPersonLocation = getCurrentTransaction.location.city;
+
+  const sendEmailPerson = () => {
+    Linking.openURL(`mailto:${getPersonEmail}?subject=#${getTransactionID} | Biostack&body=Hey ${getPersonName}, contacting you regarding this order! <3`);
+  };
+
   return (
     <Portal>
       <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={modal.mainContainer}>
@@ -55,7 +64,7 @@ const ContactPerson = ({ visible, hideModal, getCurrentTransaction }) => {
               <Text style={{ backgroundColor: styling.colors.Asphalt, color: styling.colors.VistaWhite, textAlign: 'center', fontFamily: styling.fonts.buttonContent, padding: 5, width: '70%' }}>Name</Text>
             </View>
             <View style={{ flex: 1/2 }}>
-              <Text style={{ color: styling.colors.Asphalt, textAlign: 'center', padding: 5, }}>{getCurrentTransaction.buyerName ? getCurrentTransaction.buyerName : getCurrentTransaction.sellerName}</Text>
+              <Text style={{ color: styling.colors.Asphalt, textAlign: 'center', padding: 5, }}>{getPersonName}</Text>
             </View>
           </View>
 
@@ -64,7 +73,7 @@ const ContactPerson = ({ visible, hideModal, getCurrentTransaction }) => {
               <Text style={{ backgroundColor: styling.colors.Asphalt, color: styling.colors.VistaWhite, textAlign: 'center', fontFamily: styling.fonts.buttonContent, padding: 5, width: '70%' }}>Email</Text>
             </View>
             <View style={{ flex: 1/2 }}>
-              <Text style={{ color: styling.colors.Asphalt, textAlign: 'center', padding: 5, }}>{getCurrentTransaction.buyerEmail ? getCurrentTransaction.buyerEmail : getCurrentTransaction.sellerEmail}</Text>
+              <Text style={{ color: styling.colors.Asphalt, textAlign: 'center', padding: 5, }}>{getPersonEmail}</Text>
             </View>
           </View>
 
@@ -82,10 +91,17 @@ const ContactPerson = ({ visible, hideModal, getCurrentTransaction }) => {
               <Text style={{ backgroundColor: styling.colors.Asphalt, color: styling.colors.VistaWhite, textAlign: 'center', fontFamily: styling.fonts.buttonContent, padding: 5, width: '70%' }}>City</Text>
             </View>
             <View style={{ flex: 1/2 }}>
-              <Text style={{ color: styling.colors.Asphalt, textAlign: 'center', padding: 5, }}>{getCurrentTransaction.location.city}</Text>
+              <Text style={{ color: styling.colors.Asphalt, textAlign: 'center', padding: 5, }}>{getPersonLocation}</Text>
             </View>
           </View>
         </View>
+
+        <View style={{ backgroundColor: styling.colors.Asphalt, marginTop: 15, marginBottom: 15, width: '90%', alignSelf: 'center' }}>
+          <Button color={styling.colors.VistaWhite} onPress={sendEmailPerson}>
+            <Text style={{ fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>Send email</Text>
+          </Button>
+        </View>
+
 
       </Modal>
     </Portal>

@@ -19,7 +19,7 @@ import styling from '../../styling'; // Import "styling" variable from "styling.
 const modal = StyleSheet.create({
   mainContainer: {
     backgroundColor: styling.colors.VistaWhite,
-    marginTop: -75,
+    marginTop: -10,
     marginLeft: 10,
     marginRight: 10,
   },
@@ -134,11 +134,11 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
   const buttonText = () => {
     if (chosenDelivery.name && chosenPayment.name) {
       return (
-        <Text style={{ color: styling.colors.VistaWhite }}>Buy an item</Text>
+        <Text style={{ color: styling.colors.VistaWhite, fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>Buy an item</Text>
       )
     } else {
       return (
-        <Text style={{ color: styling.colors.VistaWhite }}>Choose shipping & payment</Text>
+        <Text style={{ color: styling.colors.VistaWhite, fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>Choose shipping & payment</Text>
       )
     };
   };
@@ -380,8 +380,8 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
 
       <Divider style={{ marginBottom: 5 }} />
 
-      <View style={{ alignItems: 'center', marginTop: 10, marginBottom: 10 }}>
-        <Button style={{ width: '90%' }} color={styling.colors.Asphalt} disabled={preventSubmit} loading={loading} mode="contained" onPress={onSubmit}>
+      <View style={{ backgroundColor: styling.colors.Asphalt, marginTop: 15, marginBottom: 15, width: '90%', alignSelf: 'center' }}>
+        <Button color={styling.colors.VistaWhite} disabled={preventSubmit} loading={loading} onPress={onSubmit}>
           {buttonText()}
         </Button>
       </View>

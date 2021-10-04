@@ -71,8 +71,8 @@ const productSizeContainer = StyleSheet.create({
 const buttonContainer = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 15,
+    marginBottom: 15,
   },
   button: {
     width: '90%'
@@ -128,11 +128,11 @@ const NewProductForm = ({ currentItemType, currentItemSize, onSubmit, loading })
   const buttonText = () => {
     if (currentItemType && currentItemSize) {
       return (
-        <Text style={{ color: styling.colors.VistaWhite }}>Create an item</Text>
+        <Text style={{ color: styling.colors.VistaWhite, fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>Create an item</Text>
       )
     } else {
       return (
-        <Text style={{ color: styling.colors.VistaWhite }}>Choose item type & size</Text>
+        <Text style={{ color: styling.colors.VistaWhite, fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>Choose item type & size</Text>
       )
     };
   };
