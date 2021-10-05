@@ -62,6 +62,20 @@ export const PRODUCT_ADDED = gql`
         name
         value
       }
+      owner {
+        _id
+        name
+        username
+        email
+        rating
+        location {
+          city
+          region_id
+          latitude
+          longitude
+        }
+        facebookAvatar
+      }
     }
   }
 `
@@ -74,6 +88,7 @@ export const SHOW_ALL_PRODUCTS = gql`
   query showAllProducts($getCursorID: ID, $productSearchValue: String) {
     showAllProducts(first: 8, cursor: $getCursorID, search: $productSearchValue) {
       edges {
+        cursor
         node {
           _id
            productTitle

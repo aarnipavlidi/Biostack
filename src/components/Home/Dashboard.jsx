@@ -43,25 +43,31 @@ const Dashboard = ({ searchStatus, resetSearchBar, activateSearchBar, currentSea
 
   const client = useApolloClient();
 
-  const updateCache = (getNewBook) => {
-
+  const updateCache = (getNewProductData) => {
     const checkMatches = (set, object) => {
-      set.map(results => results.node._id).includes(object._id)
-    }
+      set.map(results => results.cursor).includes(object._id)
+    };
 
-    const bookDataInStore = client.readQuery({
+    const productsCacheData = client.readQuery({
       query: SHOW_ALL_PRODUCTS,
       variables: {
         productSearchValue: ''
       }
-    })
+    });
 
-    console.log(bookDataInStore.showAllProducts)
+    if (!checkMatches(productsCacheData.showAllProducts.edges, getNewProductData)) {
 
+      const cursor = productsCacheData.showAllProducts.pageInfo.endCursor;
+      const cursorIndex = !cursor
+        ? 0
+        : productsCacheData.showAllProducts.edges.findIndex(results => results.cursor === cursor);
 
-    if (!checkMatches(bookDataInStore.showAllProducts.edges, getNewBook)) {
-
-      bookDataInStore.showAllProducts.edges.concat({ node: getNewBook })
+      const paginationNewProduct = {
+        cursor: getNewProductData._id,
+        node: {
+          ...getNewProductData
+        }
+      };
 
       client.writeQuery({
         query: SHOW_ALL_PRODUCTS,
@@ -69,11 +75,18 @@ const Dashboard = ({ searchStatus, resetSearchBar, activateSearchBar, currentSea
           productSearchValue: ''
         },
         data: {
-          showAllProducts: bookDataInStore.showAllProducts
+          showAllProducts: {
+            __typename: productsCacheData.showAllProducts.__typename,
+            edges: [productsCacheData.showAllProducts.edges.concat(paginationNewProduct)],
+            pageInfo: {
+              endCursor: getNewProductData._id,
+              hasNextPage: cursorIndex + 8 < productsCacheData.showAllProducts.edges.length,
+            },
+          },
         }
       })
     }
-  }
+  };
 
   useSubscription(PRODUCT_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
