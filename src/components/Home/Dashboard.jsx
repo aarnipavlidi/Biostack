@@ -34,7 +34,7 @@ const loadingContainer = StyleSheet.create({
 });
 
 import { useQuery, useApolloClient, useSubscription } from '@apollo/client'; // Import following functions from "@apollo/client" library for this hook usage.
-import { SHOW_ALL_PRODUCTS, PRODUCT_ADDED } from '../../graphql/queries'; // Import following queries from "queries.js" file for this hook usage.
+import { SHOW_ALL_PRODUCTS, PRODUCT_ADDED, PRODUCT_PURCHASED } from '../../graphql/queries'; // Import following queries from "queries.js" file for this hook usage.
 
 // Define component "Dashboard", which will execute everything inside of {...}, component
 // will be rendered everytime user has successfully logged to the app. Component will
@@ -88,11 +88,82 @@ const Dashboard = ({ searchStatus, resetSearchBar, activateSearchBar, currentSea
     }
   };
 
+  const removeCache = (getRemovedProductID) => {
+
+    const productsCacheData = client.readQuery({
+      query: SHOW_ALL_PRODUCTS,
+      variables: {
+        productSearchValue: ''
+      }
+    });
+
+    const checkCurrentCache = productsCacheData.showAllProducts.edges.some(results => results.cursor === getRemovedProductID);
+
+    //console.log(productsCacheData.showAllProducts)
+
+    const cursor = productsCacheData.showAllProducts.pageInfo.endCursor;
+    const cursorIndex = !cursor
+      ? 0
+      : productsCacheData.showAllProducts.edges.findIndex(results => results.cursor === cursor);
+
+    console.log(cursorIndex)
+
+
+    if (checkCurrentCache && productsCacheData.showAllProducts.pageInfo.endCursor === getRemovedProductID) {
+
+      const filterCurrentCache = productsCacheData.showAllProducts.edges.filter(results => results.cursor !== getRemovedProductID);
+
+      client.writeQuery({
+        query: SHOW_ALL_PRODUCTS,
+        variables: {
+          productSearchValue: ''
+        },
+        data: {
+          showAllProducts: {
+            __typename: productsCacheData.showAllProducts.__typename,
+            edges: [filterCurrentCache],
+            pageInfo: {
+              endCursor: productsCacheData.showAllProducts.edges[6].cursor,
+              hasNextPage: productsCacheData.showAllProducts.pageInfo.hasNextPage,
+            },
+          },
+        },
+      })
+    } else {
+
+      const filterCurrentCache = productsCacheData.showAllProducts.edges.filter(results => results.cursor !== getRemovedProductID);
+
+      client.writeQuery({
+        query: SHOW_ALL_PRODUCTS,
+        variables: {
+          productSearchValue: ''
+        },
+        data: {
+          showAllProducts: {
+            __typename: productsCacheData.showAllProducts.__typename,
+            edges: [filterCurrentCache],
+            pageInfo: {
+              endCursor: productsCacheData.showAllProducts.pageInfo.endCursor,
+              hasNextPage: productsCacheData.showAllProducts.pageInfo.hasNextPage,
+            },
+          },
+        },
+      })
+    }
+  };
+
   useSubscription(PRODUCT_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
       const getNewAddedValue = subscriptionData.data.productAdded
       updateCache(getNewAddedValue)
-    }
+    },
+  });
+
+  useSubscription(PRODUCT_PURCHASED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const getRemovedProductID = subscriptionData.data.productPurchased
+      removeCache(getRemovedProductID)
+    },
   });
 
   const { getAllProducts, fetchMore, loading } = useProducts({ productSearchValue: debouncedSearchValue }); // Define following variables from "useProducts(...)" hook.
