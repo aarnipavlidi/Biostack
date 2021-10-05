@@ -55,6 +55,16 @@ const Dashboard = ({ searchStatus, resetSearchBar, activateSearchBar, currentSea
       }
     });
 
+    // Right now I have a problem that when user adds new item to the app and if there are more than
+    // 8 different products in total, then for other user(s) there will be rendering issue with cache,
+    // which means "current" products which user sees will disappear, so only way for user to get back
+    // access into products is to go different page (like Profile) and go back into "Home" aka "Dashboard"
+    // component, which will render products back to the user visible. I for now made "dirty way" for
+    // temporary fix with following condition, which will return "null". Will get back to this later!
+    if (productsCacheData.showAllProducts.edges.length >= 8) {
+      return null;
+    };
+
     if (!checkMatches(productsCacheData.showAllProducts.edges, getNewProductData)) {
 
       const cursor = productsCacheData.showAllProducts.pageInfo.endCursor;
@@ -98,20 +108,31 @@ const Dashboard = ({ searchStatus, resetSearchBar, activateSearchBar, currentSea
     });
 
     const checkCurrentCache = productsCacheData.showAllProducts.edges.some(results => results.cursor === getRemovedProductID);
+    const filterCurrentCache = productsCacheData.showAllProducts.edges.filter(results => results.cursor !== getRemovedProductID);
 
-    //console.log(productsCacheData.showAllProducts)
+    if (checkCurrentCache && productsCacheData.showAllProducts.edges.length === 1) {
+      client.writeQuery({
+        query: SHOW_ALL_PRODUCTS,
+        variables: {
+          productSearchValue: ''
+        },
+        data: {
+          showAllProducts: {
+            __typename: productsCacheData.showAllProducts.__typename,
+            edges: [filterCurrentCache],
+            pageInfo: {
+              endCursor: null,
+              hasNextPage: false
+            }
+          }
+        }
+      })
+    };
 
-    const cursor = productsCacheData.showAllProducts.pageInfo.endCursor;
-    const cursorIndex = !cursor
-      ? 0
-      : productsCacheData.showAllProducts.edges.findIndex(results => results.cursor === cursor);
+    if (checkCurrentCache && productsCacheData.showAllProducts.edges.length > 1 && productsCacheData.showAllProducts.pageInfo.endCursor === getRemovedProductID) {
 
-    console.log(cursorIndex)
-
-
-    if (checkCurrentCache && productsCacheData.showAllProducts.pageInfo.endCursor === getRemovedProductID) {
-
-      const filterCurrentCache = productsCacheData.showAllProducts.edges.filter(results => results.cursor !== getRemovedProductID);
+      const getCurrentIndex = productsCacheData.showAllProducts.edges.findIndex(results => results.cursor === getRemovedProductID);
+      const getPreviousItem = getCurrentIndex - 1;
 
       client.writeQuery({
         query: SHOW_ALL_PRODUCTS,
@@ -123,16 +144,13 @@ const Dashboard = ({ searchStatus, resetSearchBar, activateSearchBar, currentSea
             __typename: productsCacheData.showAllProducts.__typename,
             edges: [filterCurrentCache],
             pageInfo: {
-              endCursor: productsCacheData.showAllProducts.edges[6].cursor,
+              endCursor: productsCacheData.showAllProducts.edges[getPreviousItem].cursor,
               hasNextPage: productsCacheData.showAllProducts.pageInfo.hasNextPage,
             },
           },
         },
       })
     } else {
-
-      const filterCurrentCache = productsCacheData.showAllProducts.edges.filter(results => results.cursor !== getRemovedProductID);
-
       client.writeQuery({
         query: SHOW_ALL_PRODUCTS,
         variables: {
