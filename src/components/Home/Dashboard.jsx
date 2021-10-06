@@ -2,6 +2,8 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React, { useState } from 'react'; // Import "react" library's content for this component usage.
+import { useApolloClient, useSubscription } from '@apollo/client'; // Import following functions from "@apollo/client" library for this hook usage.
+import { SHOW_ALL_PRODUCTS, PRODUCT_ADDED, PRODUCT_PURCHASED, PRODUCT_DELETED, PRODUCT_DELETED_MANY } from '../../graphql/queries'; // Import following queries from "queries.js" file for this hook usage.
 import { ActivityIndicator, FlatList, Text, StyleSheet, View, LogBox } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Appbar, Searchbar } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import { MaterialIcons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
@@ -33,9 +35,6 @@ const loadingContainer = StyleSheet.create({
   }
 });
 
-import { useQuery, useApolloClient, useSubscription } from '@apollo/client'; // Import following functions from "@apollo/client" library for this hook usage.
-import { SHOW_ALL_PRODUCTS, PRODUCT_ADDED, PRODUCT_PURCHASED } from '../../graphql/queries'; // Import following queries from "queries.js" file for this hook usage.
-
 // Define component "Dashboard", which will execute everything inside of {...}, component
 // will be rendered everytime user has successfully logged to the app. Component will
 // render every product which has been added to the app by various different users.
@@ -43,144 +42,59 @@ const Dashboard = ({ searchStatus, resetSearchBar, activateSearchBar, currentSea
 
   const client = useApolloClient();
 
-  const updateCache = (getNewProductData) => {
-    const checkMatches = (set, object) => {
-      set.map(results => results.cursor).includes(object._id)
-    };
-
-    const productsCacheData = client.readQuery({
-      query: SHOW_ALL_PRODUCTS,
-      variables: {
-        productSearchValue: ''
-      }
+  const productAddedCache = async (response) => {
+    console.log(response);
+    await client.refetchQueries({
+      include: "active",
     });
-
-    // Right now I have a problem that when user adds new item to the app and if there are more than
-    // 8 different products in total, then for other user(s) there will be rendering issue with cache,
-    // which means "current" products which user sees will disappear, so only way for user to get back
-    // access into products is to go different page (like Profile) and go back into "Home" aka "Dashboard"
-    // component, which will render products back to the user visible. I for now made "dirty way" for
-    // temporary fix with following condition, which will return "null". Will get back to this later!
-    if (productsCacheData.showAllProducts.edges.length >= 8) {
-      return null;
-    };
-
-    if (!checkMatches(productsCacheData.showAllProducts.edges, getNewProductData)) {
-
-      const cursor = productsCacheData.showAllProducts.pageInfo.endCursor;
-      const cursorIndex = !cursor
-        ? 0
-        : productsCacheData.showAllProducts.edges.findIndex(results => results.cursor === cursor);
-
-      const paginationNewProduct = {
-        cursor: getNewProductData._id,
-        node: {
-          ...getNewProductData
-        }
-      };
-
-      client.writeQuery({
-        query: SHOW_ALL_PRODUCTS,
-        variables: {
-          productSearchValue: ''
-        },
-        data: {
-          showAllProducts: {
-            __typename: productsCacheData.showAllProducts.__typename,
-            edges: [productsCacheData.showAllProducts.edges.concat(paginationNewProduct)],
-            pageInfo: {
-              endCursor: getNewProductData._id,
-              hasNextPage: cursorIndex + 8 < productsCacheData.showAllProducts.edges.length,
-            },
-          },
-        }
-      })
-    }
-  };
-
-  const removeCache = (getRemovedProductID) => {
-
-    const productsCacheData = client.readQuery({
-      query: SHOW_ALL_PRODUCTS,
-      variables: {
-        productSearchValue: ''
-      }
-    });
-
-    const checkCurrentCache = productsCacheData.showAllProducts.edges.some(results => results.cursor === getRemovedProductID);
-    const filterCurrentCache = productsCacheData.showAllProducts.edges.filter(results => results.cursor !== getRemovedProductID);
-
-    if (checkCurrentCache && productsCacheData.showAllProducts.edges.length === 1) {
-      client.writeQuery({
-        query: SHOW_ALL_PRODUCTS,
-        variables: {
-          productSearchValue: ''
-        },
-        data: {
-          showAllProducts: {
-            __typename: productsCacheData.showAllProducts.__typename,
-            edges: [filterCurrentCache],
-            pageInfo: {
-              endCursor: null,
-              hasNextPage: false
-            }
-          }
-        }
-      })
-    };
-
-    if (checkCurrentCache && productsCacheData.showAllProducts.edges.length > 1 && productsCacheData.showAllProducts.pageInfo.endCursor === getRemovedProductID) {
-
-      const getCurrentIndex = productsCacheData.showAllProducts.edges.findIndex(results => results.cursor === getRemovedProductID);
-      const getPreviousItem = getCurrentIndex - 1;
-
-      client.writeQuery({
-        query: SHOW_ALL_PRODUCTS,
-        variables: {
-          productSearchValue: ''
-        },
-        data: {
-          showAllProducts: {
-            __typename: productsCacheData.showAllProducts.__typename,
-            edges: [filterCurrentCache],
-            pageInfo: {
-              endCursor: productsCacheData.showAllProducts.edges[getPreviousItem].cursor,
-              hasNextPage: productsCacheData.showAllProducts.pageInfo.hasNextPage,
-            },
-          },
-        },
-      })
-    } else {
-      client.writeQuery({
-        query: SHOW_ALL_PRODUCTS,
-        variables: {
-          productSearchValue: ''
-        },
-        data: {
-          showAllProducts: {
-            __typename: productsCacheData.showAllProducts.__typename,
-            edges: [filterCurrentCache],
-            pageInfo: {
-              endCursor: productsCacheData.showAllProducts.pageInfo.endCursor,
-              hasNextPage: productsCacheData.showAllProducts.pageInfo.hasNextPage,
-            },
-          },
-        },
-      })
-    }
   };
 
   useSubscription(PRODUCT_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
-      const getNewAddedValue = subscriptionData.data.productAdded
-      updateCache(getNewAddedValue)
+      const response = subscriptionData.data.productAdded
+      productAddedCache(response)
     },
   });
 
+  const productPurchasedCache = async (response) => {
+    console.log(response);
+    await client.refetchQueries({
+      include: "active",
+    });
+  };
+
   useSubscription(PRODUCT_PURCHASED, {
     onSubscriptionData: ({ subscriptionData }) => {
-      const getRemovedProductID = subscriptionData.data.productPurchased
-      removeCache(getRemovedProductID)
+      const response = subscriptionData.data.productPurchased
+      productPurchasedCache(response)
+    },
+  });
+
+  const productDeletedCache = async (response) => {
+    console.log(response);
+    await client.refetchQueries({
+      include: "active",
+    });
+  };
+
+  useSubscription(PRODUCT_DELETED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const response = subscriptionData.data.productDeleted
+      productDeletedCache(response)
+    },
+  });
+
+  const productDeletedManyCache = async (response) => {
+    console.log(response);
+    await client.refetchQueries({
+      include: "active",
+    });
+  };
+
+  useSubscription(PRODUCT_DELETED_MANY, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const response = subscriptionData.data.productDeletedMany
+      productDeletedManyCache(response)
     },
   });
 

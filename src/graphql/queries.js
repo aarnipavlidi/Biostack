@@ -52,37 +52,25 @@ export const CURRENT_LOGGED_USER = gql`
 
 export const PRODUCT_ADDED = gql`
   subscription {
-    productAdded {
-      _id
-      productTitle
-      productDescription
-      productSize
-      productPrice
-      productImage {
-        name
-        value
-      }
-      owner {
-        _id
-        name
-        username
-        email
-        rating
-        location {
-          city
-          region_id
-          latitude
-          longitude
-        }
-        facebookAvatar
-      }
-    }
+    productAdded
   }
 `
 
 export const PRODUCT_PURCHASED = gql`
   subscription {
     productPurchased
+  }
+`
+
+export const PRODUCT_DELETED = gql`
+  subscription {
+    productDeleted
+  }
+`
+
+export const PRODUCT_DELETED_MANY = gql`
+  subscription {
+    productDeletedMany
   }
 `
 
