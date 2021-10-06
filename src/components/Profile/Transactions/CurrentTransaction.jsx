@@ -84,6 +84,8 @@ const orderContainer = StyleSheet.create({
   },
   productBoxContent: {
     color: styling.colors.VistaWhite,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 12,
     padding: 5,
   },
   productValueBox: {
@@ -175,7 +177,7 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
                 <View style={orderContainer.productValueContainer}>
                   <View style={orderContainer.productBox}>
                     <View style={orderContainer.productBoxStyle}>
-                      <Text style={orderContainer.productBoxContent}>Product</Text>
+                      <Text style={orderContainer.productBoxContent}>PRODUCT</Text>
                     </View>
                   </View>
                   <View style={orderContainer.productValueBox}>
@@ -186,7 +188,7 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
                 <View style={orderContainer.productValueContainer}>
                   <View style={orderContainer.productBox}>
                     <View style={orderContainer.productBoxStyle}>
-                      <Text style={orderContainer.productBoxContent}>Type</Text>
+                      <Text style={orderContainer.productBoxContent}>TYPE</Text>
                     </View>
                   </View>
                   <View style={orderContainer.productValueBox}>
@@ -197,7 +199,7 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
                 <View style={orderContainer.productValueContainer}>
                   <View style={orderContainer.productBox}>
                     <View style={orderContainer.productBoxStyle}>
-                      <Text style={orderContainer.productBoxContent}>Size</Text>
+                      <Text style={orderContainer.productBoxContent}>SIZE</Text>
                     </View>
                   </View>
                   <View style={orderContainer.productValueBox}>
@@ -208,7 +210,7 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
                 <View style={orderContainer.productValueContainer}>
                   <View style={orderContainer.productBox}>
                     <View style={orderContainer.productBoxStyle}>
-                      <Text style={orderContainer.productBoxContent}>Delivery</Text>
+                      <Text style={orderContainer.productBoxContent}>DELIVERY</Text>
                     </View>
                   </View>
                   <View style={orderContainer.productValueBox}>
@@ -219,7 +221,7 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
                 <View style={orderContainer.productValueContainer}>
                   <View style={orderContainer.productBox}>
                     <View style={orderContainer.productBoxStyle}>
-                      <Text style={orderContainer.productBoxContent}>Payment</Text>
+                      <Text style={orderContainer.productBoxContent}>PAYMENT</Text>
                     </View>
                   </View>
                   <View style={orderContainer.productValueBox}>
@@ -230,7 +232,7 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
                 <View style={orderContainer.productValueContainer}>
                   <View style={orderContainer.productBox}>
                     <View style={orderContainer.productBoxStyle}>
-                      <Text style={orderContainer.productBoxContent}>Total</Text>
+                      <Text style={orderContainer.productBoxContent}>TOTAL</Text>
                     </View>
                   </View>
                   <View style={orderContainer.productValueBox}>
@@ -246,7 +248,9 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
         <Card.Title
           style={{ marginTop: 5, marginBottom: 5, backgroundColor: styling.colors.VistaWhite, width: '90%', alignSelf: 'center', elevation: 5 }}
           title={getCurrentTransaction.type === "Purchased" ? "Contact seller" : "Contact buyer"}
+          titleStyle={{ fontFamily: styling.fonts.buttonContent, fontSize: 20 }}
           subtitle={getCurrentTransaction.type === "Purchased" ? "Product seller contact information." : "Product buyer contact information."}
+          subtitleStyle={{ fontFamily: styling.fonts.buttonContent }}
           left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="email-multiple-outline" />}
           right={(props) => <IconButton {...props} icon="chevron-right" onPress={showModal} />}
         />
@@ -263,7 +267,7 @@ const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
           <Card.Content>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flex: 1 }}>
               <View style={{ flex: 2.5/3 }}>
-                <Title>{getCurrentTransaction.type === "Purchased" ? "Rate seller" : "Rate buyer"}</Title>
+                <Title style={{ fontFamily: styling.fonts.buttonContent, fontSize: 19 }}>{getCurrentTransaction.type === "Purchased" ? "Rate seller" : "Rate buyer"}</Title>
                 <Paragraph>{getCurrentTransaction.type === "Purchased"
                   ? "Give a rating to the seller based on how the communication etc. went overall."
                   : "Give a rating to the buyer based on how the communication etc. went overall."}

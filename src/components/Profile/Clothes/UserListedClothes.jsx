@@ -8,7 +8,7 @@ import { Badge, Card, Title, Paragraph } from 'react-native-paper'; // Import fo
 import useDeleteProduct from '../../../hooks/useDeleteProduct'; // Import "useDeleteProduct" hook from "useDeleteProduct.js" file for this component usage.
 import ProductImage from './ProductImage'; // Import "ProductImage" component from "ProductImage.jsx" file for this component usage.
 import ItemTypeCheck from '../../ProductChecking/ItemTypeCheck'; // Import "ItemTypeCheck" component from "ItemTypeCheck.jsx" file for this component usage.
-import { AntDesign } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
+import { MaterialCommunityIcons } from '@expo/vector-icons'; // Import following components from "@expo/vector-icons" libary for this component usage.
 
 import styling from '../../../styling'; // Import "styling" variable from "styling.js" for this component usage.
 
@@ -33,7 +33,7 @@ const listedProductsContainer = StyleSheet.create({
   },
   productDescriptionContainer: {
     flexShrink: 1,
-    marginRight: 1,
+    marginRight: 25,
   },
   productImageContainer: {
     width: 60,
@@ -50,7 +50,8 @@ const listedProductsContainer = StyleSheet.create({
     marginTop: 5
   },
   productGroupNameTitle: {
-    fontSize: styling.fontSizes.subheading,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 14,
     color: styling.colors.Asphalt,
   },
   productSizeContainer: {
@@ -61,7 +62,8 @@ const listedProductsContainer = StyleSheet.create({
     color: styling.colors.VistaWhite,
   },
   productSizeTitle: {
-    fontSize: styling.fontSizes.subheading,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 14,
     color: styling.colors.Asphalt,
   },
   productPriceContainer: {
@@ -72,18 +74,20 @@ const listedProductsContainer = StyleSheet.create({
     color: styling.colors.VistaWhite,
   },
   productPriceTitle: {
-    fontSize: styling.fontSizes.subheading,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 14,
     color: styling.colors.Asphalt,
   },
 });
 
-const UserListedClothes = ({ item }) => {
+const UserListedClothes = ({ item, showSnackBar }) => {
 
   const [deleteProductFromDatabase] = useDeleteProduct(); // Define "deleteProductFromDatabase" variable from => "useDeleteProduct(...)" hook.
 
   const removeUserProduct = async () => {
     try {
-      await deleteProductFromDatabase(item._id);
+      const response = await deleteProductFromDatabase(item._id);
+      showSnackBar(response.deleteProduct.response);
     } catch (error) {
       console.log(error.message);
     }
@@ -115,34 +119,44 @@ const UserListedClothes = ({ item }) => {
 
           <View style={listedProductsContainer.primaryContainer}>
             <View>
-              <Title>{item.productTitle}</Title>
+              <Title style={{ fontFamily: styling.fonts.buttonContent, fontSize: 17 }}>{item.productTitle}</Title>
             </View>
             <Pressable onPress={confirmProductDelete}>
-              <AntDesign style={{ alignSelf: 'center' }} name="delete" size={20} color={styling.colors.Asphalt} />
+              <MaterialCommunityIcons style={{ alignSelf: 'center' }} name="delete-outline" size={25} color={styling.colors.Asphalt} />
             </Pressable>
           </View>
 
           <View style={listedProductsContainer.secondaryContainer}>
             <View style={listedProductsContainer.productDescriptionContainer}>
-              <Paragraph>{item.productDescription}</Paragraph>
+              <Paragraph style={{ fontSize: 12 }}>{item.productDescription}</Paragraph>
             </View>
             <ProductImage getImageName={item.productImage.name} getImageValue={item.productImage.value} />
           </View>
 
+
+
+
+
           <View style={listedProductsContainer.contentContainer}>
-            <View>
-              <Text style={listedProductsContainer.productGroupNameTitle}>Item Type</Text>
+            <View style={{ alignItems: 'center' }}>
+              <Paragraph style={listedProductsContainer.productGroupNameTitle}>Item Type</Paragraph>
               <ItemTypeCheck currentItemType={item.productImage.name} />
             </View>
-            <View>
-              <Text style={listedProductsContainer.productSizeTitle}>Item Size</Text>
-              <Badge style={listedProductsContainer.productSizeContainer} size={24}>{item.productSize}</Badge>
+            <View style={{ alignItems: 'center' }}>
+              <Paragraph style={listedProductsContainer.productSizeTitle}>Item Size</Paragraph>
+              <Badge style={listedProductsContainer.productSizeContainer} size={22}>{item.productSize}</Badge>
             </View>
-            <View>
-              <Text style={listedProductsContainer.productPriceTitle}>Item Price (€)</Text>
-              <Badge style={listedProductsContainer.productPriceContainer} size={24}>{item.productPrice}</Badge>
+            <View style={{ alignItems: 'center' }}>
+              <Paragraph style={listedProductsContainer.productPriceTitle}>Item Price (€)</Paragraph>
+              <Badge style={listedProductsContainer.productPriceContainer} size={22}>{item.productPrice}</Badge>
             </View>
           </View>
+
+
+
+
+
+
         </Card.Content>
       </Card>
     </View>

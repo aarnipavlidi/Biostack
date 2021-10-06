@@ -31,12 +31,11 @@ const modal = StyleSheet.create({
     backgroundColor: styling.colors.VistaWhite,
     marginTop: 25,
     marginLeft: 15,
-    borderColor: styling.colors.VistaWhite,
-    borderRadius: 25 / 2,
-    // elevation problem need to fix.
   },
   title: {
     padding: 5,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 19,
     color: styling.colors.Asphalt
   },
   headerIcon: {
@@ -47,7 +46,6 @@ const modal = StyleSheet.create({
     borderWidth: 5,
     borderColor: styling.colors.VistaWhite,
     borderRadius: 50 / 2,
-    // elevation problem need to fix.
   },
   summaryContainer: {
     marginBottom: 10
@@ -61,9 +59,11 @@ const modal = StyleSheet.create({
   summaryTitle: {
     marginTop: 5,
     marginLeft: 15,
-    padding: 3,
+    padding: 5,
     backgroundColor: styling.colors.Asphalt,
     color: styling.colors.VistaWhite,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 12,
   },
   summaryValue: {
     marginTop: 5,
@@ -233,12 +233,11 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
             <Title style={modal.title}>Order Summary</Title>
           </View>
           <View style={modal.headerIcon}>
-            <Fontisto style={{ padding: 5 }} name="shopping-basket" size={24} color={styling.colors.Asphalt} />
+            <Fontisto style={{ padding: 5 }} name="shopping-basket-add" size={24} color={styling.colors.Asphalt} />
           </View>
         </View>
         </ImageBackground>
       </View>
-
       <View style={modal.summaryContainer}>
         <View style={modal.summaryContent}>
           <Text style={modal.summaryTitle}>NAME</Text>
@@ -265,11 +264,10 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
         </View>
         <Divider />
       </View>
-
       <View style={modal.shippingContainer}>
         <View style={modal.shippingTitle}>
-          <Title>Shipping</Title>
-          <Feather name="package" size={24} color={styling.colors.Asphalt} />
+          <Title style={{ fontFamily: styling.fonts.buttonContent, fontSize: 15, marginRight: 5 }}>Shipping</Title>
+          <Feather name="package" size={18} color={styling.colors.Asphalt} />
         </View>
         <View style={modal.shippingOptionsContainer}>
           <View style={modal.shippingOptionItem}>
@@ -303,11 +301,10 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
           </View>
         </View>
       </View>
-
       <View style={modal.shippingContainer}>
         <View style={modal.shippingTitle}>
-          <Title>Payment</Title>
-          <MaterialIcons name="payment" size={24} color={styling.colors.Asphalt} />
+          <Title style={{ fontFamily: styling.fonts.buttonContent, fontSize: 15, marginRight: 5 }}>Payment</Title>
+          <MaterialIcons name="payment" size={18} color={styling.colors.Asphalt} />
         </View>
         <View style={modal.shippingOptionsContainer}>
           <View style={modal.shippingOptionItem}>
@@ -341,52 +338,39 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
           </View>
         </View>
       </View>
-
       <Divider />
-
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
-
         <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10, marginRight: 20, }}>
-          <Title>Summary</Title>
-          <Entypo name="price-tag" size={24} color={styling.colors.Asphalt} />
+          <Title style={{ fontFamily: styling.fonts.buttonContent, fontSize: 15, marginRight: 5 }}>Summary</Title>
+          <Entypo name="price-tag" size={18} color={styling.colors.Asphalt} />
         </View>
-
         <View style={{ flex: 1, justifyContent: 'flex-start', marginRight: 10 }}>
-
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
             <Text>Product price :</Text>
             <Text>{getCurrentProduct.productPrice} €</Text>
           </View>
-
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
             <Text>Shipping :</Text>
             <Text>{chosenDelivery.price} €</Text>
           </View>
-
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
             <Text>Payment :</Text>
             <Text>{chosenPayment.price} €</Text>
           </View>
-
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderTopWidth: 2, alignItems: 'center' }}>
             <View style={{ backgroundColor: styling.colors.Asphalt, borderWidth: 2 }}>
               <Text style={{ color: styling.colors.VistaWhite }}>Total :</Text>
             </View>
             <Text>{orderTotalPrice} €</Text>
           </View>
-
         </View>
       </View>
-
       <Divider style={{ marginBottom: 5 }} />
-
       <View style={{ backgroundColor: styling.colors.Asphalt, marginTop: 15, marginBottom: 15, width: '90%', alignSelf: 'center' }}>
         <Button color={styling.colors.VistaWhite} disabled={preventSubmit} loading={loading} onPress={onSubmit}>
           {buttonText()}
         </Button>
       </View>
-
-
       </Modal>
     </Portal>
   );

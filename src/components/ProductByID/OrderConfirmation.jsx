@@ -16,7 +16,8 @@ const headerContainer = StyleSheet.create({
     height: 50,
   },
   appBarContent: {
-    color: styling.colors.VistaWhite
+    color: styling.colors.VistaWhite,
+    fontFamily: styling.fonts.loginScreenTitle
   }
 });
 
@@ -55,6 +56,8 @@ const orderContainer = StyleSheet.create({
   },
   productBoxContent: {
     color: styling.colors.VistaWhite,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 12,
     padding: 5,
   },
   productValueBox: {
@@ -69,14 +72,15 @@ const orderContainer = StyleSheet.create({
 const emailContainer = StyleSheet.create({
   container: {
     marginTop: 10,
-    borderBottomWidth: 2,
+    borderBottomWidth: 2.5,
     borderBottomColor: styling.colors.Asphalt,
-    borderTopWidth: 2,
+    borderTopWidth: 2.5,
     borderTopColor: styling.colors.Asphalt,
   },
   content: {
-    padding: 9,
-    fontSize: 15,
+    padding: 10,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 14,
     textAlign: 'center',
   },
 });
@@ -91,18 +95,17 @@ const buttonContainer = StyleSheet.create({
   },
   productButton: {
     backgroundColor: styling.colors.Asphalt,
-    flex: 1/2,
+    flex: 1.25/3,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
-    marginLeft: 5,
-    marginRight: 5,
     elevation: 5,
   },
   productButtonText: {
     color: styling.colors.VistaWhite,
-    fontSize: 18,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 12,
     marginRight: 5,
   },
 });
@@ -113,7 +116,6 @@ const OrderConfirmation = () => {
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
   const getOrderData = location.state.detail;
-
   const orderNumber = `#${getOrderData._id}`;
 
   return (
@@ -125,8 +127,8 @@ const OrderConfirmation = () => {
       <Card style={orderContainer.mainContainer}>
         <Card.Content>
           <View style={{ alignItems: 'center' }}>
-            <AntDesign name="checkcircleo" size={50} color={styling.colors.Greenery} />
-            <Title style={{ textAlign: 'center', marginTop: 10 }}>You have successfully purchased item from the app.</Title>
+            <AntDesign name="checkcircleo" size={30} color={styling.colors.Greenery} />
+            <Title style={{ fontFamily: styling.fonts.buttonContent, fontSize: 15, textAlign: 'center', marginTop: 10 }}>You have successfully purchased item from the app.</Title>
           </View>
           <View style={orderContainer.confirmationFlexBox}>
             <View>
@@ -136,7 +138,7 @@ const OrderConfirmation = () => {
               <View style={orderContainer.productValueContainer}>
                 <View style={orderContainer.productBox}>
                   <View style={orderContainer.productBoxStyle}>
-                    <Text style={orderContainer.productBoxContent}>Product</Text>
+                    <Text style={orderContainer.productBoxContent}>PRODUCT</Text>
                   </View>
                 </View>
                 <View style={orderContainer.productValueBox}>
@@ -147,7 +149,7 @@ const OrderConfirmation = () => {
               <View style={orderContainer.productValueContainer}>
                 <View style={orderContainer.productBox}>
                   <View style={orderContainer.productBoxStyle}>
-                    <Text style={orderContainer.productBoxContent}>Type</Text>
+                    <Text style={orderContainer.productBoxContent}>TYPE</Text>
                   </View>
                 </View>
                 <View style={orderContainer.productValueBox}>
@@ -158,7 +160,7 @@ const OrderConfirmation = () => {
               <View style={orderContainer.productValueContainer}>
                 <View style={orderContainer.productBox}>
                   <View style={orderContainer.productBoxStyle}>
-                    <Text style={orderContainer.productBoxContent}>Size</Text>
+                    <Text style={orderContainer.productBoxContent}>SIZE</Text>
                   </View>
                 </View>
                 <View style={orderContainer.productValueBox}>
@@ -169,7 +171,7 @@ const OrderConfirmation = () => {
               <View style={orderContainer.productValueContainer}>
                 <View style={orderContainer.productBox}>
                   <View style={orderContainer.productBoxStyle}>
-                    <Text style={orderContainer.productBoxContent}>Delivery</Text>
+                    <Text style={orderContainer.productBoxContent}>DELIVERY</Text>
                   </View>
                 </View>
                 <View style={orderContainer.productValueBox}>
@@ -180,7 +182,7 @@ const OrderConfirmation = () => {
               <View style={orderContainer.productValueContainer}>
                 <View style={orderContainer.productBox}>
                   <View style={orderContainer.productBoxStyle}>
-                    <Text style={orderContainer.productBoxContent}>Payment</Text>
+                    <Text style={orderContainer.productBoxContent}>PAYMENT</Text>
                   </View>
                 </View>
                 <View style={orderContainer.productValueBox}>
@@ -191,7 +193,7 @@ const OrderConfirmation = () => {
               <View style={orderContainer.productValueContainer}>
                 <View style={orderContainer.productBox}>
                   <View style={orderContainer.productBoxStyle}>
-                    <Text style={orderContainer.productBoxContent}>Total</Text>
+                    <Text style={orderContainer.productBoxContent}>TOTAL</Text>
                   </View>
                 </View>
                 <View style={orderContainer.productValueBox}>
@@ -206,10 +208,10 @@ const OrderConfirmation = () => {
           </View>
           <View style={buttonContainer.productButtonContainer}>
             <Pressable style={buttonContainer.productButton} onPress={() => history.push('/dashboard')}>
-              <Text style={buttonContainer.productButtonText}>Buy more</Text>
+              <Text style={buttonContainer.productButtonText}>BUY MORE</Text>
             </Pressable>
-            <Pressable style={buttonContainer.productButton} onPress={() => history.push('/dashboard/profile')}>
-              <Text style={buttonContainer.productButtonText}>Contact seller</Text>
+            <Pressable style={buttonContainer.productButton} onPress={() => history.push(`/dashboard/profile/transactions/${getOrderData._id}`)}>
+              <Text style={buttonContainer.productButtonText}>CONTACT SELLER</Text>
             </Pressable>
           </View>
         </Card.Content>

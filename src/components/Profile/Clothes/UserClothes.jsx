@@ -2,7 +2,7 @@
 // then please contact me by sending email at me@aarnipavlidi.fi <3
 
 import React from 'react'; // Import "react" library's content for this component usage.
-import { Alert, ActivityIndicator, FlatList, View, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { ActivityIndicator, FlatList, StyleSheet } from 'react-native'; // Import following components from "react-native" library for this component usage.
 
 import UserClothesHeader from './UserClothesHeader'; // Import "UserClothesHeader" component from "UserClothesHeader.jsx" file for this component usage.
 import UserListedClothes from './UserListedClothes'; // Import "UserListedClothes" component from "UserListedClothes.jsx" file for this component usage.
@@ -21,7 +21,7 @@ const loadingContainer = StyleSheet.create({
 
 // Define "UserClothes" component, which will execute everything inside of {...}
 // and render back either "loading spinner" or current logged user data.
-const UserClothes = ({ currentUserData, loading }) => {
+const UserClothes = ({ currentUserData, loading, showSnackBar }) => {
 
   const getUserListedProducts = currentUserData
     ? currentUserData.products.map(results => results)
@@ -42,7 +42,7 @@ const UserClothes = ({ currentUserData, loading }) => {
     <FlatList
       data={getUserListedProducts}
       keyExtractor={(item, index) => item._id}
-      renderItem={({ item }) => <UserListedClothes item={item} />}
+      renderItem={({ item }) => <UserListedClothes item={item} showSnackBar={showSnackBar} />}
       ListHeaderComponent={<UserClothesHeader />}
     />
   );

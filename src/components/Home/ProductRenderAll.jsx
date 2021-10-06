@@ -22,7 +22,14 @@ const productContainer = StyleSheet.create({
   },
   productTitle: {
     borderTopWidth: 0.5,
+    borderColor: styling.colors.Asphalt,
+    marginBottom: 5,
     alignItems: 'center'
+  },
+  productTitleText: {
+    marginTop: 5,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 12
   },
   productFeatures: {
     flexDirection: 'row',
@@ -42,7 +49,7 @@ const ProductRenderAll = ({ item }) => {
         <Card.Content>
           <ProductImage getImageName={item.productImage.name} getImageValue={item.productImage.value} />
           <View style={productContainer.productTitle}>
-            <Text>{item.productTitle}</Text>
+            <Text style={productContainer.productTitleText}>{item.productTitle}</Text>
           </View>
           <View style={productContainer.productFeatures}>
             <ItemTypeCheck currentItemType={item.productImage.name} />

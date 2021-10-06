@@ -245,7 +245,7 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
       <Appbar.Header statusBarHeight={0} style={editAccountHeaderContainer.appBarContainer}>
         <Appbar.BackAction onPress={goBackPreviousRoute} />
         <Appbar.Content titleStyle={editAccountHeaderContainer.appBarContent} title="Edit Account" titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
-        <Appbar.Action icon="cards-heart" />
+        <Appbar.Action icon="account-edit-outline" />
       </Appbar.Header>
       <Formik initialValues={initialValues} onSubmit={(values, { resetForm }) => confirmUserUpdate(values, { resetForm })} validationSchema={editAccountFormValidationSchema}>
         {({ handleSubmit, handleReset, values }) => <EditAccountForm currentFormValues={values} nameValue={nameValue} setNameValue={setNameValue} emailValue={emailValue} setEmailValue={setEmailValue} currentUserData={currentUserData} onSubmit={handleSubmit} loading={loadingUpdateUser} resetAccountValues={() => resetAccountValues({ handleReset })} />}
@@ -256,7 +256,9 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
       <Card.Title
         style={cardTitleContainer.container}
         title="Delete account"
+        titleStyle={{ fontFamily: styling.fonts.buttonContent, fontSize: 20 }}
         subtitle="Delete your account from the app."
+        subtitleStyle={{ fontFamily: styling.fonts.buttonContent }}
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="account-box" />}
         right={(props) => !loadingDeleteUser
           ? <IconButton {...props} size={25} color={styling.colors.Asphalt} icon="delete-outline" onPress={confirmUserDelete} />
@@ -266,7 +268,9 @@ const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }
       <Card.Title
         style={cardTitleContainer.container}
         title="Delete products"
+        titleStyle={{ fontFamily: styling.fonts.buttonContent, fontSize: 20 }}
         subtitle="Delete your products from the app."
+        subtitleStyle={{ fontFamily: styling.fonts.buttonContent }}
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="basket-outline" />}
         right={(props) => !loadingDeleteProducts
           ? <IconButton {...props} size={25} color={styling.colors.Asphalt} icon="delete-outline" onPress={confirmProductDelete}/>

@@ -13,7 +13,8 @@ const snackBarContainer = StyleSheet.create({
   },
   content: {
     color: styling.colors.VistaWhite,
-    fontFamily: 'IndieFlower_400Regular',
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 12,
   },
 });
 

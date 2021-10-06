@@ -52,10 +52,11 @@ const productSizeContainer = StyleSheet.create({
   },
   titleBackground: {
     backgroundColor: styling.colors.Asphalt,
-    borderRadius: 25 / 2
   },
   titleContent: {
     color: styling.colors.VistaWhite,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 12,
     padding: 8,
   },
   valueBox: {
@@ -99,17 +100,19 @@ const createProductFormValidationSchema = yup.object().shape({
   productTitle: yup
     .string()
     .min(5, 'Title has to be minimum of 5 characters.')
+    .max(25, 'Title can be only maximum of 25 characters.')
     .required('Title for your item is required.'),
   productDescription: yup
     .string()
     .min(5, 'Description has to be minimum of 5 characters.')
+    .max(100, 'Description can be only maximum of 100 characters.')
     .required('Description for your item is required.'),
   productPrice: yup
     .string()
-    .min(1, 'Price has to be minimum of 1 character.')
-    .required('Price for your item is required.'),
+    .matches(/^[0-9]+$/, 'Only rounded numbers can be used on pricing the item.')
+    .max(3, 'Price can be only maximum of 3 characters.')
+    .required('Price for your product is required.'),
 });
-
 
 const NewProductForm = ({ currentItemType, currentItemSize, onSubmit, loading }) => {
 
@@ -140,8 +143,8 @@ const NewProductForm = ({ currentItemType, currentItemSize, onSubmit, loading })
   // Component will render everything inside of (...) back to the user.
   return (
     <View>
-      <FormikTextInput name="productTitle" placeholder="Please enter title for your item." />
-      <FormikTextInput name="productDescription" placeholder="Please enter description for your item." />
+      <FormikTextInput multiline={true} name="productTitle" placeholder="Please enter title for your item." />
+      <FormikTextInput multiline={true} name="productDescription" placeholder="Please enter description for your item." />
       <FormikTextInput name="productPrice" placeholder="Please enter price for your item." />
       <View style={buttonContainer.container}>
         <Button style={buttonContainer.button} color={styling.colors.Asphalt} disabled={preventSubmit} loading={loading} mode="contained" onPress={onSubmit}>
@@ -194,8 +197,8 @@ const NewProduct = ({ currentUserData }) => {
     const productSize = currentSize; // Define variable "productSize", which is equal to "currentSize" variable.
 
     try {
-      const { data } = await submitNewProduct({ productTitle, productDescription, productSize, productPrice, productType, productImageValue, owner })
-      history.push("/dashboard"); // Redirect user to "/dashboard" after adding new product successfully.
+      const response = await submitNewProduct({ productTitle, productDescription, productSize, productPrice, productType, productImageValue, owner })
+      history.push(`/dashboard/${response.data.createProduct._id}`); // Redirect user to "/dashboard" after adding new product successfully.
     } catch (error) { // If there is a problem at "try" section, then "Alert" component will be rendered.
       Alert.alert(
         "Biostack",
@@ -235,14 +238,14 @@ const NewProduct = ({ currentUserData }) => {
       <View style={productSizeContainer.container}>
         <View style={productSizeContainer.titleBox}>
           <View style={productSizeContainer.titleBackground}>
-            <Text style={productSizeContainer.titleContent}>Product Size</Text>
+            <Text style={productSizeContainer.titleContent}>PRODUCT SIZE</Text>
           </View>
         </View>
         <View>
           <View style={productSizeContainer.valueBox}>
             <View style={productSizeContainer.valueOption}>
               <View>
-                <Text>XS</Text>
+                <Text style={{ fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>XS</Text>
               </View>
               <View>
                 <RadioButton
@@ -255,7 +258,7 @@ const NewProduct = ({ currentUserData }) => {
             </View>
             <View style={productSizeContainer.valueOption}>
               <View>
-                <Text>S</Text>
+                <Text style={{ fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>S</Text>
               </View>
               <View>
                 <RadioButton
@@ -268,7 +271,7 @@ const NewProduct = ({ currentUserData }) => {
             </View>
             <View style={productSizeContainer.valueOption}>
               <View>
-                <Text>M</Text>
+                <Text style={{ fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>M</Text>
               </View>
               <View>
                 <RadioButton
@@ -281,7 +284,7 @@ const NewProduct = ({ currentUserData }) => {
             </View>
             <View style={productSizeContainer.valueOption}>
               <View>
-                <Text>L</Text>
+                <Text style={{ fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>L</Text>
               </View>
               <View>
                 <RadioButton
@@ -294,7 +297,7 @@ const NewProduct = ({ currentUserData }) => {
             </View>
             <View style={productSizeContainer.valueOption}>
               <View>
-                <Text>XL</Text>
+                <Text style={{ fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>XL</Text>
               </View>
               <View>
                 <RadioButton
@@ -307,7 +310,7 @@ const NewProduct = ({ currentUserData }) => {
             </View>
             <View style={productSizeContainer.valueOption}>
               <View>
-                <Text>XXL</Text>
+                <Text style={{ fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>XXL</Text>
               </View>
               <View>
                 <RadioButton

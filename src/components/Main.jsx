@@ -96,13 +96,13 @@ const Main = () => {
             {currentToken ? <CurrentTransaction currentUserData={currentUserData} loading={loading} showSnackBar={showSnackBar} /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/profile/clothes">
-            {currentToken ? <UserClothes currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
+            {currentToken ? <UserClothes currentUserData={currentUserData} loading={loading} showSnackBar={showSnackBar} /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/profile">
             {currentToken ? <UserSettings setCurrentToken={setCurrentToken} currentUserData={currentUserData} loading={loading} /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/dashboard/:id">
-            {currentToken ? <CurrentProduct currentUserData={currentUserData} loadingUserData={loading} /> : <Redirect to="/" />}
+            {currentToken ? <CurrentProduct currentUserData={currentUserData} loadingUserData={loading} showSnackBar={showSnackBar} /> : <Redirect to="/" />}
           </Route>
           <Route exact path='/register'>
             <RegistrationScreen showSnackBar={showSnackBar} />

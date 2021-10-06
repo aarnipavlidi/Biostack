@@ -26,7 +26,7 @@ const DashboardHeader = ({ searchStatus, resetSearchBar, activateSearchBar, curr
     <Appbar.Header style={dashboardHeaderContainer.appBarContainer} statusBarHeight={0}>
       <Appbar.Content style={dashboardHeaderContainer.appBarContent} title="Biostack" titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
       {searchStatus === true
-        ? <Searchbar style={{ height: 30, width: 80, marginRight: 5, flexGrow: 1 }} placeholder="Search for item" value={currentSearchValue} onChangeText={(getInputValue) => setCurrentSearchValue(getInputValue)} inputStyle={{ fontSize: 13 }} clearIcon={() => <MaterialIcons name="clear" size={24} onPress={() => resetSearchBar()} color={styling.colors.Asphalt} />}/>
+        ? <Searchbar theme={{ colors: { primary: styling.colors.Asphalt }}} style={{ height: 30, width: 80, marginRight: 5, flexGrow: 1 }} placeholder="Search for item" value={currentSearchValue} onChangeText={(getInputValue) => setCurrentSearchValue(getInputValue)} inputStyle={{ fontSize: 13 }} clearIcon={() => <MaterialIcons name="clear" size={24} onPress={() => resetSearchBar()} color={styling.colors.Asphalt} />}/>
         : <Appbar.Action icon="magnify" onPress={activateSearchBar} />
       }
     </Appbar.Header>

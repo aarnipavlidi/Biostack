@@ -30,15 +30,13 @@ const UserClothesHeader = () => {
     history.goBack();
   };
 
-  const handleMore = () => console.log("Show more settings from this component!");
-
   // Component will render everything inside of (...) back to the user.
   return (
     <View>
       <Appbar.Header statusBarHeight={0} style={clothesHeaderContainer.appBarContainer}>
         <Appbar.BackAction onPress={goBackPreviousRoute} />
         <Appbar.Content titleStyle={clothesHeaderContainer.appBarContent} title="Clothes" titleStyle={{ fontFamily: 'PermanentMarker_400Regular' }} />
-        <Appbar.Action icon="dots-vertical" onPress={handleMore} />
+        <Appbar.Action icon="hanger" />
       </Appbar.Header>
     </View>
   );

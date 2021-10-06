@@ -3,7 +3,7 @@
 
 import React from 'react'; // Import "react" library's content for this component usage.
 import { useHistory } from 'react-router-native'; // Import following functions from "react-router-native" library's content for this component usage.
-import { Alert, ActivityIndicator, Image, ScrollView, View, StyleSheet, Pressable, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
+import { Alert, ActivityIndicator, Image, ScrollView, View, StyleSheet, Text } from 'react-native'; // Import following components from "react-native" library for this component usage.
 import { Avatar, Appbar, Card, IconButton, Title, Paragraph } from 'react-native-paper'; // Import following components from "react-native-paper" library for this component usage.
 import TextAvatar from 'react-native-text-avatar'; // Import following components from 'react-native-text-avatar' library for this component usage.
 
@@ -46,7 +46,14 @@ const profileOverviewContainer = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     height: 50,
+    marginBottom: 10
+  },
+  headerTitleContainer: {
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 19,
   },
   avatarContainer: {
     position: 'absolute',
@@ -54,8 +61,9 @@ const profileOverviewContainer = StyleSheet.create({
   },
   contentContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 5
+    justifyContent: 'space-between',
+    marginTop: 5,
+    marginBottom: 5,
   },
   contentPrimary: {
     alignItems: 'flex-start',
@@ -66,12 +74,13 @@ const profileOverviewContainer = StyleSheet.create({
     justifyContent: 'center',
   },
   contentButton: {
-    height: 25,
-    borderWidth: 10,
-    borderRadius: 25 / 2,
     backgroundColor: styling.colors.Asphalt,
-    textAlign: 'center',
-    color: styling.colors.VistaWhite
+    padding: 5,
+    marginBottom: 5,
+    elevation: 5,
+    color: styling.colors.VistaWhite,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 12
   },
 });
 
@@ -182,28 +191,28 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
       <Card style={profileOverviewContainer.mainContainer}>
         <Card.Content>
           <View style={profileOverviewContainer.headerContainer}>
-            <Title>Profile Overview</Title>
+            <Title style={profileOverviewContainer.headerTitleContainer}>Your account</Title>
             <View style={profileOverviewContainer.avatarContainer}>
               <CurrentUserAvatar checkUserAvatar={currentUserData.facebookAvatar} currentUserName={currentUserData.name} />
             </View>
           </View>
           <View style={profileOverviewContainer.contentContainer}>
             <View style={profileOverviewContainer.contentPrimary}>
-              <Text style={profileOverviewContainer.contentButton}>Username</Text>
+              <Text style={profileOverviewContainer.contentButton}>USERNAME</Text>
               <Text>{currentUserData.username}</Text>
             </View>
             <View style={profileOverviewContainer.contentSecondary}>
-              <Text style={profileOverviewContainer.contentButton}>Name</Text>
+              <Text style={profileOverviewContainer.contentButton}>NAME</Text>
               <Text>{currentUserData.name}</Text>
             </View>
           </View>
           <View style={profileOverviewContainer.contentContainer}>
             <View style={profileOverviewContainer.contentPrimary}>
-              <Text style={profileOverviewContainer.contentButton}>Rating</Text>
+              <Text style={profileOverviewContainer.contentButton}>RATING</Text>
               <UserRating currentRating={currentUserData.rating} />
             </View>
             <View style={profileOverviewContainer.contentSecondary}>
-              <Text style={profileOverviewContainer.contentButton}>Email</Text>
+              <Text style={profileOverviewContainer.contentButton}>EMAIL</Text>
               <Text>{currentUserData.email}</Text>
             </View>
           </View>
@@ -212,28 +221,36 @@ const UserSettings = ({ setCurrentToken, currentUserData, loading }) => {
       <Card.Title
         style={cardTitleContainer.container}
         title="Clothes"
+        titleStyle={{fontFamily: styling.fonts.buttonContent, fontSize: 20 }}
         subtitle="Your listed clothes on the app."
+        subtitleStyle={{fontFamily: styling.fonts.buttonContent }}
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="hanger" />}
         right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/clothes')} />}
       />
       <Card.Title
         style={cardTitleContainer.container}
         title="Bookmarks"
+        titleStyle={{fontFamily: styling.fonts.buttonContent, fontSize: 20 }}
         subtitle="Bookmarked clothes on the app."
+        subtitleStyle={{fontFamily: styling.fonts.buttonContent }}
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="bookmark-multiple-outline" />}
         right={(props) => <IconButton {...props} icon="chevron-right" />}
       />
       <Card.Title
         style={cardTitleContainer.container}
         title="Transactions"
+        titleStyle={{fontFamily: styling.fonts.buttonContent, fontSize: 20 }}
         subtitle="Your orders history on the app."
+        subtitleStyle={{fontFamily: styling.fonts.buttonContent }}
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="basket-outline" />}
         right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/transactions')} />}
       />
       <Card.Title
         style={cardTitleContainer.container}
         title="Edit Account"
+        titleStyle={{fontFamily: styling.fonts.buttonContent, fontSize: 20 }}
         subtitle="Edit your account information."
+        subtitleStyle={{fontFamily: styling.fonts.buttonContent }}
         left={(props) => <Avatar.Icon {...props} style={{ backgroundColor: styling.colors.Asphalt }} icon="account-edit-outline" />}
         right={(props) => <IconButton {...props} icon="chevron-right" onPress={() => history.push('/dashboard/profile/edit-account')} />}
       />

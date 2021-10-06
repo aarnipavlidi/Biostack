@@ -33,9 +33,8 @@ const navigationContainer = StyleSheet.create({
     textAlign: 'center'
   },
   textContainer: {
-    fontFamily: styling.fonts.android,
-    fontWeight: styling.fontWeights.normal,
-    fontSize: styling.fontSizes.default,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 12,
     paddingLeft: 10,
     paddingRight: 10
   }

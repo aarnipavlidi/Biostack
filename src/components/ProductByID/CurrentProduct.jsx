@@ -47,13 +47,13 @@ const productContainer = StyleSheet.create({
   },
   productTitle: {
     backgroundColor: styling.colors.Asphalt,
-    borderWidth: 1,
     borderColor: styling.colors.Asphalt,
+    padding: 5,
     color: styling.colors.VistaWhite,
-    fontSize: styling.fontSizes.subheading,
+    fontFamily: styling.fonts.buttonContent,
+    fontSize: 12,
     textAlign: 'center',
     height: 'auto',
-    width: 55,
     elevation: 5,
   },
   productContent: {
@@ -102,7 +102,7 @@ const CurrentUserAvatar = ({ checkUserAvatar, currentUserName }) => {
   };
 };
 
-const CurrentProduct = ({ currentUserData, loadingUserData }) => {
+const CurrentProduct = ({ currentUserData, loadingUserData, showSnackBar }) => {
 
   const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
@@ -145,19 +145,19 @@ const CurrentProduct = ({ currentUserData, loadingUserData }) => {
             <Divider style={{ marginTop: 10, marginBottom: 10 }} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly'}}>
               <View>
-                <Text style={productContainer.productTitle}>Type</Text>
+                <Text style={productContainer.productTitle}>TYPE</Text>
                 <View style={productContainer.productContent}>
                   <ItemTypeCheck currentItemType={getCurrentProduct.productImage.name} />
                 </View>
               </View>
               <View>
-                <Text style={productContainer.productTitle}>Size</Text>
+                <Text style={productContainer.productTitle}>SIZE</Text>
                 <View style={productContainer.productContent}>
                   <ItemSizeCheck currentItemSize={getCurrentProduct.productSize} />
                 </View>
               </View>
               <View>
-                <Text style={productContainer.productTitle}>Price</Text>
+                <Text style={productContainer.productTitle}>PRICE</Text>
                 <View style={productContainer.productContent}>
                   <Text style={{ fontSize: 16}}>{getCurrentProduct.productPrice} €</Text>
                 </View>
@@ -170,7 +170,7 @@ const CurrentProduct = ({ currentUserData, loadingUserData }) => {
             <View style={sellerContainer.header}>
               <View>
                 <View style={sellerContainer.headerTitle}>
-                  <Title style={{ color: styling.colors.Asphalt }}>Seller information</Title>
+                  <Title style={{ fontFamily: styling.fonts.buttonContent, fontSize: 19, color: styling.colors.Asphalt }}>Seller information</Title>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                   <View style={sellerContainer.sellerContent}>
@@ -189,7 +189,7 @@ const CurrentProduct = ({ currentUserData, loadingUserData }) => {
             </View>
           </Card.Content>
         </Card>
-        <ButtonOptions getCurrentProduct={getCurrentProduct} currentUserData={currentUserData} showModal={showModal} />
+        <ButtonOptions getCurrentProduct={getCurrentProduct} currentUserData={currentUserData} showModal={showModal} showSnackBar={showSnackBar} />
         <Checkout getCurrentProduct={getCurrentProduct} currentUserData={currentUserData} visible={visible} hideModal={hideModal} />
       </Provider>
     </ScrollView>
