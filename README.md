@@ -407,6 +407,30 @@ When user is at current transaction view, then user has an option to give rating
   };
 ```	  
 
+
+### ContactPerson
+
+<p align="center">
+  <img src="/documentation/images/ContactPerson_component.jpg" width=25% height=25%>
+</p>
+
+This component (Modal) will be rendered top of "CurrentTransaction" component, when user wants to contact the product buyer/seller. This modal will render
+back data, which consist of buyers/sellers => name, email, number (set as default 123 123 123 to every user) and city. Then user can contact the user via
+email by pressing the "SEND EMAIL" button. For this feature we are using "Linking" component with "openURL" function and give to this function parameter values.
+
+
+```javascript
+  const getTransactionID = getCurrentTransaction._id;
+  const getPersonName = getCurrentTransaction.buyerName ? getCurrentTransaction.buyerName : getCurrentTransaction.sellerName;
+  const getPersonEmail = getCurrentTransaction.buyerEmail ? getCurrentTransaction.buyerEmail : getCurrentTransaction.sellerEmail;
+  const getPersonLocation = getCurrentTransaction.location.city;
+
+  const sendEmailPerson = () => {
+    Linking.openURL(`mailto:${getPersonEmail}?subject=#${getTransactionID} | Biostack&body=Hey ${getPersonName}, contacting you regarding this order! <3`);
+  };
+```	  
+
+
 ### OrderHistory
 
 <p align="center">
