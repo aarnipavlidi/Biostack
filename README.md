@@ -27,6 +27,10 @@ From purchasing and selling, what if user wants to delete current listed items f
 
 ### Dashboard
 
+<p align="center">
+  <img src="/documentation/images/Dashboard_component.jpg" width=25% height=25%>
+</p>
+
 This component is the first component which will be rendered to the user once user has successfully logged in to the Biostack. This component shows all the current listed products from different users. User has an option to scroll down to see more options, which will force query to fetch more values from the database and show those new ones back to the user. With scrolling, there is also an option to search some specific product from the "Searchbar" component @ https://callstack.github.io/react-native-paper/searchbar.html.
 
 Component is also using multiple "useSubscription()" hooks, and their purpose is "listen" if other users are buying, adding or deleting products from the app. This way we make sure that current logged user has always the newest data rendered. For example what if user would go on specific product via "Dashboard" component and that product would not exist anymore on database, app would most likely crash. 
@@ -63,6 +67,62 @@ const ProductRenderAll = ({ item }) => {
       <Pressable onPress={() => history.push(`/dashboard/${item._id}`)}>
 ```
 
+### CurrentProduct
+
 <p align="center">
-  <img src="/documentation/images/Dashboard_component.jpg" width=25% height=25%>
-</p>
+  <img src="/documentation/images/CurrentProduct_component_one.jpg" width=25% height=25%>
+	<img src="/documentation/images/CurrentProduct_component_two.jpg" width=25% height=25%>
+</p
+
+This component will be rendered, if user chooses to go on some specific product. User will see related data to current item (type, size and price) and also seller information that who is selling this current item on the app. Seller's name and rating (does not work at this moment) will be shown back and also avatar. By default avatar will show first letters of firstname and lastname, but if user has registered to the app via using facebook, then app will show it's facebook profile image on the avatar's place.
+
+```javascript
+const CurrentUserAvatar = ({ checkUserAvatar, currentUserName }) => {
+
+  if (checkUserAvatar) {
+    return (
+      <Image style={{ width: 75, height: 75, borderRadius: 75 / 2 }} source={{ uri: checkUserAvatar }} />
+    )
+  } else {
+    return (
+      <TextAvatar backgroundColor={styling.colors.Asphalt} textColor={styling.colors.VistaWhite} size={75} type={'circle'}>
+        {currentUserName}
+      </TextAvatar>
+    );
+  };
+};
+```
+
+On each product two different buttons on the bottom will always be shown, so if current logged user is the owner of that specific product, then "EDIT PRODUCT" and "DELETE PRODUCT" buttons will be rendered. Keep in mind that as of right now editing products has not been implemented, but deleting product works. If current logged user is not the owner, then app will render "CHECKOUT" and "BOOKMARK" (bookmarking feature not implemented) buttoks back to the user. Component called "ButtonOptions" handles this logic and here is the small snippet of that component:
+ 
+```javascript
+if (getCurrentProduct.owner._id === currentUserData._id) {
+  return (
+    <View style={buttonContainer.productButtonContainer}>
+      <Pressable style={buttonContainer.productButton}>
+        <Text style={buttonContainer.productButtonText}>EDIT PRODUCT</Text>
+        <FontAwesome name="edit" size={18} color={styling.colors.VistaWhite} />
+      </Pressable>
+      <Pressable style={buttonContainer.productButton} onPress={confirmProductDelete}>
+        <Text style={buttonContainer.productButtonText}>DELETE PRODUCT</Text>
+        <MaterialCommunityIcons name="delete-outline" size={18} color={styling.colors.VistaWhite} />
+      </Pressable>
+    </View>
+  );
+} else {
+  return (
+    <View style={buttonContainer.productButtonContainer}>
+      <Pressable style={buttonContainer.productButton} onPress={showModal}>
+        <Text style={buttonContainer.productButtonText}>CHECKOUT</Text>
+        <Fontisto name="shopping-basket-add" size={18} color={styling.colors.VistaWhite} />
+      </Pressable>
+      <Pressable style={buttonContainer.productButton}>
+        <Text style={buttonContainer.productButtonText}>BOOKMARK</Text>
+        <Ionicons name="bookmarks" size={18} color={styling.colors.VistaWhite} />
+      </Pressable>
+    </View>
+  );
+};
+```
+  
+If user decides to buy current product from the app via pressing "CHECKOUT" button, then component "Checkout" (modal) will be rendered back to the user. So basically we are still on "CurrentProduct" route, but "Checkout" component has been rendered on top of earlier component. So idea was that, if user is uncertain of something or wants to go back to "Dashboard" to see other products, then user has just an option to close the modal and go back.
