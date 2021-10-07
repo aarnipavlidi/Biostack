@@ -37,6 +37,19 @@ EMAIL_USER_ID = your_emailjs_user_id
 FACEBOOK_APP_ID = your_facebook_app_id
 ```
 
+## How to start?
+
+```javascript
+
+npm run start // Script, which will start Biostack on Expo.
+
+```
+
+## Can I test Biostack somewhere?
+
+Yeah you can @ https://expo.dev/@aarnipavlidi/Biostack, might release Biostack on Google Play near future! :)
+
+
 
 ## Different components and their layout
 
