@@ -191,3 +191,27 @@ On the "Checkout" component, app will use "Modal" component from https://callsta
 <p align="center">
 	<img src="/documentation/images/OrderConfirmation_component.jpg" width=25% height=25%>
 </p
+
+This component will be rendered to the user, after purchasing the item is successful. Component will show all the data regarding that order, which gets the data from previous "history.push" function. Also 2x different buttons will be rendered back, 1) "BUY MORE" button which will redirect user back to home "Dashboard" component and 2) "CONTACT SELLER" button, which will redirect user to this orders own page => "CurrentTransaction" component. There user is able to give rating and contact the seller/buyer.
+	
+```javascript
+  const location = useLocation(); // Define "location" variable, which will execute => "useLocation(...)" function.
+  const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
+
+  // Define "getOrderData" variable, which is equal to "location.state.detail". So after user
+  // has purchased the product successfully, then that order data goes into "location.state.detail"
+  // and user will be redirected to this component (OrderConfirmation), which will show that data back.
+  const getOrderData = location.state.detail;
+  const orderNumber = `#${getOrderData._id}`;
+
+
+<View style={buttonContainer.productButtonContainer}>
+	<Pressable style={buttonContainer.productButton} onPress={() => history.push('/dashboard')}>
+		<Text style={buttonContainer.productButtonText}>BUY MORE</Text>
+	</Pressable>
+        <Pressable style={buttonContainer.productButton} onPress={() => history.push(`/dashboard/profile/transactions/${getOrderData._id}`)}>
+        	<Text style={buttonContainer.productButtonText}>CONTACT SELLER</Text>
+        </Pressable>
+</View>
+```
+	
