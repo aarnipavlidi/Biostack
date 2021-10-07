@@ -388,3 +388,132 @@ const UserOrders = ({ item }) => {
   );
 };
 ```
+
+### NewProduct
+
+<p align="center">
+  <img src="/documentation/images/NewProduct_component.jpg" width=25% height=25%>
+</p
+
+
+This component will be rendered, when user is pressing the "New item" button on the "NavigationBottom" component. Once user has been redirected, then user has an option to add new product
+to the app. User will be asked to fill required input fields (type, size, title, description and price). If these fields are not filled, then user won't be able to submit new product to the
+app. We are using "Formik" and "Yup" library's combination to execute validation into those input fields.
+
+
+```javascript
+// Define "initialValues" variable, which will get inside of {...}
+// objects values as default (''). Which means, if user wants to
+// submit form without changing any input fields, these objects
+// will get those default values and passed to database. But
+// because we have validation setupped, that won't be possible! :)
+const initialValues = {
+  productTitle: '',
+  productDescription: '',
+  productSize: '',
+  productPrice: '',
+};
+
+// Define "createProductFormValidationSchema" variable, which will execute
+// validation via "yup" variable, when user wants to create new product to
+// the app. If some of the input fields don't match with required condition,
+// then function will return "error message" under of that current input field.
+const createProductFormValidationSchema = yup.object().shape({
+  productTitle: yup
+    .string()
+    .min(5, 'Title has to be minimum of 5 characters.')
+    .max(25, 'Title can be only maximum of 25 characters.')
+    .required('Title for your item is required.'),
+  productDescription: yup
+    .string()
+    .min(5, 'Description has to be minimum of 5 characters.')
+    .max(100, 'Description can be only maximum of 100 characters.')
+    .required('Description for your item is required.'),
+  productPrice: yup
+    .string()
+    .matches(/^[0-9]+$/, 'Only rounded numbers can be used on pricing the item.')
+    .max(3, 'Price can be only maximum of 3 characters.')
+    .required('Price for your product is required.'),
+});
+```
+
+Also on the button, which lets the user submit the product on the app has "text" based on the current state and also button has "props" value called "disabled", which has default value "true"
+which gets the value from "preventSubmit" variable. If condition are met, which means products type and size has been chosen then the variable is equal to "false" and user is able to press
+the button and submit data into database.
+
+
+```javascript
+// Define "preventSubmit" variable, which will be equal to either "false" or
+// "true" value. Variable idea is to prevent the user press "Create an item"
+// button, if the user has not chosen "item type" or "size" option. So once
+// user has chosen both options, then "preventSubmit" will be equal to "false" value,
+// which means button will be "pressable" to the user.
+const preventSubmit = currentItemType && currentItemSize ? false : true;
+
+// Define "buttonText" variable, which will execute everything inside of {...},
+// and return text into button => based on if user has selected both payment
+// and delivery option or not. If user (by default) has not chosen any option
+// values, then function will return "Choose shipping & payment" text and
+// otherwise will return "Buy an item" text.
+const buttonText = () => {
+  if (currentItemType && currentItemSize) {
+    return (
+      <Text style={{ color: styling.colors.VistaWhite, fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>Create an item</Text>
+    )
+  } else {
+    return (
+      <Text style={{ color: styling.colors.VistaWhite, fontFamily: styling.fonts.buttonContent, fontSize: 12 }}>Choose item type & size</Text>
+    )
+  };
+};
+```
+
+
+Once user has submitted the new product into database, then user will be redirected into that products view, which means "CurrentProduct" component will be rendered. In order to be able
+submit the item into backend, we have defined "useCreateNewProduct()" hook and we get access into "submitNewProduct" function.
+
+
+```javascript
+// Define "useCreateNewProduct(...)" hook and get access into "submitNewProduct" function and
+// "loading" variable. With function "submitNewProduct" we are able to save the users new
+// product into database with given parameter values. When function has been executed and
+// data is "loading" then the button, which user earlier pressed will get "loading spinner"
+// untill query has been finished. After that user will be redirected into added product
+// own view => "CurrentProduct" component will be rendered.
+const [submitNewProduct, { loading }] = useCreateNewProduct(); // Define "submitNewProduct" variable from => "useCreateNewProduct(...)" hook.
+const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
+
+// Define variable "onSubmit", which will execute everything inside of {...},
+// when function is being referenced. When user is trying to add new product
+// to the app, function will try execute mutation via "submitNewProduct(...)"
+// function and if adding new item failed (error) then we will let the user
+// know about it via "Alert" component and render "error" variable message.
+const onSubmit = async (values) => {
+
+  const { productTitle, productDescription, productPrice } = values; // Define variables inside of {...}, which are equal to "values" variable.
+
+  const owner = currentUserData._id; // Define variable "owner", which is equal to "currentUserData._id" variable.
+  const productType = value; // Define variable "productType", which is equal to "value" variable.
+  const productImageValue = value === 'sweater'
+    ? Math.floor((Math.random() * 6) + 1)
+    : Math.floor((Math.random() * 4) + 1);
+
+  const productSize = currentSize; // Define variable "productSize", which is equal to "currentSize" variable.
+
+  try {
+    const response = await submitNewProduct({ productTitle, productDescription, productSize, productPrice, productType, productImageValue, owner })
+    history.push(`/dashboard/${response.data.createProduct._id}`); // Redirect user to "/dashboard" after adding new product successfully.
+  } catch (error) { // If there is a problem at "try" section, then "Alert" component will be rendered.
+    Alert.alert(
+      "Biostack",
+      `${error}`,
+      [
+        {
+          text: "BACK",
+          style: "cancel"
+        },
+      ]
+    );
+  };
+};
+```

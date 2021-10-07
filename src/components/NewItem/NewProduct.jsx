@@ -176,6 +176,12 @@ const NewProduct = ({ currentUserData }) => {
 
   const [currentSize, setCurrentSize] = useState(null); // Define variable "currentSize" into state, which gets value "null" as default.
 
+  // Define "useCreateNewProduct(...)" hook and get access into "submitNewProduct" function and
+  // "loading" variable. With function "submitNewProduct" we are able to save the users new
+  // product into database with given parameter values. When function has been executed and
+  // data is "loading" then the button, which user earlier pressed will get "loading spinner"
+  // untill query has been finished. After that user will be redirected into added product
+  // own view => "CurrentProduct" component will be rendered.
   const [submitNewProduct, { loading }] = useCreateNewProduct(); // Define "submitNewProduct" variable from => "useCreateNewProduct(...)" hook.
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
