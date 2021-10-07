@@ -1,5 +1,7 @@
 # Biostack 0.9v
 
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/Zr52d24jQeY/0.jpg)](http://www.youtube.com/watch?v=Zr52d24jQeY "Video Title")
+
 
 This project is part of "Full Stack open 2021" course, where final task is to create our own project from scratch.  This project is using React Native's framework. Also for the project I made backend ("Biostack-backend" repository), which is using combination of Node, Mongoose and GraphQL.
 
