@@ -17,7 +17,7 @@ You are able to login and register to the app, which will store the data into da
 User can add own items and check what other items are being sold from different users and buy the item from them. As of right now (version 0.9v) does not have a option to add own
 images to the app, so current code will handle the images by generating random image to the user. Big thanks for **IKONO** @ https://ikono.fi/ for providing the images! <3
 
-If user decides to buy some cloth from different user, then app will render component (Checkout) where user can decide which delivery or payment method user wants to choose from. Once those are decided and current product has been purchased, then user will be redirected and shown of confirmation of that order. Copy of that order will be also sent to the users current email, this feature was implemented by using **EmailJS** library, more information about it can be found @ https://www.emailjs.com/. It is free to use, but only downside of using that service is that only **200** emails in total can be sent from app to the user. 
+If user decides to buy some cloth from different user, then app will render component (Checkout) where user can decide which delivery or payment method user wants to choose from. Once those are decided and current product has been purchased, then user will be redirected and shown of confirmation of that order. Copy of that order will be also sent to the users current email, this feature was implemented by using **EmailJS** library, more information about it can be found @ https://www.emailjs.com/. It is free to use, but only downside of using that service is that only **200** emails in total can be sent from app to the user.
 
 Users can also give rating to each other (to the buyer and seller of that product which has been traded) at component, which shows each transactions to the current logged user on the app. User can give rating between 1 or 3 and once rating has been given, user can not give rating again on that specific transaction anymore. App will notify about if user has already given rating and show that rating was given back to the user.
 
@@ -33,7 +33,7 @@ From purchasing and selling, what if user wants to delete current listed items f
 
 This component is the first component which will be rendered to the user once user has successfully logged in to the Biostack. This component shows all the current listed products from different users. User has an option to scroll down to see more options, which will force query to fetch more values from the database and show those new ones back to the user. With scrolling, there is also an option to search some specific product from the "Searchbar" component @ https://callstack.github.io/react-native-paper/searchbar.html.
 
-Component is also using multiple "useSubscription()" hooks, and their purpose is "listen" if other users are buying, adding or deleting products from the app. This way we make sure that current logged user has always the newest data rendered. For example what if user would go on specific product via "Dashboard" component and that product would not exist anymore on database, app would most likely crash. 
+Component is also using multiple "useSubscription()" hooks, and their purpose is "listen" if other users are buying, adding or deleting products from the app. This way we make sure that current logged user has always the newest data rendered. For example what if user would go on specific product via "Dashboard" component and that product would not exist anymore on database, app would most likely crash.
 
 Example of one subscription, which listen if other user has added new product to the app. So if other user has added new product, then for other users their current active querys (CURRENT_LOGGED_USER and SHOW_ALL_PRODUCTS) will be refetched.
 
@@ -57,7 +57,7 @@ Example of one subscription, which listen if other user has added new product to
 ```
 
 
-Component is using "FlatList" component to render each product via using "ProductRenderAll" component. If user presses some specific product, then user will be redirected to the different view and "CurrentProduct" component will rendered back to the user. So as we can see from bottom code example, that we are able to redirect user into right product by using "item" variable, which has "_id" object included. 
+Component is using "FlatList" component to render each product via using "ProductRenderAll" component. If user presses some specific product, then user will be redirected to the different view and "CurrentProduct" component will rendered back to the user. So as we can see from bottom code example, that we are able to redirect user into right product by using "item" variable, which has "_id" object included.
 
 
 
@@ -80,7 +80,7 @@ const ProductRenderAll = ({ item }) => {
 </p
 
 This component will be rendered, if user chooses to go on some specific product. User will see related data to current item (type, size and price) and also seller information that who is selling this current item on the app. Seller's name and rating (does not work at this moment) will be shown back and also avatar. By default avatar will show first letters of firstname and lastname, but if user has registered to the app via using facebook, then app will show it's facebook profile image on the avatar's place.
-	
+
 
 ```javascript
 const CurrentUserAvatar = ({ checkUserAvatar, currentUserName }) => {
@@ -99,10 +99,10 @@ const CurrentUserAvatar = ({ checkUserAvatar, currentUserName }) => {
 };
 ```
 
-	
+
 On each product two different buttons on the bottom will always be shown, so if current logged user is the owner of that specific product, then "EDIT PRODUCT" and "DELETE PRODUCT" buttons will be rendered. Keep in mind that as of right now editing products has not been implemented, but deleting product works. If current logged user is not the owner, then app will render "CHECKOUT" and "BOOKMARK" (bookmarking feature not implemented) buttoks back to the user. Component called "ButtonOptions" handles this logic and here is the small snippet of that component:
-	
- 
+
+
 ```javascript
 if (getCurrentProduct.owner._id === currentUserData._id) {
   return (
@@ -132,19 +132,19 @@ if (getCurrentProduct.owner._id === currentUserData._id) {
   );
 };
 ```
-  
-	
+
+
 If user decides to buy current product from the app via pressing "CHECKOUT" button, then component "Checkout" (modal) will be rendered back to the user. So basically we are still on "CurrentProduct" route, but "Checkout" component has been rendered on top of earlier component. So idea was that, if user is uncertain of something or wants to go back to "Dashboard" to see other products, then user has just an option to close the modal and go back.
-	
+
 ### Checkout
-	
+
 <p align="center">
 	<img src="/documentation/images/Checkout_component_one.jpg" width=25% height=25%>
 	<img src="/documentation/images/Checkout_component_two.jpg" width=25% height=25%>
 </p
-	
-On the "Checkout" component, app will use "Modal" component from https://callstack.github.io/react-native-paper/modal.html, which has all the information related to the chosen product, which user wants to buy from the app. Once user has has chosen all the required options (for shipping and payment), app will show total price of that order and user is now able to buy the item via pressing "BUY AN ITEM" button. Here is the code of the logic, which handles the buying an item and redirecting the user if buying an item is successful: 
-	
+
+On the "Checkout" component, app will use "Modal" component from https://callstack.github.io/react-native-paper/modal.html, which has all the information related to the chosen product, which user wants to buy from the app. Once user has has chosen all the required options (for shipping and payment), app will show total price of that order and user is now able to buy the item via pressing "BUY AN ITEM" button. Here is the code of the logic, which handles the buying an item and redirecting the user if buying an item is successful:
+
 
 ```javascript
     // These 3x variables are being used/needed, so that app is able to send email
@@ -196,14 +196,14 @@ On the "Checkout" component, app will use "Modal" component from https://callsta
 ```
 
 ### OrderConfirmation
-	
+
 <p align="center">
 	<img src="/documentation/images/OrderConfirmation_component.jpg" width=25% height=25%>
 </p
 
 This component will be rendered to the user, after purchasing the item is successful. Component will show all the data regarding that order, which gets the data from previous "history.push" function. Also 2x different buttons will be rendered back, 1) "BUY MORE" button which will redirect user back to home "Dashboard" component and 2) "CONTACT SELLER" button, which will redirect user to this orders own page => "CurrentTransaction" component. There user is able to give rating and contact the seller/buyer.
-	
-	
+
+
 ```javascript
   const location = useLocation(); // Define "location" variable, which will execute => "useLocation(...)" function.
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
@@ -224,9 +224,9 @@ This component will be rendered to the user, after purchasing the item is succes
         </Pressable>
 </View>
 ```
-	
+
 ### CurrentTransaction
-	
+
 <p align="center">
   <img src="/documentation/images/CurrentTransaction_component_one.jpg" width=25% height=25%>
   <img src="/documentation/images/CurrentTransaction_component_two.jpg" width=25% height=25%>
@@ -234,11 +234,11 @@ This component will be rendered to the user, after purchasing the item is succes
   <img src="/documentation/images/CurrentTransaction_component_rating_snackbar.jpg" width=25% height=25%>
   <img src="/documentation/images/CurrentTransaction_component_after_giving_rating.jpg" width=25% height=25%>
 </p
-	
+
 
 Component "CurrentTransaction" will show current transaction based on the "id" value of that transaction. User is able to go specific transaction either from "OrderHistory" component, which shows all of users transactions on the app or after user has bought the item, which the button which lets user to redirect the user to current order. On our "Main" component has the router logic, which renders then this component "CurrentTransaction"
-	
-	
+
+
 ```javascript
 <Route exact path="/dashboard/profile/transactions/:transactionID">
 	{currentToken ? <CurrentTransaction currentUserData={currentUserData} loading={loading} showSnackBar={showSnackBar} /> : <Redirect to="/" />}
@@ -252,11 +252,11 @@ Component "CurrentTransaction" will show current transaction based on the "id" v
   // data is loading, which means "loadingTransaction" is === "true", then component will
   // render back "loading spinner" untill data has been completely loaded.
   const { getCurrentTransaction, loadingTransaction } = useCurrentTransaction();
-	  
+
 ```
 
 And the hook which this component is using, will be using "useParams()" function, so after user is pressing on specific transaction then the router will know that this "id" value is this, which lets execute query with right variable and render back the data to the user.
-	
+
 
 ```javascript
 // This project has been commented by Aarni Pavlidi, if you have any questions or suggestions with the code,
@@ -288,11 +288,11 @@ const useCurrentTransaction = () => {
 // Export "useCurrentTransaction" hook, so other components like "App.js" are able to use this hooks's content.
 export default useCurrentTransaction;
 ```
-	
+
 
 When user is at current transaction view, then user has an option to give rating to the user (to both product buyer and seller). User can give rating only once and from values between 1 or 3. Once rating has been given successfully to the user, then app will render "Snackbar" component, which will notify that rating has been given. After that if user comes back to that current transaction, then user won't be able to give rating again and app will render the rating which was given earlier.
-	
-	
+
+
 ```javascript
   // Define "useCurrentTransaction(...)" hook, then get access into "getCurrentTransaction"
   // and "loadingTransaction" variables. When user goes into specific transaction, app will
@@ -352,3 +352,39 @@ When user is at current transaction view, then user has an option to give rating
     )
   };
 ```	  
+
+### OrderHistory
+
+<p align="center">
+  <img src="/documentation/images/OrderHistory_component.jpg" width=25% height=25%>
+</p
+
+
+This component shows to the user all of the transactions, which have been made by the user. Any purchases or selling clothes will be shown at this component. Component shows 4x different
+things on each row, which are transaction date, product type, product size and the payment total of that transaction. Then user has an option to check more data on each transaction by
+pressing the button ("chevron-right" icon) on the end. Pressing the button will redirect user on that pressed transaction and render "CurrentTransaction" component back.
+
+
+```javascript
+const UserOrders = ({ item }) => {
+
+  const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
+
+  return (
+    <View>
+      <DataTable.Row>
+        <DataTable.Cell>{item.date}</DataTable.Cell>
+        <DataTable.Cell numeric={true}>
+          <ItemTypeCheck currentItemType={item.productType} />
+          <ItemSizeCheck currentItemSize={item.productSize} />
+        </DataTable.Cell>
+        <DataTable.Cell style={{ justifyContent: 'center' }}>{item.type}</DataTable.Cell>
+        <DataTable.Cell numeric={true}>{item.paymentTotal} €</DataTable.Cell>
+        <DataTable.Cell style={{ justifyContent: 'center' }} onPress={() => history.push(`/dashboard/profile/transactions/${item._id}`)}>
+          <Entypo name="chevron-right" size={20} color={styling.colors.Asphalt} />
+        </DataTable.Cell>
+      </DataTable.Row>
+    </View>
+  );
+};
+```
