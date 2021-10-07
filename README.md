@@ -519,6 +519,97 @@ const onSubmit = async (values) => {
 ```
 
 
+### UserSettings
+
+<p align="center">
+  <img src="/documentation/images/UserSettings_component.jpg" width=25% height=25%>
+</p>
+
+
+When user has pressed the "Profile" link ("NavigationBottom" component), then this will component will be rendered back to the user. This component renders back
+overview of your account and different links where user can go to. Overview of user acccount has following data: username, current rating, name and email.
+
+Component has 4 different links (3 of them work, "Bookmarks" has not been implemented yet), "Clothes" link will redirect user into "UserClothes" component, which will show
+all the listed products user has currently on the app. "Transactions" link will redirect user into "OrderHistory" component and "Edit Account" link will redirect user
+into "EditAccount" component. User has also an option to logout from the app and reset the session ("authStorage.removeAccessToken" function).
+
+```javascript
+  const client = useApolloClient(); // Define "client" variable, which is equal to "useApolloClient(...)" function.
+  const authStorage = useAuthStorage(); // Define "authStorage" variable, which is equal to "useAuthStorage(...)" function.
+
+  const logoutUserToken = async () => {
+    try {
+      await authStorage.removeAccessToken();
+      client.clearStore();
+      setCurrentToken(null);
+    } catch (error) {
+      console.log(error.message);
+    };
+  };
+
+  const confirmUserLogout = () => {
+    Alert.alert(
+      "Biostack",
+      "Are you sure you want to logout from the app?",
+      [
+        {
+          text: "CANCEL",
+          onPress: () => console.log('User has cancelled logout process!'),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => logoutUserToken(),
+        }
+      ]
+    )
+  };
+```
+
+
+### UserClothes
+
+<p align="center">
+  <img src="/documentation/images/UserClothes_component.jpg" width=25% height=25%>
+</p>
+
+This component uses "FlatList" component, which renders each item which has been listed by the user into own row. User has an option also to delete specific
+product manually, which will then render "Snackbar" component back to the user. Component gets the data from the "currentUserData" which is equal to "CURRENT_LOGGED_USER"
+query. Query has an "products" object, which we use for "FlatList" component to render each item back to the user visible.
+
+
+```javascript
+// Define "UserClothes" component, which will execute everything inside of {...}
+// and render back either "loading spinner" or current logged user data.
+const UserClothes = ({ currentUserData, loading, showSnackBar }) => {
+
+  const getUserListedProducts = currentUserData
+    ? currentUserData.products.map(results => results)
+    : [];
+
+  // If "me" querys data => "currentUserData" is still loading from the dabase, component
+  // will render everything inside of (...) (loading spinner) untill data has loaded.
+  if (loading) {
+    return (
+      <View style={loadingContainer.container}>
+        <ActivityIndicator size="large" color={styling.colors.Asphalt} />
+      </View>
+    );
+  };
+
+  // Otherwise component will render everything inside of (...) back to the user.
+  return (
+    <FlatList
+      data={getUserListedProducts}
+      keyExtractor={(item, index) => item._id}
+      renderItem={({ item }) => <UserListedClothes item={item} showSnackBar={showSnackBar} />}
+      ListHeaderComponent={<UserClothesHeader />}
+    />
+  );
+};
+```
+
+
 ### EditAccount
 
 <p align="center">
