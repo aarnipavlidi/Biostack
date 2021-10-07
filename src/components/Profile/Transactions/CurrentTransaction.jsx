@@ -99,24 +99,47 @@ const orderContainer = StyleSheet.create({
 
 const CurrentTransaction = ({ currentUserData, loading, showSnackBar }) => {
 
+  // Define "useCurrentTransaction(...)" hook, then get access into "getCurrentTransaction"
+  // and "loadingTransaction" variables. When user goes into specific transaction, app will
+  // execute hook and show current data back into "getCurrentTransaction" variable. If the
+  // data is loading, which means "loadingTransaction" is === "true", then component will
+  // render back "loading spinner" untill data has been completely loaded.
   const { getCurrentTransaction, loadingTransaction } = useCurrentTransaction();
+
+  // Define "useCreateNewRating()" hook, then get access into "submitNewRating" function
+  // and "loadingRating" variable. When user wants to give rating to the current transaction
+  // buyer/seller, then component will execute "submitNewRating" function. When executing
+  // function, we will be using 3x different parameters, "getCurrentTransaction._id",
+  // "currentRating.value" and "getCurrentTransaction.type".
   const [submitNewRating, { loadingRating }] = useCreateNewRating(); // Define "submitNewRating" variable from => "useCreateNewRating(...)" hook.
 
+  // Define "currentRating" into state, which will get in default two (2) object values
+  // => "status" === "false" and "value" == "null". If we want to change "currentRating"
+  // state, we will be using "setCurrentRating" function.
   const [currentRating, setCurrentRating] = useState({ status: false, value: null });
 
   const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
+  // Define "submitRating" variable which will execute everything inside of {...} when
+  // being referenced. Function executes "submitNewRating" function with given parameter
+  // values and once the function returns data, we will be using that data into rendering
+  // "Snackbar" component via using "showSnackBar" function, which will notify user of
+  // giving successful rating value to the products buyer/seller.
   const submitRating = async () => {
-    try {
+    try { // We will try execute first "try" section, if there are any problems then we will execute "catch" section.
       const { data } = await submitNewRating(getCurrentTransaction._id, currentRating.value, getCurrentTransaction.type);
-      showSnackBar(data.giveRatingUser.response);
-    } catch (error) {
-      console.log(error.message)
+      showSnackBar(data.giveRatingUser.response); // Execute "showSnackBar" function, with given parameter value.
+    } catch (error) { // If there any problems during executing the function then we will do "catch" section.
+      console.log(error.message) // Console.log "error.message" variable back to the terminal.
     };
   };
 
+  // Define "confirmSubmitRating" function, which will execute everything inside of {...}, when being referenced.
+  // So when user has chosen the given rating value (1, 2 or 3) and user pressed the "submit" button, then user
+  // will asked to confirm of giving the rating. Once user has decided to confirm, then we will execute the
+  // "submitRating" function and execute the "submitNewRating" function (hook).
   const confirmSubmitRating = () => {
     Alert.alert(
       "Biostack",

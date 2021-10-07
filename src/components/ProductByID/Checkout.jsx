@@ -187,6 +187,8 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
       paymentTotal: String(orderTotalPrice)
     };
 
+    // These 3x variables are being used/needed, so that app is able to send email
+    // confirmation to the buyer if purchasing the item is successful.
     const emailService = Constants.manifest.extra.email_service_id;
     const emailTemplate = Constants.manifest.extra.email_template_id;
     const emailUser = Constants.manifest.extra.email_user_id;
@@ -194,14 +196,19 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
     // When this function is being referenced, then we wil execute "try" section first,
     // if something goes wrong during this section then we will pass into "catch" section.
     try {
-      const response = await submitNewTransaction({ getOrderData }); // Define "response" variable, which will execute following function.
-      const confirmationData = response.data.createTransaction;
+      // We will be using "useCreateNewTransaction(...)" hook, which has "submitNewTransaction(...)"
+      // function. Once function has been executed, then data will be under "response" variable,
+      // which lets us access the query data => "data.createTransaction".
+      const response = await submitNewTransaction({ getOrderData });
+      const confirmationData = response.data.createTransaction; // Define "confirmationData" variable, which is equal to "response.data.createTransaction".
 
+      // Define "emailOrderConfirmation" variable, which will get access
+      // inside of {...} different object values.
       const emailOrderConfirmation = {
-        to_name: currentUserData.name, // tuotteen ostaja
-        to_email: currentUserData.email, // ostajan email
+        to_name: currentUserData.name,
+        to_email: currentUserData.email,
         reply_to: "me@aarnipavlidi.fi",
-        orderID: confirmationData._id, // oston id
+        orderID: confirmationData._id,
         orderName: confirmationData.productTitle,
         orderSize: confirmationData.productSize,
         orderType: confirmationData.productType,
@@ -212,13 +219,18 @@ const Checkout = ({ getCurrentProduct, currentUserData, visible, hideModal }) =>
         sellerName: confirmationData.sellerName,
         contactEmail: confirmationData.sellerEmail,
       };
+      // If earlier function (submitNewTransaction) is successful, then user will be redirected to the
+      // different view and "OrderConfirmation" component will be rendered back to the user, which will
+      // show data, which uses "confirmationData" via => "state: { detail: order_data_here }":
       history.push({
         pathname: '/dashboard/order-confirmation',
         state: { detail: confirmationData }
       });
+      // Then app will make copy of that order confirmation and send confirmation to the users current
+      // email, which will use those 3x different variables which we defined earlier.
       await emailjs.send(emailService, emailTemplate, emailOrderConfirmation, emailUser);
-    } catch (error) {
-      console.log(error)
+    } catch (error) { // If there are any problems during "try" section, then we will execute "catch" section.
+      console.log(error) // Console.log the "error" variable data back to the terminal.
     };
   };
 

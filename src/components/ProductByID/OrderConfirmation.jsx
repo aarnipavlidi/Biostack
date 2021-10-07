@@ -115,6 +115,9 @@ const OrderConfirmation = () => {
   const location = useLocation(); // Define "location" variable, which will execute => "useLocation(...)" function.
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
 
+  // Define "getOrderData" variable, which is equal to "location.state.detail". So after user
+  // has purchased the product successfully, then that order data goes into "location.state.detail"
+  // and user will be redirected to this component (OrderConfirmation), which will show that data back.
   const getOrderData = location.state.detail;
   const orderNumber = `#${getOrderData._id}`;
 
