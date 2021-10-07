@@ -37,6 +37,7 @@ Component is also using multiple "useSubscription()" hooks, and their purpose is
 
 Example of one subscription, which listen if other user has added new product to the app. So if other user has added new product, then for other users their current active querys (CURRENT_LOGGED_USER and SHOW_ALL_PRODUCTS) will be refetched.
 
+
 ```javascript
   const client = useApolloClient();
 
@@ -55,7 +56,10 @@ Example of one subscription, which listen if other user has added new product to
   });
 ```
 
+
 Component is using "FlatList" component to render each product via using "ProductRenderAll" component. If user presses some specific product, then user will be redirected to the different view and "CurrentProduct" component will rendered back to the user. So as we can see from bottom code example, that we are able to redirect user into right product by using "item" variable, which has "_id" object included. 
+
+
 
 ```javascript
 const ProductRenderAll = ({ item }) => {
@@ -67,6 +71,7 @@ const ProductRenderAll = ({ item }) => {
       <Pressable onPress={() => history.push(`/dashboard/${item._id}`)}>
 ```
 
+
 ### CurrentProduct
 
 <p align="center">
@@ -75,6 +80,7 @@ const ProductRenderAll = ({ item }) => {
 </p
 
 This component will be rendered, if user chooses to go on some specific product. User will see related data to current item (type, size and price) and also seller information that who is selling this current item on the app. Seller's name and rating (does not work at this moment) will be shown back and also avatar. By default avatar will show first letters of firstname and lastname, but if user has registered to the app via using facebook, then app will show it's facebook profile image on the avatar's place.
+	
 
 ```javascript
 const CurrentUserAvatar = ({ checkUserAvatar, currentUserName }) => {
@@ -93,7 +99,9 @@ const CurrentUserAvatar = ({ checkUserAvatar, currentUserName }) => {
 };
 ```
 
+	
 On each product two different buttons on the bottom will always be shown, so if current logged user is the owner of that specific product, then "EDIT PRODUCT" and "DELETE PRODUCT" buttons will be rendered. Keep in mind that as of right now editing products has not been implemented, but deleting product works. If current logged user is not the owner, then app will render "CHECKOUT" and "BOOKMARK" (bookmarking feature not implemented) buttoks back to the user. Component called "ButtonOptions" handles this logic and here is the small snippet of that component:
+	
  
 ```javascript
 if (getCurrentProduct.owner._id === currentUserData._id) {
@@ -125,6 +133,7 @@ if (getCurrentProduct.owner._id === currentUserData._id) {
 };
 ```
   
+	
 If user decides to buy current product from the app via pressing "CHECKOUT" button, then component "Checkout" (modal) will be rendered back to the user. So basically we are still on "CurrentProduct" route, but "Checkout" component has been rendered on top of earlier component. So idea was that, if user is uncertain of something or wants to go back to "Dashboard" to see other products, then user has just an option to close the modal and go back.
 	
 ### Checkout
@@ -194,6 +203,7 @@ On the "Checkout" component, app will use "Modal" component from https://callsta
 
 This component will be rendered to the user, after purchasing the item is successful. Component will show all the data regarding that order, which gets the data from previous "history.push" function. Also 2x different buttons will be rendered back, 1) "BUY MORE" button which will redirect user back to home "Dashboard" component and 2) "CONTACT SELLER" button, which will redirect user to this orders own page => "CurrentTransaction" component. There user is able to give rating and contact the seller/buyer.
 	
+	
 ```javascript
   const location = useLocation(); // Define "location" variable, which will execute => "useLocation(...)" function.
   const history = useHistory(); // Define "history" variable, which will execute => "useHistory(...)" function.
@@ -215,3 +225,130 @@ This component will be rendered to the user, after purchasing the item is succes
 </View>
 ```
 	
+### CurrentTransaction
+	
+<p align="center">
+  <img src="/documentation/images/CurrentTransaction_component_one.jpg" width=25% height=25%>
+  <img src="/documentation/images/CurrentTransaction_component_two.jpg" width=25% height=25%>
+  <img src="/documentation/images/CurrentTransaction_component_giving_rating.jpg" width=25% height=25%>
+  <img src="/documentation/images/CurrentTransaction_component_rating_snackbar.jpg" width=25% height=25%>
+  <img src="/documentation/images/CurrentTransaction_component_after_giving_rating.jpg" width=25% height=25%>
+</p
+	
+
+Component "CurrentTransaction" will show current transaction based on the "id" value of that transaction. User is able to go specific transaction either from "OrderHistory" component, which shows all of users transactions on the app or after user has bought the item, which the button which lets user to redirect the user to current order. On our "Main" component has the router logic, which renders then this component "CurrentTransaction"
+	
+	
+```javascript
+<Route exact path="/dashboard/profile/transactions/:transactionID">
+	{currentToken ? <CurrentTransaction currentUserData={currentUserData} loading={loading} showSnackBar={showSnackBar} /> : <Redirect to="/" />}
+</Route>
+```
+
+```javascript
+  // Define "useCurrentTransaction(...)" hook, then get access into "getCurrentTransaction"
+  // and "loadingTransaction" variables. When user goes into specific transaction, app will
+  // execute hook and show current data back into "getCurrentTransaction" variable. If the
+  // data is loading, which means "loadingTransaction" is === "true", then component will
+  // render back "loading spinner" untill data has been completely loaded.
+  const { getCurrentTransaction, loadingTransaction } = useCurrentTransaction();
+	  
+```
+
+And the hook which this component is using, will be using "useParams()" function, so after user is pressing on specific transaction then the router will know that this "id" value is this, which lets execute query with right variable and render back the data to the user.
+	
+
+```javascript
+// This project has been commented by Aarni Pavlidi, if you have any questions or suggestions with the code,
+// then please contact me by sending email at me@aarnipavlidi.fi <3
+
+import React from 'react'; // Import "react" library's content for this hooks usage.
+import { useParams } from 'react-router-native'; // Import following components from "react-router-native" library's content for this component usage.
+import { useQuery } from '@apollo/client'; // Import following functions from "@apollo/client" library for this hook usage.
+import { SHOW_CURRENT_TRANSACTION } from '../graphql/queries'; // Import following queries from "queries.js" file for this hook usage.
+
+const useCurrentTransaction = () => {
+
+  const { transactionID } = useParams();
+
+  const { loading, error, data } = useQuery(SHOW_CURRENT_TRANSACTION, {
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      getTransactionID: transactionID
+    },
+  });
+
+  // Return variables inside of {...} to be used with this hook.
+  return {
+    getCurrentTransaction: data?.showCurrentTransaction,
+    loadingTransaction: loading,
+  };
+};
+
+// Export "useCurrentTransaction" hook, so other components like "App.js" are able to use this hooks's content.
+export default useCurrentTransaction;
+```
+	
+
+When user is at current transaction view, then user has an option to give rating to the user (to both product buyer and seller). User can give rating only once and from values between 1 or 3. Once rating has been given successfully to the user, then app will render "Snackbar" component, which will notify that rating has been given. After that if user comes back to that current transaction, then user won't be able to give rating again and app will render the rating which was given earlier.
+	
+	
+```javascript
+  // Define "useCurrentTransaction(...)" hook, then get access into "getCurrentTransaction"
+  // and "loadingTransaction" variables. When user goes into specific transaction, app will
+  // execute hook and show current data back into "getCurrentTransaction" variable. If the
+  // data is loading, which means "loadingTransaction" is === "true", then component will
+  // render back "loading spinner" untill data has been completely loaded.
+  const { getCurrentTransaction, loadingTransaction } = useCurrentTransaction();
+
+  // Define "useCreateNewRating()" hook, then get access into "submitNewRating" function
+  // and "loadingRating" variable. When user wants to give rating to the current transaction
+  // buyer/seller, then component will execute "submitNewRating" function. When executing
+  // function, we will be using 3x different parameters, "getCurrentTransaction._id",
+  // "currentRating.value" and "getCurrentTransaction.type".
+  const [submitNewRating, { loadingRating }] = useCreateNewRating(); // Define "submitNewRating" variable from => "useCreateNewRating(...)" hook.
+
+  // Define "currentRating" into state, which will get in default two (2) object values
+  // => "status" === "false" and "value" == "null". If we want to change "currentRating"
+  // state, we will be using "setCurrentRating" function.
+  const [currentRating, setCurrentRating] = useState({ status: false, value: null });
+
+  const [visible, setVisible] = useState(false);
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+
+  // Define "submitRating" variable which will execute everything inside of {...} when
+  // being referenced. Function executes "submitNewRating" function with given parameter
+  // values and once the function returns data, we will be using that data into rendering
+  // "Snackbar" component via using "showSnackBar" function, which will notify user of
+  // giving successful rating value to the products buyer/seller.
+  const submitRating = async () => {
+    try { // We will try execute first "try" section, if there are any problems then we will execute "catch" section.
+      const { data } = await submitNewRating(getCurrentTransaction._id, currentRating.value, getCurrentTransaction.type);
+      showSnackBar(data.giveRatingUser.response); // Execute "showSnackBar" function, with given parameter value.
+    } catch (error) { // If there any problems during executing the function then we will do "catch" section.
+      console.log(error.message) // Console.log "error.message" variable back to the terminal.
+    };
+  };
+
+  // Define "confirmSubmitRating" function, which will execute everything inside of {...}, when being referenced.
+  // So when user has chosen the given rating value (1, 2 or 3) and user pressed the "submit" button, then user
+  // will asked to confirm of giving the rating. Once user has decided to confirm, then we will execute the
+  // "submitRating" function and execute the "submitNewRating" function (hook).
+  const confirmSubmitRating = () => {
+    Alert.alert(
+      "Biostack",
+      `You are giving rating value of ${currentRating.value} to the user. Are you sure and want to proceed?`,
+      [
+        {
+          text: "CANCEL",
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => submitRating(),
+        }
+      ]
+    )
+  };
+```	  
