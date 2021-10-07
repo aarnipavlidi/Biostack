@@ -70,7 +70,7 @@ const ProductRenderAll = ({ item }) => {
 ### CurrentProduct
 
 <p align="center">
-  <img src="/documentation/images/CurrentProduct_component_one.jpg" width=25% height=25%>
+	<img src="/documentation/images/CurrentProduct_component_one.jpg" width=25% height=25%>
 	<img src="/documentation/images/CurrentProduct_component_two.jpg" width=25% height=25%>
 </p
 
@@ -126,3 +126,68 @@ if (getCurrentProduct.owner._id === currentUserData._id) {
 ```
   
 If user decides to buy current product from the app via pressing "CHECKOUT" button, then component "Checkout" (modal) will be rendered back to the user. So basically we are still on "CurrentProduct" route, but "Checkout" component has been rendered on top of earlier component. So idea was that, if user is uncertain of something or wants to go back to "Dashboard" to see other products, then user has just an option to close the modal and go back.
+	
+### Checkout
+	
+<p align="center">
+	<img src="/documentation/images/Checkout_component_one.jpg" width=25% height=25%>
+	<img src="/documentation/images/Checkout_component_two.jpg" width=25% height=25%>
+</p
+	
+On the "Checkout" component, app will use "Modal" component from https://callstack.github.io/react-native-paper/modal.html, which has all the information related to the chosen product, which user wants to buy from the app. Once user has has chosen all the required options (for shipping and payment), app will show total price of that order and user is now able to buy the item via pressing "BUY AN ITEM" button. Here is the code of the logic, which handles the buying an item and redirecting the user if buying an item is successful: 
+	
+
+```javascript
+    // These 3x variables are being used/needed, so that app is able to send email
+    // confirmation to the buyer if purchasing the item is successful.
+    const emailService = Constants.manifest.extra.email_service_id;
+    const emailTemplate = Constants.manifest.extra.email_template_id;
+    const emailUser = Constants.manifest.extra.email_user_id;
+
+    // When this function is being referenced, then we wil execute "try" section first,
+    // if something goes wrong during this section then we will pass into "catch" section.
+    try {
+      // We will be using "useCreateNewTransaction(...)" hook, which has "submitNewTransaction(...)"
+      // function. Once function has been executed, then data will be under "response" variable,
+      // which lets us access the query data => "data.createTransaction".
+      const response = await submitNewTransaction({ getOrderData });
+      const confirmationData = response.data.createTransaction; // Define "confirmationData" variable, which is equal to "response.data.createTransaction".
+
+      // Define "emailOrderConfirmation" variable, which will get access
+      // inside of {...} different object values.
+      const emailOrderConfirmation = {
+        to_name: currentUserData.name,
+        to_email: currentUserData.email,
+        reply_to: "me@aarnipavlidi.fi",
+        orderID: confirmationData._id,
+        orderName: confirmationData.productTitle,
+        orderSize: confirmationData.productSize,
+        orderType: confirmationData.productType,
+        orderImage: confirmationData.productImage,
+        orderShipping: confirmationData.shippingMethod,
+        orderPayment: confirmationData.paymentMethod,
+        orderTotal: confirmationData.paymentTotal,
+        sellerName: confirmationData.sellerName,
+        contactEmail: confirmationData.sellerEmail,
+      };
+      // If earlier function (submitNewTransaction) is successful, then user will be redirected to the
+      // different view and "OrderConfirmation" component will be rendered back to the user, which will
+      // show data, which uses "confirmationData" via => "state: { detail: order_data_here }":
+      history.push({
+        pathname: '/dashboard/order-confirmation',
+        state: { detail: confirmationData }
+      });
+      // Then app will make copy of that order confirmation and send confirmation to the users current
+      // email, which will use those 3x different variables which we defined earlier.
+      await emailjs.send(emailService, emailTemplate, emailOrderConfirmation, emailUser);
+    } catch (error) { // If there are any problems during "try" section, then we will execute "catch" section.
+      console.log(error) // Console.log the "error" variable data back to the terminal.
+    };
+  };
+```
+
+### OrderConfirmation
+	
+<p align="center">
+	<img src="/documentation/images/OrderConfirmation_component.jpg" width=25% height=25%>
+</p
