@@ -25,6 +25,60 @@ From purchasing and selling, what if user wants to delete current listed items f
 
 ## Different components and their layout
 
+### LoginScreen & RegistrationScreen
+
+<p align="center">
+  <img src="/documentation/images/LoginScreen_component.jpg" width=25% height=25%>
+  <img src="/documentation/images/RegistrationScreen_component.jpg" width=25% height=25%>
+</p>
+
+On these components user is able to login or register into Biostack. User has an also option to login into app via using "Facebook login". If user wants to register
+without using "Facebook" then user can press the "SIGN UP" button, which will redirect "RegistrationScreen" component back to the user. Registration form has the validation,
+which uses combination of "Formik" and "Yup". Validation is making sure that all the required input fields are filled and the password matches. Once registration has been
+successfully executed, then "Snackbar" component will be rendered and user will be redirected into "LoginScreen", so user can login into app with previously made account.
+
+
+```javascript
+// Define "initialValues" variable, which will get inside of {...}
+// objects values as default (''). Which means, if user wants to
+// submit form without changing any input fields, these objects
+// will get those default values and passed to database. But
+// because we have validation setupped, that won't be possible! :)
+const initialValues = {
+  name: '',
+  username: '',
+  password: '',
+  passwordConfirm: '',
+  email: ''
+};
+
+// Define "registrationFormValidationSchema" variable, which will execute
+// validation via "yup" variable, when user wants to create new user to
+// the app. If some of the input fields don't match with required condition,
+// then function will return "error message" under of that current input field.
+const registrationFormValidationSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required('Name is required.'),
+  username: yup
+    .string()
+    .min(5, 'Username has to be minimum of 5 characters.')
+    .required('Username is required.'),
+  password: yup
+    .string()
+    .required('Password is required.'),
+  passwordConfirm: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords do not match.')
+    .required('Confirmation for password is required.'),
+  email: yup
+    .string()
+    .email('Invalid email format.')
+    .required('Email is required.')
+});
+```
+
+
 ### Dashboard
 
 <p align="center">
