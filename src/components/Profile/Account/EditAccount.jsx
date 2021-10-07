@@ -102,9 +102,27 @@ const editAccountFormValidationSchema = yup.object().shape({
 
 const EditAccount = ({ setCurrentToken, currentUserData, loading, showSnackBar }) => {
 
+  // Define "useDeleteUser()" hook and get access into "deleteUserFromDatabase" function and
+  // "loadingDeleteUser" variable. When user wants to delete his account from the app, then
+  // "deleteUserFromDatabase" function will be executed and while the data is "loading", which
+  // means "loadingDeleteUser" is equal to "true" => "loading spinner" will be rendered on the
+  // submit button untill function has been finished and then user will be redirected back into
+  // "loginScreen" component.
   const [deleteUserFromDatabase, { loadingDeleteUser }] = useDeleteUser(); // Define "deleteUserFromDatabase" variable from => "useDeleteUser(...)" hook.
+
+  // Define "useDeleteManyProduct()" hook and get access into "deleteProductsFromDatabase" function and
+  // "loadingUpdateUser" variable. When user wants to delete his all products from the app, then
+  // "deleteProductsFromDatabase" function will be executed and while the data is "loading", which
+  // means "loadingUpdateUser" is equal to "true" => "loading spinner" will be rendered on the
+  // submit button untill function has been finished.
   const [deleteProductsFromDatabase, { loadingDeleteProducts }] = useDeleteManyProduct(); // Define "deleteProductsFromDatabase" variable from => "useDeleteManyProduct(...)" hook.
+
+  // Define "useUpdateUser()" hook and get access into "updateCurrentUser" function and "loadingUpdateUser"
+  // variable. When user wants to update his current values (name or email), then "updateCurrentUser"
+  // function will be executed and while data is "loading", which means "loadingUpdateUser" is equal
+  // to "true" => "loading spinner" will be on the submit button untill function has been finished.
   const [updateCurrentUser, { loadingUpdateUser }] = useUpdateUser(); // Define "updateCurrentUser" variable from => "useUpdateUser(...)" hook.
+
   const client = useApolloClient(); // Define "client" variable, which is equal to "useApolloClient(...)" function.
   const authStorage = useAuthStorage(); // Define "authStorage" variable, which is equal to "useAuthStorage(...)" function.
 

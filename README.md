@@ -77,7 +77,7 @@ const ProductRenderAll = ({ item }) => {
 <p align="center">
 	<img src="/documentation/images/CurrentProduct_component_one.jpg" width=25% height=25%>
 	<img src="/documentation/images/CurrentProduct_component_two.jpg" width=25% height=25%>
-</p
+</p>
 
 This component will be rendered, if user chooses to go on some specific product. User will see related data to current item (type, size and price) and also seller information that who is selling this current item on the app. Seller's name and rating (does not work at this moment) will be shown back and also avatar. By default avatar will show first letters of firstname and lastname, but if user has registered to the app via using facebook, then app will show it's facebook profile image on the avatar's place.
 
@@ -141,7 +141,7 @@ If user decides to buy current product from the app via pressing "CHECKOUT" butt
 <p align="center">
 	<img src="/documentation/images/Checkout_component_one.jpg" width=25% height=25%>
 	<img src="/documentation/images/Checkout_component_two.jpg" width=25% height=25%>
-</p
+</p>
 
 On the "Checkout" component, app will use "Modal" component from https://callstack.github.io/react-native-paper/modal.html, which has all the information related to the chosen product, which user wants to buy from the app. Once user has has chosen all the required options (for shipping and payment), app will show total price of that order and user is now able to buy the item via pressing "BUY AN ITEM" button. Here is the code of the logic, which handles the buying an item and redirecting the user if buying an item is successful:
 
@@ -199,7 +199,7 @@ On the "Checkout" component, app will use "Modal" component from https://callsta
 
 <p align="center">
 	<img src="/documentation/images/OrderConfirmation_component.jpg" width=25% height=25%>
-</p
+</p>
 
 This component will be rendered to the user, after purchasing the item is successful. Component will show all the data regarding that order, which gets the data from previous "history.push" function. Also 2x different buttons will be rendered back, 1) "BUY MORE" button which will redirect user back to home "Dashboard" component and 2) "CONTACT SELLER" button, which will redirect user to this orders own page => "CurrentTransaction" component. There user is able to give rating and contact the seller/buyer.
 
@@ -233,7 +233,7 @@ This component will be rendered to the user, after purchasing the item is succes
   <img src="/documentation/images/CurrentTransaction_component_giving_rating.jpg" width=25% height=25%>
   <img src="/documentation/images/CurrentTransaction_component_rating_snackbar.jpg" width=25% height=25%>
   <img src="/documentation/images/CurrentTransaction_component_after_giving_rating.jpg" width=25% height=25%>
-</p
+</p>
 
 
 Component "CurrentTransaction" will show current transaction based on the "id" value of that transaction. User is able to go specific transaction either from "OrderHistory" component, which shows all of users transactions on the app or after user has bought the item, which the button which lets user to redirect the user to current order. On our "Main" component has the router logic, which renders then this component "CurrentTransaction"
@@ -357,7 +357,7 @@ When user is at current transaction view, then user has an option to give rating
 
 <p align="center">
   <img src="/documentation/images/OrderHistory_component.jpg" width=25% height=25%>
-</p
+</p>
 
 
 This component shows to the user all of the transactions, which have been made by the user. Any purchases or selling clothes will be shown at this component. Component shows 4x different
@@ -393,7 +393,7 @@ const UserOrders = ({ item }) => {
 
 <p align="center">
   <img src="/documentation/images/NewProduct_component.jpg" width=25% height=25%>
-</p
+</p>
 
 
 This component will be rendered, when user is pressing the "New item" button on the "NavigationBottom" component. Once user has been redirected, then user has an option to add new product
@@ -517,3 +517,79 @@ const onSubmit = async (values) => {
   };
 };
 ```
+
+
+### EditAccount
+
+<p align="center">
+  <img src="/documentation/images/EditAccount_component.jpg" width=25% height=25%>
+  <img src="/documentation/images/EditAccount_component_before_edit.jpg" width=25% height=25%>
+  <img src="/documentation/images/EditAccount_component_after_edit.jpg" width=25% height=25%>
+  <img src="/documentation/images/EditAccount_component_delete_products_snackbar.jpg" width=25% height=25%>
+</p>
+
+On this component user is able to delete his own account from the app, delete all listed products or edit current name/email values into new ones. On all of these functions app will also render
+"Snackbar" component after successful execution. Here is the small snippet of code, where user if confirms the account deletion then we will execute the function (provided by the hook) and then
+user will be redirected back to the "LoginScreen" after deleting the acccount has been successful.
+
+
+```javascript
+// Define "useDeleteUser()" hook and get access into "deleteUserFromDatabase" function and
+// "loadingDeleteUser" variable. When user wants to delete his account from the app, then
+// "deleteUserFromDatabase" function will be executed and while the data is "loading", which
+// means "loadingDeleteUser" is equal to "true" => "loading spinner" will be rendered on the
+// submit button untill function has been finished and then user will be redirected back into
+// "loginScreen" component.
+const [deleteUserFromDatabase, { loadingDeleteUser }] = useDeleteUser(); // Define "deleteUserFromDatabase" variable from => "useDeleteUser(...)" hook.
+
+const client = useApolloClient(); // Define "client" variable, which is equal to "useApolloClient(...)" function.
+const authStorage = useAuthStorage(); // Define "authStorage" variable, which is equal to "useAuthStorage(...)" function.
+
+// Define "removeUserToken" function, which will execute everything inside of {...},
+// so if user wants to delete his account and confirms deletion via "Alert" method,
+// then this function will be executed. If account deletion is successful, then
+// user will be redirected back to login screen and else if there is a problem
+// with deletion then "error.message" variable will be returned back to the user.
+const removeUserToken = async () => {
+  try { // First we will execute "try" section, if there will be a problem => "catch" section.
+    const response = await deleteUserFromDatabase(currentUserData._id);
+    await authStorage.removeAccessToken(); // Remove token value from "authStorage" after account deletion.
+    //client.resetStore(); // Clear mutation from "active" and refetch all other active queries again.
+    // App was getting errors after account deletion and changing "resetStore()" into
+    // "clearStore()" function solved the issue. Need to find out later what caused
+    // the original problem when deleting account and going back to login screen.
+    client.clearStore(); // Does same thing as upper function "client.resetStore()", but won't refetch all other active queries again.
+    setCurrentToken(null); // Change "currentToken" variable state into original value => "null".
+    showSnackBar(response.deleteUser.response);
+  } catch (error) {
+    console.log(error.message); // Console.log "error.message" variable data back to the user.
+  }
+};
+
+// Define "confirmUserDelete" function, which will execute everything inside of
+// {...}, so if user presses button to delete his/her account => "Alert" component
+// will be rendered back to the user and user has to confirm that he/she wants to
+// delete account from database. If user chooses to confirm, then "removeUserToken()"
+// function will be executed and app will try delete account from the database.
+const confirmUserDelete = () => {
+  Alert.alert(
+    "Biostack",
+    "Are you sure you want to delete your account from the app?",
+    [
+      {
+        text: "CANCEL",
+        onPress: () => console.log('User has cancelled account deletion process!'),
+        style: "cancel"
+      },
+      {
+        text: "OK",
+        onPress: () => removeUserToken(),
+      }
+    ]
+  )
+};
+```
+
+Other functions (deleting products and updating user values) have the same logic behind, first we confirm that user wants to really delete account/products or update values and once that
+has been confirmed, we will execute function provided by the hook and then render the "loading spinner" untill that function has been finished. Then once function has been executed
+successfully, app will render "Snackbar" and notify the user that function has been executed successfully.
