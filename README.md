@@ -23,6 +23,21 @@ Users can also give rating to each other (to the buyer and seller of that produc
 
 From purchasing and selling, what if user wants to delete current listed items from the app? We got that covered aswell, so user has an option to either delete each product manually or all of them same time. Also there is option for the user to edit either current email or name, which will then update values into database and render updated values back to the user.
 
+## Environment variables
+
+Project has 4 different .env variables defined:
+
+```javascript
+APOLLO_URI = your_backend_url/graphql
+
+EMAIL_SERVICE_ID = your_emailjs_service_id
+EMAIL_TEMPLATE_ID = your_emailjs_template_id
+EMAIL_USER_ID = your_emailjs_user_id
+
+FACEBOOK_APP_ID = your_facebook_app_id
+```
+
+
 ## Different components and their layout
 
 ### LoginScreen & RegistrationScreen
